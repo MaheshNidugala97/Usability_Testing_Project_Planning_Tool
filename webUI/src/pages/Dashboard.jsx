@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import Sidebar from '../components/Sidebar';
-import Navbar from '../components/NavBar';
-import Backlog from '../components/Backlog';
-import Board from '../components/Board';
-import ProjectSettings from '../components/ProjectSettings';
-import CreateIssue from '../components/CreateIssue';
+import Sidebar from '../components/Sidebar.jsx';
+import Navbar from '../components/NavBar.jsx/index.js';
+import Backlog from '../components/Backlog.jsx';
+import Board from '../components/Board.jsx';
+import ProjectSettings from '../components/ProjectSettings.jsx';
+import CreateIssue from '../components/CreateIssue.jsx';
 import '../styles/Dashboard.css';
 
 function Dashboard() {
