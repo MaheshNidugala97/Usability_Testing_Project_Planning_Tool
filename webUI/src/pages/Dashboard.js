@@ -7,22 +7,25 @@ import ProjectSettings from '../components/ProjectSettings';
 import CreateIssue from '../components/CreateIssue';
 import '../styles/Dashboard.css';
 
-
-function App() {
+function Dashboard() {
   const [activeSection, setActiveSection] = useState('Board');
+
+  const handleCloseCreateIssue = () => {
+    setActiveSection('Board');
+  };
 
   const getActiveComponent = () => {
     switch (activeSection) {
       case 'Board': return <Board />;
       case 'Project Settings': return <ProjectSettings />;
-      case 'Create Issue': return <CreateIssue />;
+      case 'Create Issue': return <CreateIssue onClose={handleCloseCreateIssue} />;
       case 'Backlog': return <Backlog />;
       default: return <div>Select a project from the menu</div>;
     }
   };
 
   return (
-    <div className="app">
+    <div className="Dashboard">
       <Sidebar />
       <div className="main-section">
         <Navbar activeSection={activeSection} setActiveSection={setActiveSection} />
@@ -34,4 +37,4 @@ function App() {
   );
 }
 
-export default App;
+export default Dashboard;
