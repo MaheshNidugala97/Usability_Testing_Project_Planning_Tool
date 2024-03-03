@@ -28,7 +28,6 @@
   right: 10px;
   top: 10px;
   border: none;
-  background: none;
   font-size: 20px;
   cursor: pointer;
 }
@@ -79,7 +78,7 @@
 }
 
 .issue-form button:hover {
-  background-color: #ffffff;
+  background-color: #1e8bff;
 }
 
 @media (max-width: 768px) {
