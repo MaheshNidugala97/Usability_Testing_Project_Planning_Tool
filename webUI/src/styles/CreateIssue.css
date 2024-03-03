@@ -1,0 +1,93 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.issue-form {
+  background: #ffffff;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 800px;
+  max-height: 80%;
+  overflow-y: auto;
+  position: relative;
+  margin: 20px;
+}
+
+.close-button {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  border: none;
+  background: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+
+.issue-form h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.form-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.form-column {
+  display: flex;
+  flex-direction: column;
+  width: 48%; 
+}
+
+.issue-form label {
+  margin-bottom: 10px;
+}
+
+.issue-form input[type="text"],
+.issue-form select,
+.issue-form textarea {
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #676767;
+  border-radius: 4px;
+}
+
+.issue-form textarea {
+  height: 100px;
+}
+
+.accept-button {
+  margin-top: 10px;
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.issue-form button:hover {
+  background-color: #ffffff;
+}
+
+@media (max-width: 768px) {
+  .form-row {
+    flex-direction: column;
+  }
+
+  .form-column {
+    width: 100%;
+  }
+}
