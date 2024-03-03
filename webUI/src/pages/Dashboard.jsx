@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Sidebar from '../components/Sidebar.jsx';
-import Navbar from '../components/NavBar.jsx/index.js';
+import Navbar from '../components/NavBar.jsx';
 import Backlog from '../components/Backlog.jsx';
 import Board from '../components/Board.jsx';
 import ProjectSettings from '../components/ProjectSettings.jsx';
