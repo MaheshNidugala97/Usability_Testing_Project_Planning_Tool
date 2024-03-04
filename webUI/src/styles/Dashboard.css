@@ -32,6 +32,7 @@
     padding: 10px;
     box-sizing: border-box;
     overflow-y: auto; 
+    border-right: 3px solid #DDDDDD;
   }
   
   .project-details {
@@ -79,7 +80,7 @@
 .main-container {
     flex-grow: 1;
     display: flex;
-    background-color: #ECF0F1; 
+    background-color: #ffffff; 
     padding: 20px;
     box-sizing: border-box;
     overflow-y: auto;
