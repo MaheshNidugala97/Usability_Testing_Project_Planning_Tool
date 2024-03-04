@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Sidebar from '../components/Sidebar.jsx';
 import Navbar from '../components/NavBar.jsx';
 import Backlog from '../components/Backlog.jsx';
-import Board from '../components/Board.jsx';
+import Board from '../components/KanbanBoard/Board.jsx';
 import ProjectSettings from '../components/ProjectSettings.jsx';
 import CreateIssue from '../components/CreateIssue.jsx';
 import '../styles/Dashboard.css';
