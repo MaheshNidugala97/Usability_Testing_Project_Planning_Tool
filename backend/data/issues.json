@@ -7,5 +7,33 @@
     "priority": "HIGH",
     "assignee": "Mark",
     "reporter": "John"
+  },
+  {
+    "id": 1796084,
+    "title": "UI Component issue",
+    "description": "There is a problem with component that give invalid data to the UI",
+    "status": "To do",
+    "priority": "MEDIUM",
+    "assignee": "John",
+    "reporter": "Mark",
+    "feedback": [
+      "nbnbnnbnb",
+      "bnbnn",
+      "ffssddsdds",
+      "dsddddds",
+      "",
+      "ddsdsdsds",
+      "dsdsddsds",
+      "dsdsddsdsddddsdd"
+    ]
+  },
+  {
+    "id": 9775276,
+    "title": "hihiih",
+    "description": "vghgbhjnkhghjnk",
+    "status": "To do",
+    "priority": "LOW",
+    "assignee": "Daniel",
+    "reporter": "Daniel"
   }
 ]

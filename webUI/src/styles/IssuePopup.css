@@ -1,0 +1,278 @@
+.issue-popup-container {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 400px; 
+  background-color: #fff;
+  z-index: 999;
+  overflow-y: auto; 
+}
+
+.issue-popup {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.close-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  color: #888;
+}
+
+.expand-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: #888;
+  margin-left: 290px;
+  margin-top: -7px; 
+}
+
+.issue-details {
+  font-family: Arial, sans-serif;
+}
+
+.color-box {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.title-section {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.title {
+  margin: 0;
+}
+
+.attachment-section {
+  margin-bottom: 20px;
+}
+
+.attachment-section label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.file-input-section {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.file-input-section input[type="file"] {
+  display: none;
+}
+
+.file-input-section .upload-button,
+.file-input-section button {
+  background-color: #acadad;
+  color: #fff;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px; 
+  margin-top: 13px; 
+  margin-left: 5px;
+  margin-right: -15px; 
+}
+
+.file-input-section .upload-button:hover,
+.file-input-section button:hover {
+  background-color: #0056b3;
+}
+
+.file-input-section button {
+  margin-left: 30px;
+  margin-top: 9px;
+}
+
+.attachment-thumbnails {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.attachment-thumbnail {
+  width: 100px; 
+  height: 100px; 
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.attachment-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.upload-message {
+  margin-top: 10px;
+  color: green;
+}
+
+.status-section {
+  margin-bottom: 20px;
+  display: flex; 
+  align-items: center; 
+}
+
+.status-section label {
+  margin-right: 15px; 
+}
+
+.status-section select {
+  width: 125px; 
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px; 
+}
+
+/* Hover effect for the dropdown */
+.status-section select:hover {
+  background-color: #0056b3;
+}
+
+.description-section {
+  margin-bottom: 20px;
+}
+
+.description-box {
+  border: 1px solid #ccc; 
+  border-radius: 8px; 
+  padding: 10px; 
+  background-color: #f9f9f9; 
+}
+
+.description-text {
+  margin: 0; 
+  font-size: 16px; 
+  line-height: 1.5; 
+}
+
+.issue-detail {
+  margin-bottom: 10px;
+}
+
+.label {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.color-picker {
+  width: 20px;
+  height: 20px;
+  border: 1px solid #ccc;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.color-options {
+  display: flex;
+  flex-wrap: wrap;
+  position: absolute;
+  top: 30px;
+  left: 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 5px;
+  z-index: 999;
+}
+
+.color-option {
+  width: 20px;
+  height: 20px;
+  margin: 5px;
+  cursor: pointer;
+}
+
+.details-section {
+  margin-top: 20px;
+}
+
+.details-button {
+  background-color: #aeb4ba;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 158px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.details-button:hover {
+  background-color: #0056b3;
+}
+
+.details-content {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+
+.details-content .issue-detail {
+  margin-bottom: 10px;
+}
+
+.details-content .label {
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.feedback-section {
+  margin-top: 20px;
+}
+
+.feedback-section h3 {
+  margin-bottom: 10px;
+}
+
+.feedback-section textarea {
+  width: 100%;
+  height: 100px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+.feedback-section button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.feedback-list {
+  margin-top: 10px;
+}
+
+.feedback-list-item {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  margin-bottom: 5px;
+}

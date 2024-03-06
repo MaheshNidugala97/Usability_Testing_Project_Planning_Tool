@@ -1,5 +1,4 @@
-// KanbanBoard.js
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import Column from "./Column";
@@ -7,25 +6,42 @@ import "./Board.css";
 
 const KanbanBoard = () => {
   const [tickets, setTickets] = useState([
-    { id: "ticket-1", title: "Fix bug in login", status: "To Do" },
-    { id: "ticket-2", title: "Implement new feature", status: "In Progress" },
-    { id: "ticket-3", title: "Write documentation", status: "Done" },
+    {
+      "id": 1,
+      "ticketName":"T-1",
+      "title": "Login API Call",
+      "description": "Login API Call",
+      "status": "To Do",
+      "priority": "HIGH",
+      "assignee": "Mahesh Nidugala",
+      "reporter": "John",
+      "estimate": '1'
+      
+    },
+    {
+      "id": 2,
+      "ticketName":"T-2",
+      "title": "Validation to Login Page",
+      "description": "alidation to Login Page",
+      "status": "In Progress",
+      "priority": "HIGH",
+      "assignee": "Adith Jain",
+      "reporter": "John",
+      "estimate": "3"
+    },
+    {
+      "id": 3,
+      "ticketName":"T-3",
+      "title": "Login page",
+      "description": "design login page with 2 fields",
+      "status": "Done",
+      "priority": "HIGH",
+      "assignee": "Athul Krishna",
+      "reporter": "John",
+      "estimate": "3"
+    }
   ]);
   
-  useEffect(() => {
-    const maxTickets = Math.max(
-      tickets.filter(ticket => ticket.status === 'To Do').length,
-      tickets.filter(ticket => ticket.status === 'In Progress').length,
-      tickets.filter(ticket => ticket.status === 'Done').length
-    );
-
-    const columnHeight = maxTickets * 90;
-    const columns = document.querySelectorAll('.column');
-    columns.forEach(column => {
-      column.style.height = `${columnHeight}px`;
-    });
-  }, [tickets])
-
   return (
     <DndProvider backend={HTML5Backend}>
       <div className="kanban-board">
