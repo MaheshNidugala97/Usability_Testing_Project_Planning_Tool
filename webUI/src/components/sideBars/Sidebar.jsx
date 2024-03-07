@@ -1,7 +1,7 @@
 import React from 'react';
-import logo from '../Assets/logo.png';
-import userProfile from '../Assets/user-profile.png';
-import logoutIcon from '../Assets/logout-icon.png';
+import logo from '../../Assets/logo.png';
+import userProfile from '../../Assets/user-profile.png';
+import logoutIcon from '../../Assets/logout-icon.png';
 
 function Sidebar() {
   return (

@@ -37,6 +37,7 @@
   
   .project-details {
     margin-bottom: 20px;
+    width:90%;
   }
   
   .project-icon {
@@ -61,7 +62,7 @@
     border: none;
     padding: 10px;
     text-align: left;
-    width: 100%;
+    width: 90%;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -72,6 +73,10 @@
     background-color: #e0e0e0; 
   }
   
+
+  .menu-item:hover {
+    background-color: #e0e0e0; 
+  }
   .menu-icon {
     margin-right: 8px; 
     width: 20px; 
