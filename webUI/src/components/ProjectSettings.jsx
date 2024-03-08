@@ -1,19 +1,10 @@
-// import React from 'react';
-
-// const ProjectSettings = () => {
-//   return <div>Project Settings Content</div>;
-// };
-
-// export default ProjectSettings;
-
-
-
-// CreateIssue.js
 import React, { useState } from 'react';
-import IssuePopup from './IssuePopup';
-
+import IssuePopup from './issueView/IssuePopup';
+ 
 const ProjectSettings = () => {
   const [showModal, setShowModal] = useState(false);
+ 
+  const [issueId, setIssueId] = useState('1796084');
 
   const openModal = () => {
     setShowModal(true);
@@ -27,10 +18,10 @@ const ProjectSettings = () => {
     <div>
       <h2>Create Issue</h2>
       <button onClick={openModal}>Open Modal</button>
-      {showModal && <IssuePopup onClose={closeModal} />}
-      {/* Your form inputs or UI elements for creating issues */}
+      {showModal && <IssuePopup issueId={issueId} onClose={closeModal} />}
     </div>
   );
 };
 
 export default ProjectSettings;
+

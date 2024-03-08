@@ -1,0 +1,40 @@
+.issue-popup-container {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  width: 400px;
+  background-color: #fff;
+  z-index: 999;
+  overflow-y: auto;
+}
+
+.issue-popup {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+
+.issue-popup-container.expanded {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5); 
+  z-index: 1000; 
+}
+
+.issue-popup.expanded {
+  max-width: 600px; 
+  max-height: 80%; 
+  overflow-y: auto; 
+  margin: 20px; 
+  background-color: #fff; 
+  border-radius: 10px; 
+
+}

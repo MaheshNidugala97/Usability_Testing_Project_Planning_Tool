@@ -13,8 +13,8 @@ const IssuePopup = ({ issueId, onClose }) => {
   const [fileInputKey, setFileInputKey] = useState(0); // Key to reset file input
   const [message, setMessage] = useState(""); // Success message
   const [showDetails, setShowDetails] = useState(false);
-  const [feedback, setFeedback] = useState(""); // Feedback text
-  const [feedbackList, setFeedbackList] = useState([]); // List of feedback
+  const [comment, setcomment] = useState(""); // comment text
+  const [commentList, setcommentList] = useState([]); // List of comment
 
   useEffect(() => {
     const fetchData = async () => {
@@ -22,8 +22,8 @@ const IssuePopup = ({ issueId, onClose }) => {
         const issueResponse = await axios.get(`http://localhost:3009/api/issues/1796084`);
         setIssue(issueResponse.data);
 
-        const feedbackResponse = await axios.get(`http://localhost:3009/api/issues/1796084/feedback`);
-        setFeedbackList(feedbackResponse.data);
+        const commentResponse = await axios.get(`http://localhost:3009/api/issues/1796084/comment`);
+        setcommentList(commentResponse.data);
       } catch (error) {
         console.error("Error fetching issue:", error);
       }
@@ -33,7 +33,7 @@ const IssuePopup = ({ issueId, onClose }) => {
 
     return () => {
       setIssue(null);
-      setFeedbackList([]);
+      setcommentList([]);
     };
   }, [issueId]);
 
@@ -76,21 +76,21 @@ const IssuePopup = ({ issueId, onClose }) => {
     setShowDetails(!showDetails);
   };
 
-  const handleFeedbackChange = (e) => {
-    setFeedback(e.target.value);
+  const handlecommentChange = (e) => {
+    setcomment(e.target.value);
   };
 
-  const submitFeedback = async () => {
+  const submitcomment = async () => {
     try {
-      await axios.post(`http://localhost:3009/api/issues/1796084/feedback`, {
-        feedback: feedback,
+      await axios.post(`http://localhost:3009/api/issues/1796084/comment`, {
+        comment: comment,
       });
 
-      setFeedbackList([...feedbackList, feedback]);
-      setFeedback("");
-      setMessage("Feedback submitted successfully!");
+      setcommentList([...commentList, comment]);
+      setcomment("");
+      setMessage("comment submitted successfully!");
     } catch (error) {
-      console.error("Error submitting feedback:", error);
+      console.error("Error submitting comment:", error);
     }
   };
 
@@ -220,18 +220,18 @@ const IssuePopup = ({ issueId, onClose }) => {
                 </div>
               )}
             </div>
-            <div className="feedback-section">
-              <h3>Feedback:</h3>
+            <div className="comment-section">
+              <h3>comment:</h3>
               <textarea
-                value={feedback}
-                onChange={handleFeedbackChange}
-                placeholder="Enter your feedback..."
+                value={comment}
+                onChange={handlecommentChange}
+                placeholder="Enter your comment..."
               ></textarea>
-              <button onClick={submitFeedback}>Submit Feedback</button>
-              <div className="feedback-list">
-                {feedbackList.map((feedbackItem, index) => (
-                  <div key={index} className="feedback-list-item">
-                    {feedbackItem}
+              <button onClick={submitcomment}>Submit comment</button>
+              <div className="comment-list">
+                {commentList.map((commentItem, index) => (
+                  <div key={index} className="comment-list-item">
+                    {commentItem}
                   </div>
                 ))}
               </div>
