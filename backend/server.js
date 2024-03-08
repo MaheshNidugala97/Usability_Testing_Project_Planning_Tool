@@ -67,6 +67,14 @@ app.get("/api/issues/:id", (req, res) => {
   res.status(200).json(issue);
 });
 
+app.get("/api/issues", (req, res) => {
+  const issues = readDataFromFile();
+  if (!issues) {
+    return res.status(404).send("Issue not found");
+  }
+  res.status(200).json(issues);
+});
+
 app.get("/api/issues/:id/feedback", (req, res) => {
   const issueId = parseInt(req.params.id, 10);
   const issues = readDataFromFile();
