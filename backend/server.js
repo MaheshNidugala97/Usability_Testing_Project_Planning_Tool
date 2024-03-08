@@ -65,7 +65,7 @@ app.get('/api/issues/:id', (req, res) => {
   res.status(200).json(issue);
 });
 
-app.get('/api/issues/:id/feedback', (req, res) => {
+app.get('/api/issues/:id/comment', (req, res) => {
   const issueId = parseInt(req.params.id, 10);
   const issues = readDataFromFile();
   const issue = issues.find(issue => issue.id === issueId);
@@ -74,14 +74,14 @@ app.get('/api/issues/:id/feedback', (req, res) => {
     return res.status(404).send('Issue not found');
   }
 
-  const feedback = issue.feedback || [];
+  const comment = issue.comment || [];
 
-  res.status(200).json(feedback);
+  res.status(200).json(comment);
 });
 
-app.post('/api/issues/:id/feedback', (req, res) => {
+app.post('/api/issues/:id/comment', (req, res) => {
   const issueId = parseInt(req.params.id, 10);
-  const feedbackText = req.body.feedback;
+  const commentText = req.body.comment;
 
   const issues = readDataFromFile();
   const issueIndex = issues.findIndex(issue => issue.id === issueId);
@@ -90,14 +90,14 @@ app.post('/api/issues/:id/feedback', (req, res) => {
     return res.status(404).send('Issue not found');
   }
 
-  if (!issues[issueIndex].feedback) {
-    issues[issueIndex].feedback = [];
+  if (!issues[issueIndex].comment) {
+    issues[issueIndex].comment = [];
   }
 
-  issues[issueIndex].feedback.push(feedbackText);
+  issues[issueIndex].comment.push(commentText);
   writeDataToFile(issues);
 
-  res.status(201).json({ message: 'Feedback submitted successfully' });
+  res.status(201).json({ message: 'comment submitted successfully' });
 });
 
 app.post('/api/upload', upload.array('files'), (req, res) => {
