@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDrag } from "react-dnd";
+import axios from "axios";
 import {
   Card,
   CardContent,
@@ -40,8 +41,16 @@ const Ticket = (props) => {
     setShowFullName(false);
   };
 
-  const handleDelete = () => {
+  const handleDelete = async (id) => {
+    try {
+    const response = await axios.delete(`http://localhost:3009/api/issues/${id}`);
+    if(!response?.data) {
     console.log("Deleting ticket with ID:", props.ticket.id);
+    }
+    props.setTickets(response.data)
+  } catch (error) {
+    console.error("Error deleting ticket:", error);
+  }
   };
 
   return (
@@ -58,7 +67,7 @@ const Ticket = (props) => {
       onMouseLeave={handleMouseLeave}
     >
       <IconButton
-        onClick={handleDelete}
+        onClick={()=>handleDelete(props.ticket.id)}
         style={{
           position: "absolute",
           top: "5px",

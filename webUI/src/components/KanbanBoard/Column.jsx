@@ -1,4 +1,5 @@
 import React ,{useState, useEffect} from "react";
+import axios from "axios";
 import { useDrop } from "react-dnd";
 import Ticket from "./Ticket";
 import "./Board.css";
@@ -54,6 +55,7 @@ const Column = (props) => {
               ticket={ticket}
               index={index}
               assigneeInitials={getInitials(ticket.assignee)}
+              setTickets={props.setTickets}
             />
           ) : null
         )}

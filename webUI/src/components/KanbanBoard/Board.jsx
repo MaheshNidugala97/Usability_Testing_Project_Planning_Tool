@@ -1,17 +1,27 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import Column from "./Column";
 import "./Board.css";
-import { getTickets } from "../../services/endpoint.call";
+
 
 const KanbanBoard = () => {
   const [tickets, setTickets] = useState([]);
 
   useEffect(() => {
-    getTickets().then((data) => {
-      setTickets(data);
-    });
+    const getTickets = async () => {
+      try {
+        const issues = await axios.get(`http://localhost:3009/api/issues`);
+        if (!issues?.data) {
+          throw new Error("Failed to get tickets");
+        }
+        setTickets(issues.data);
+      } catch (error) {
+        console.error("Error fetching issue:", error);
+      }
+    };
+    getTickets();;    
   }, []);
 
   return (

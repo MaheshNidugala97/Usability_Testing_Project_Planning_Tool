@@ -75,7 +75,50 @@ app.get("/api/issues", (req, res) => {
   res.status(200).json(issues);
 });
 
-app.get("/api/issues/:id/feedback", (req, res) => {
+/**
+ * @description  Delete ticket by id
+ */
+app.delete("/api/issues/:id", (req, res) => {
+  const issues = readDataFromFile();
+  if (!issues) {
+    return res.status(404).send("Issues not found");
+  }
+
+  const { id } = req.params;
+  const index = issues.findIndex((issue) => issue.id === parseInt(id));
+
+  if (index === -1) {
+    return res.status(404).send("Issue not found");
+  }
+
+  issues.splice(index, 1);
+  writeDataToFile(issues);
+
+  res.status(200).json(issues);
+});
+
+/**
+ * @description  Update ticket
+ */
+app.patch("/api/issues/:id", (req, res) => {
+  const issues = readDataFromFile();
+  if (!issues) {
+    return res.status(404).send("Issues not found");
+  }
+
+  const { id } = req.params;
+  const index = issues.findIndex((issue) => issue.id === parseInt(id));
+
+  if (index === -1) {
+    return res.status(404).send("Issue not found");
+  }
+  const updatedFields = req.body;
+  Object.assign(issues[index], updatedFields);
+  writeDataToFile(issues);
+  res.status(200).json(issues[index]);
+});
+
+app.get("/api/issues/:id/comment", (req, res) => {
   const issueId = parseInt(req.params.id, 10);
   const issues = readDataFromFile();
   const issue = issues.find((issue) => issue.id === issueId);
@@ -84,14 +127,14 @@ app.get("/api/issues/:id/feedback", (req, res) => {
     return res.status(404).send("Issue not found");
   }
 
-  const feedback = issue.feedback || [];
+  const comment = issue.comment || [];
 
-  res.status(200).json(feedback);
+  res.status(200).json(comment);
 });
 
-app.post("/api/issues/:id/feedback", (req, res) => {
+app.post("/api/issues/:id/comment", (req, res) => {
   const issueId = parseInt(req.params.id, 10);
-  const feedbackText = req.body.feedback;
+  const commentText = req.body.comment;
 
   const issues = readDataFromFile();
   const issueIndex = issues.findIndex((issue) => issue.id === issueId);
@@ -100,14 +143,13 @@ app.post("/api/issues/:id/feedback", (req, res) => {
     return res.status(404).send("Issue not found");
   }
 
-  if (!issues[issueIndex].feedback) {
-    issues[issueIndex].feedback = [];
+  if (!issues[issueIndex].comment) {
+    issues[issueIndex].comment = [];
   }
 
-  issues[issueIndex].feedback.push(feedbackText);
+  issues[issueIndex].comment.push(commentText);
   writeDataToFile(issues);
-
-  res.status(201).json({ message: "Feedback submitted successfully" });
+  res.status(201).json({ message: "comment submitted successfully" });
 });
 
 app.post("/api/upload", upload.array("files"), (req, res) => {
