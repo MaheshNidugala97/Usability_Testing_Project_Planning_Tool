@@ -43,14 +43,16 @@ const Ticket = (props) => {
 
   const handleDelete = async (id) => {
     try {
-    const response = await axios.delete(`http://localhost:3009/api/issues/${id}`);
-    if(!response?.data) {
-    console.log("Deleting ticket with ID:", props.ticket.id);
+      const response = await axios.delete(
+        `http://localhost:3009/api/issues/${id}`
+      );
+      if (!response?.data) {
+        console.log("Deleting ticket with ID:", props.ticket.id);
+      }
+      props.setTickets(response.data);
+    } catch (error) {
+      console.error("Error deleting ticket:", error);
     }
-    props.setTickets(response.data)
-  } catch (error) {
-    console.error("Error deleting ticket:", error);
-  }
   };
 
   return (
@@ -65,9 +67,12 @@ const Ticket = (props) => {
       }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onClick={() => {
+        props.openPopupWithIssue(props.ticket.id);
+      }}
     >
       <IconButton
-        onClick={()=>handleDelete(props.ticket.id)}
+        onClick={() => handleDelete(props.ticket.id)}
         style={{
           position: "absolute",
           top: "5px",
@@ -75,7 +80,7 @@ const Ticket = (props) => {
           color: "gray",
         }}
       >
-        <Delete  sx={{ fontSize: 'large' }}/>
+        <Delete sx={{ fontSize: "large" }} />
       </IconButton>
 
       <CardContent>

@@ -1,4 +1,4 @@
-import React ,{useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useDrop } from "react-dnd";
 import Ticket from "./Ticket";
@@ -29,7 +29,6 @@ const Column = (props) => {
     props.setTickets(ticketsCopy);
   };
 
-
   const [, drop] = useDrop({
     accept: "ticket",
     drop: (item, monitor) => {
@@ -38,15 +37,18 @@ const Column = (props) => {
         item.index = props.tickets.length;
       }
     },
-    collect: monitor => ({
+    collect: (monitor) => ({
       isOver: monitor.isOver(),
-      canDrop: monitor.canDrop()
-    })
+      canDrop: monitor.canDrop(),
+    }),
   });
 
   return (
     <div className="column" id={props.status} ref={drop}>
-      <h2>{props.title}  ({totalTickets})  {props.status === "Done" && <span className="tick-mark">&#10004;</span>}</h2>
+      <h2>
+        {props.title} ({totalTickets}){" "}
+        {props.status === "Done" && <span className="tick-mark">&#10004;</span>}
+      </h2>
       <div>
         {props.tickets.map((ticket, index) =>
           ticket.status === props.status ? (
@@ -56,6 +58,7 @@ const Column = (props) => {
               index={index}
               assigneeInitials={getInitials(ticket.assignee)}
               setTickets={props.setTickets}
+              openPopupWithIssue={props.openPopupWithIssue}
             />
           ) : null
         )}
