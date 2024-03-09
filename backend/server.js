@@ -115,7 +115,7 @@ app.patch("/api/issues/:id", (req, res) => {
   const updatedFields = req.body;
   Object.assign(issues[index], updatedFields);
   writeDataToFile(issues);
-  res.status(200).json(issues[index]);
+  res.status(200).json(issues);
 });
 
 app.get("/api/issues/:id/comment", (req, res) => {
