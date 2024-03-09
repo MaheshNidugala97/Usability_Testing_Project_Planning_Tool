@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios'; 
+import axios from 'axios';
 import '../styles/CreateIssue.css';
 
 const CreateIssue = ({ onClose }) => {
@@ -8,14 +8,14 @@ const CreateIssue = ({ onClose }) => {
     description: '',
     status: 'To do',
     priority: 'LOW',
-    assignee: 'Daniel', 
+    assignee: 'Daniel',
     reporter: 'Daniel'  
   };
 
   const [issue, setIssue] = useState(initialState);
 
-  const assignees = ['Mark', 'John','Daniel']; 
-  const reporters = ['Mark', 'John','Daniel']; 
+  const assignees = ['Mark', 'John', 'Daniel'];
+  const reporters = ['Mark', 'John', 'Daniel'];
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -25,22 +25,20 @@ const CreateIssue = ({ onClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const id = Math.floor(Math.random() * 10000000); 
+      const id = Math.floor(Math.random() * 10000000);
       const issueWithId = { ...issue, id };
 
-     
       console.log('Submitting issue:', issueWithId);
 
       const response = await axios.post('http://localhost:3009/api/issues', issueWithId);
       
-      alert(response.data.message); 
-      setIssue(initialState); 
+      alert(response.data.message);
+      setIssue(initialState);
+      onClose();
     } catch (error) {
       console.error('There was an error creating the issue:', error);
     }
   };
-
-     
 
   return (
     <div className="modal-overlay">

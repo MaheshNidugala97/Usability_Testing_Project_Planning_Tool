@@ -1,0 +1,20 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .close-button,
+  .expand-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: #888;
+  }
+  
+  .expand-button {
+    margin-left: 290px;
+    margin-top: -7px;
+  }
+  
