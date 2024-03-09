@@ -21,20 +21,27 @@ const Column = (props) => {
     return names[0][0] + (names.length > 1 ? names[names.length - 1][0] : "");
   };
 
-  const moveTicket = (dragIndex, hoverIndex, targetStatus) => {
-    const ticketsCopy = [...props.tickets];
-    const draggedTicket = ticketsCopy.splice(dragIndex, 1)[0];
-    draggedTicket.status = targetStatus;
-    ticketsCopy.splice(hoverIndex, 0, draggedTicket);
-    props.setTickets(ticketsCopy);
+  const moveTicket = async (ticketId, status) => {
+    const { data } = await axios.patch(
+      `${process.env.REACT_APP_TICKET_API_ENDPOINT}issues/${ticketId}`,
+      {
+        status,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    props.setTickets(data);
   };
 
   const [, drop] = useDrop({
     accept: "ticket",
     drop: (item, monitor) => {
       if (!monitor.didDrop()) {
-        moveTicket(item.index, props.tickets.length, props.status);
-        item.index = props.tickets.length;
+        console.log("index", item.id);
+        moveTicket(item.id, props.status);
       }
     },
     collect: (monitor) => ({

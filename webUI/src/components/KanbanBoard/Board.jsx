@@ -20,7 +20,8 @@ const KanbanBoard = () => {
   useEffect(() => {
     const getTickets = async () => {
       try {
-        const issues = await axios.get(`http://localhost:3009/api/issues`);
+        console.log(process.env.REACT_APP_TICKET_API_ENDPOINT)
+        const issues = await axios.get(`${process.env.REACT_APP_TICKET_API_ENDPOINT}issues`);
         if (!issues?.data) {
           throw new Error("Failed to get tickets");
         }
