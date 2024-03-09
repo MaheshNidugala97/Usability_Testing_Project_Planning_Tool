@@ -23,7 +23,7 @@ const Column = (props) => {
 
   const moveTicket = async (ticketId, status) => {
     const { data } = await axios.patch(
-      `http://localhost:3009/api/issues/${ticketId}`,
+      `${process.env.REACT_APP_TICKET_API_ENDPOINT}issues/${ticketId}`,
       {
         status,
       },

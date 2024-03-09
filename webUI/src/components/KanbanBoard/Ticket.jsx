@@ -43,7 +43,7 @@ const Ticket = (props) => {
 
   const handleDelete = async (id) => {
     try {
-    const response = await axios.delete(`http://localhost:3009/api/issues/${id}`);
+    const response = await axios.delete(`${process.env.REACT_APP_TICKET_API_ENDPOINT}issues/${id}`);
     if(!response?.data) {
     console.log("Deleting ticket with ID:", props.ticket.id);
     }
