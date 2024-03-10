@@ -1,15 +1,26 @@
-import React from 'react';
-import '../../styles/issueView/IssueDetails.css';
+import React from "react";
+import "../../styles/issueView/IssueDetails.css";
 
-const IssueDetails = ({ issue, selectedStatus, handleStatusChange, toggleDetails, showDetails, isExpanded }) => {
+const IssueDetails = ({
+  issue,
+  selectedStatus,
+  handleStatusChange,
+  toggleDetails,
+  showDetails,
+  isExpanded,
+}) => {
   return (
-    <div className="issue-details">
+    <div className="issue-details" data-testid="issue-details">
       <div className="title-section">
         <h2 className="title">{issue.title}</h2>
       </div>
       <div className={`status-section ${selectedStatus}`}>
         <label htmlFor="status">Status:</label>
-        <select id="status" value={selectedStatus} onChange={handleStatusChange}>
+        <select
+          id="status"
+          value={selectedStatus}
+          onChange={handleStatusChange}
+        >
           <option value="inprogress">In Progress</option>
           <option value="done">Done</option>
         </select>
@@ -21,22 +32,22 @@ const IssueDetails = ({ issue, selectedStatus, handleStatusChange, toggleDetails
         </div>
       </div>
 
-
       {!isExpanded && (
         <div className="details-section">
-          <button className="details-button" onClick={toggleDetails}>
-            {showDetails ? 'Hide Details' : 'Show Details'}
+          <button
+            className="details-button"
+            onClick={toggleDetails}
+            data-testid="show-hide-details-button"
+          >
+            {showDetails ? "Hide Details" : "Show Details"}
           </button>
           {showDetails && (
-            <div className="details-content">
-
+            <div className="details-content" data-testid="details-content">
               <DetailContent issue={issue} />
             </div>
           )}
         </div>
       )}
-
-
 
       {isExpanded && (
         <div className="details-content">
@@ -65,4 +76,3 @@ const DetailContent = ({ issue }) => (
 );
 
 export default IssueDetails;
-

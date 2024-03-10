@@ -26,7 +26,7 @@
   "scripts": {
     "start": "dotenv -e ./config/development.env react-scripts start",
     "build": "dotenv -e ./config/development.env react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --verbose",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -49,5 +49,13 @@
   },
   "devDependencies": {
     "dotenv-cli": "^7.4.0"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "^axios$": "axios/dist/node/axios.cjs"
+    },
+    "transformIgnorePatterns": [
+      "node_modules/(?!@ngrx|(?!deck.gl)|ng-dynamic)"
+    ]
   }
 }
