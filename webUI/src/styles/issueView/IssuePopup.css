@@ -32,11 +32,21 @@
 }
 
 .issue-popup.expanded {
-  max-width: 600px;
   max-height: 80%;
+  max-width: 900px;
+position: relative;
   overflow-y: auto;
   margin: 20px;
   background-color: #fff;
   border-radius: 10px;
 
+}
+.issue-popup.expanded {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.issue-popup.expanded > div {
+  flex: 1 0 50%;
 }
