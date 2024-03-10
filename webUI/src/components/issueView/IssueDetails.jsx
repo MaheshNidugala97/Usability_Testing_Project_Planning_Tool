@@ -9,8 +9,8 @@ const IssueDetails = ({
   toggleDetails,
   showDetails,
   isExpanded,
+  refreshBoard,
 }) => {
-  const employees = ["Mark", "John", "Daniel"];
   const [descriptionText, setDescriptionText] = useState(issue.description);
   const [descriptionChanged, setDescriptionChanged] = useState(false);
 
@@ -93,7 +93,7 @@ const IssueDetails = ({
           </button>
           {showDetails && (
             <div className="details-content" data-testid="details-content">
-              <DetailContent issue={issue} />
+              <DetailContent issue={issue} refreshBoard={refreshBoard} />
             </div>
           )}
         </div>
@@ -108,21 +108,58 @@ const IssueDetails = ({
   );
 };
 
-const DetailContent = ({ issue }) => (
-  <>
-    <div className="issue-detail">
-      <span className="label">Priority:</span>
-      <span>{issue.priority}</span>
-    </div>
-    <div className="issue-detail">
-      <span className="label">Assignee:</span>
-      <span>{issue.assignee}</span>
-    </div>
-    <div className="issue-detail">
-      <span className="label">Reporter:</span>
-      <span>{issue.reporter}</span>
-    </div>
-  </>
-);
+const DetailContent = ({ issue, refreshBoard }) => {
+  const employees = ["Mark", "John", "Daniel"];
+  const [assignee, setAssignee] = useState(issue.assignee);
+  const updateAssignee = async (newAssignee) => {
+    try {
+      await axios.patch(
+        `${process.env.REACT_APP_TICKET_API_ENDPOINT}issues/${issue.id}`,
+        {
+          assignee: newAssignee,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      setAssignee(newAssignee);
+      refreshBoard();
+    } catch (error) {
+      console.error("Error updating status:", error);
+    }
+  };
+  return (
+    <>
+      <div className="issue-detail">
+        <span className="label">Priority:</span>
+        <span>{issue.priority}</span>
+      </div>
+      <div className="issue-detail">
+        <span className="label">Assignee:</span>
+        <select
+          id="assignee"
+          value={assignee}
+          onChange={(e) => {
+            updateAssignee(e.target.value);
+          }}
+        >
+          {employees.map((e, i) => {
+            return (
+              <option value={e} key={i}>
+                {e}
+              </option>
+            );
+          })}
+        </select>
+      </div>
+      <div className="issue-detail">
+        <span className="label">Reporter:</span>
+        <span>{issue.reporter}</span>
+      </div>
+    </>
+  );
+};
 
 export default IssueDetails;

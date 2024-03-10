@@ -84,6 +84,7 @@ const IssuePopup = ({ issueId, refreshBoard, onClose }) => {
               handleStatusChange={handleStatusChange}
               toggleDetails={toggleDetails}
               showDetails={showDetails}
+              refreshBoard={refreshBoard}
             />
             {/* Pass down props to CommentSection */}
             <CommentSection issueId={issueId} />

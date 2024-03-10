@@ -81,3 +81,14 @@
   font-family: unset;
   border: 1px solid #ccc;
 }
+
+.issue-detail {
+  display: flex;
+}
+
+.issue-detail > .label {
+  flex: 1;
+}
+.issue-detail > :not(.label) {
+  flex: 2;
+}
