@@ -11,17 +11,23 @@ const KanbanBoard = () => {
 
   const [showIssuePopup, setShowIssuePopup] = useState(false);
   const [popupIssueId, setPopupIssueId] = useState();
+  const [forceBoardRefresh, setForceBoardRefresh] = useState(false);
 
   const openPopupWithIssue = (id) => {
     setPopupIssueId(id);
     setShowIssuePopup(true);
   };
 
+  const refreshBoard = () => {
+    setForceBoardRefresh(!forceBoardRefresh);
+  };
   useEffect(() => {
     const getTickets = async () => {
       try {
-        console.log(process.env.REACT_APP_TICKET_API_ENDPOINT)
-        const issues = await axios.get(`${process.env.REACT_APP_TICKET_API_ENDPOINT}issues`);
+        console.log(process.env.REACT_APP_TICKET_API_ENDPOINT);
+        const issues = await axios.get(
+          `${process.env.REACT_APP_TICKET_API_ENDPOINT}issues`
+        );
         if (!issues?.data) {
           throw new Error("Failed to get tickets");
         }
@@ -31,7 +37,7 @@ const KanbanBoard = () => {
       }
     };
     getTickets();
-  }, []);
+  }, [forceBoardRefresh]);
 
   return (
     <>
@@ -63,6 +69,7 @@ const KanbanBoard = () => {
       {showIssuePopup && (
         <IssuePopup
           issueId={popupIssueId}
+          refreshBoard={refreshBoard}
           onClose={() => {
             setShowIssuePopup(false);
           }}
