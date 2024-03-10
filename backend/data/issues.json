@@ -8,31 +8,31 @@
     "priority": "MEDIUM",
     "assignee": "John",
     "reporter": "Mark",
-     "estimate": "3",
+    "estimate": "3",
     "comment": [
-          {
-            "id": 440,
-            "text": "This is a sample text"
-          },
-          {
-            "id": 470,
-            "text": "Hello, world!"
-          },
-          {
-            "id": 403,
-            "text": "Lorem ipsum dolor sit amet"
-          },
-          {
-            "id": 480,
-            "text": "Testing 123"
-          },
-          {
-            "id": 400,
-            "text": "Some meaningful text"
-          }
-        ]
+      {
+        "id": 440,
+        "text": "This is a sample text"
       },
       {
+        "id": 470,
+        "text": "Hello, world!"
+      },
+      {
+        "id": 403,
+        "text": "Lorem ipsum dolor sit amet"
+      },
+      {
+        "id": 480,
+        "text": "Testing 123"
+      },
+      {
+        "id": 400,
+        "text": "Some meaningful text"
+      }
+    ]
+  },
+  {
     "id": 1796080,
     "ticketName": "T-3",
     "title": "Login page",
@@ -42,7 +42,7 @@
     "assignee": "Mark",
     "reporter": "John",
     "estimate": "3",
-    "comments": [
+    "comment": [
       {
         "id": 1,
         "text": "This is a comment"
@@ -66,16 +66,36 @@
     ]
   },
   {
-    "id": 3,
-    "ticketName": "T-3",
-    "title": "Login page",
-    "description": "design login page with 2 fields",
-    "status": "To Do",
+    "id": 1796481,
+    "ticketName": "T-4",
+    "title": "Login page no 12 fields",
+    "description": "design login page with 12 fields",
+    "status": "Done",
     "priority": "HIGH",
-    "assignee": "Athul Krishna",
-    "reporter": "John",
-    "estimate": "3"
-     }
+    "assignee": "Mark",
+    "reporter": "david",
+    "estimate": "3",
+    "comment": [
+      {
+        "id": 1,
+        "text": "This is a comment"
+      },
+      {
+        "id": 2,
+        "text": "This is another comment"
+      },
+      {
+        "id": 3,
+        "text": "This is another comment"
+      },
+      {
+        "id": 4,
+        "text": "This is another comment"
+      },
+      {
+        "id": 5,
+        "text": "This is another comment"
+      }
+    ]
+  }
 ]
-
- 
