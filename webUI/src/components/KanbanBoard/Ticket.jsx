@@ -70,7 +70,7 @@ const Ticket = (props) => {
       }}
     >
       <IconButton
-        onClick={() => handleDelete(props.ticket.id)}
+        onClick={(e) => {e.stopPropagation();handleDelete(props.ticket.id)}}
         style={{
           position: "absolute",
           top: "5px",
