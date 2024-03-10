@@ -80,3 +80,16 @@
   background-color: rgb(170, 168, 168);
 }
 
+.search-form {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.search-input {
+  margin-right: 10px;
+}
+
+.search-input input {
+  width: 200px;
+}

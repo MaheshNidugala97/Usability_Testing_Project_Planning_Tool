@@ -3,6 +3,7 @@ import axios from "axios";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import Column from "./Column";
+import Search from "./Search";
 import "./Board.css";
 
 
@@ -17,13 +18,23 @@ const KanbanBoard = () => {
         if (!issues?.data) {
           throw new Error("Failed to get tickets");
         }
-        setTickets(issues.data);
+
+        setTickets(issues.data.filter((issue) => issue.status !== "Backlog"));
+        
       } catch (error) {
         console.error("Error fetching issue:", error);
       }
     };
-    getTickets();;    
+    getTickets();
   }, []);
+  
+
+  const handleSearch = (searchTerm) => {
+    const filtered = tickets.filter((ticket) =>
+      ticket.title.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+    setTickets(filtered);
+  };
 
   return (
     <DndProvider backend={HTML5Backend}>
@@ -48,6 +59,7 @@ const KanbanBoard = () => {
         />
       </div>
     </DndProvider>
+ 
   );
 };
 

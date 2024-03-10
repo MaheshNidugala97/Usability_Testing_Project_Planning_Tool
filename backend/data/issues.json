@@ -2,7 +2,7 @@
   {
     "id": 1,
     "ticketName": "T-3",
-    "title": "Login page",
+    "title": "Cart page",
     "description": "design login page with 2 fields",
     "status": "In Progress",
     "priority": "HIGH",
@@ -110,9 +110,20 @@
   {
     "id": 3,
     "ticketName": "T-3",
+    "title": "Register page",
+    "description": "design login page with 2 fields",
+    "status": "In Progress",
+    "priority": "HIGH",
+    "assignee": "Athul Krishna",
+    "reporter": "John",
+    "estimate": "3"
+  },
+  {
+    "id": 4,
+    "ticketName": "T-3",
     "title": "Login page",
     "description": "design login page with 2 fields",
-    "status": "To Do",
+    "status": "Backlog",
     "priority": "HIGH",
     "assignee": "Athul Krishna",
     "reporter": "John",
