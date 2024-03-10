@@ -1,4 +1,4 @@
-.comment-section {
+/* .comment-section {
     margin-top: 20px;
   }
   
@@ -34,4 +34,138 @@
     padding: 10px;
     margin-bottom: 5px;
   }
+   */
+/* 
+   .comment-section {
+    margin-top: 20px;
+  }
   
+  textarea {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .comment-list {
+    margin-top: 10px;
+  }
+  
+  .comment-item {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+  
+  .comment-item span {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .button-container {
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .button-container button {
+    margin-left: 5px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+  
+  .button-container button.delete {
+    background-color: #ff6961;
+    color: #fff;
+  }
+  
+  .button-container button.edit {
+    background-color: #6495ed;
+    color: #fff;
+  }
+  
+  .button-container button.save,
+  .button-container button.cancel {
+    background-color: #90ee90;
+    color: #000;
+  }
+   */
+
+
+   .comment-section {
+    margin-top: 20px;
+  }
+  
+  textarea {
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .comment-list {
+    margin-top: 10px;
+  }
+  
+  .comment-item {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+  
+  .comment-item span {
+    display: block;
+    margin-bottom: 10px;
+  }
+  
+  .button-container {
+    display: flex;
+    align-items: center;
+  }
+
+  input[type="text" i] {
+    padding-block: 1px;
+    margin-bottom: inherit;
+}
+  
+  .button-container button {
+    margin-right: 10px;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .button-container button.delete {
+    background-color: #ff7b7b;
+    color: #fff;
+  }
+  
+  .button-container button.edit {
+    background-color: #7bbaff;
+    color: #fff;
+  }
+  
+  .button-container button.save,
+  .button-container button.cancel {
+    background-color: #4caf50;
+    color: #fff;
+  }
+
+.submit-button {
+  cursor: pointer;
+  border: none;
+  background-color: #007bff; 
+  color: white;
+  padding: 5px 15px; 
+  border-radius: 5px; 
+  font-size: 16px; 
+  transition: background-color 0.3s; 
+}

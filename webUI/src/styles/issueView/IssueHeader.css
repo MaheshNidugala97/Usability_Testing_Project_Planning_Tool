@@ -1,20 +1,25 @@
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  .close-button,
-  .expand-button {
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-    color: #888;
-  }
-  
-  .expand-button {
-    margin-left: 290px;
-    margin-top: -7px;
-  }
-  
+.header-issue {
+  display: flex;
+    justify-content: flex-start;
+    padding: 10px;
+    flex-direction: row-reverse;
+}
+
+.issue-close-button,
+.expand-button {
+  margin-left: 10px; 
+  cursor: pointer;
+  border: none;
+  background-color: #007bff; 
+  color: white;
+  padding: 5px 15px; 
+  border-radius: 5px; 
+  font-size: 16px; 
+  transition: background-color 0.3s; 
+}
+
+.issue-close-button:hover,
+.expand-button:hover {
+  background-color: #0056b3; 
+}
+
