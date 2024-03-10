@@ -51,9 +51,18 @@ const IssuePopup = ({ issueId, onClose }) => {
   return (
     <div className={`issue-popup-container ${isExpanded ? 'expanded' : ''}`}>
   <div className={`issue-popup ${isExpanded ? 'expanded' : ''}`}>
-    <IssueHeader onClose={onClose} onExpand={toggleExpandedView} />
+  <IssueHeader onClose={onClose} onExpand={toggleExpandedView} isExpanded={isExpanded} />
         {issue ? (
           <>
+            
+            <IssueDetails
+              issue={issue}
+              selectedStatus={selectedStatus}
+              handleStatusChange={handleStatusChange}
+              toggleDetails={toggleDetails}
+              showDetails={showDetails}
+              isExpanded={isExpanded}
+            />
             <AttachmentUploader
               attachments={attachments}
               setAttachments={setAttachments}
@@ -61,14 +70,7 @@ const IssuePopup = ({ issueId, onClose }) => {
               setFileInputKey={setFileInputKey}
               setMessage={setMessage}
             />
-            <IssueDetails
-              issue={issue}
-              selectedStatus={selectedStatus}
-              handleStatusChange={handleStatusChange}
-              toggleDetails={toggleDetails}
-              showDetails={showDetails}
-            />
-            {/* Pass down props to CommentSection */}
+
             <CommentSection
               issueId={issueId}
             />
