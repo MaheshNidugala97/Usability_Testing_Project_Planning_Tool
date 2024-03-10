@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   width: 70%;
-  margin-top: 100px;
+  margin-top: 50px;
 }
 
 .column {
@@ -80,16 +80,19 @@
   background-color: rgb(170, 168, 168);
 }
 
-.search-form {
+.search-box {
+  position: relative;
   display: flex;
+  top:40px;
+  width: 15%;
+  left: 10px;
+  
+}
+
+.search-box .MuiFormLabel-root {
+  font-size: 14px; 
   align-items: center;
-  margin-bottom: 20px;
-}
-
-.search-input {
-  margin-right: 10px;
-}
-
-.search-input input {
-  width: 200px;
+} 
+.board-container {
+  margin-top: 70px;
 }

@@ -65,9 +65,12 @@ const Ticket = (props) => {
       }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onClick={() => {
+        props.openPopupWithIssue(props.ticket.id);
+      }}
     >
       <IconButton
-        onClick={()=>handleDelete(props.ticket.id)}
+        onClick={() => handleDelete(props.ticket.id)}
         style={{
           position: "absolute",
           top: "5px",
@@ -75,7 +78,7 @@ const Ticket = (props) => {
           color: "gray",
         }}
       >
-        <Delete  sx={{ fontSize: 'large' }}/>
+        <Delete sx={{ fontSize: "large" }} />
       </IconButton>
 
       <CardContent>

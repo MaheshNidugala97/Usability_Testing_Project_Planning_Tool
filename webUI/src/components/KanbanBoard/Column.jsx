@@ -65,6 +65,7 @@ const Column = (props) => {
               index={index}
               assigneeInitials={getInitials(ticket.assignee)}
               setTickets={props.setTickets}
+              openPopupWithIssue={props.openPopupWithIssue}
             />
           ) : null
         )}
