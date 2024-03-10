@@ -7,7 +7,7 @@ import CommentSection from "./CommentSection";
 
 import "../../styles/issueView/IssuePopup.css";
 
-const IssuePopup = ({ issueId, onClose }) => {
+const IssuePopup = ({ issueId, refreshBoard, onClose }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [issue, setIssue] = useState(null);
   const [selectedStatus, setSelectedStatus] = useState("");
@@ -24,9 +24,7 @@ const IssuePopup = ({ issueId, onClose }) => {
         );
         // const issueResponse = await axios.get(`http://localhost:3009/api/issues/1796084`);
         setIssue(issueResponse.data);
-        setSelectedStatus(
-          issueResponse.data.status.replace(/\s/g, "").toLowerCase()
-        );
+        setSelectedStatus(issueResponse.data.status);
       } catch (error) {
         console.error("Error fetching issue:", error);
       }
@@ -43,8 +41,24 @@ const IssuePopup = ({ issueId, onClose }) => {
     setIsExpanded(!isExpanded);
   };
 
-  const handleStatusChange = (e) => {
+  const handleStatusChange = async (e) => {
     setSelectedStatus(e.target.value);
+    try {
+      await axios.patch(
+        `${process.env.REACT_APP_TICKET_API_ENDPOINT}issues/${issueId}`,
+        {
+          status: e.target.value,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      refreshBoard();
+    } catch (error) {
+      console.error("Error updating status:", error);
+    }
   };
 
   const toggleDetails = () => {
