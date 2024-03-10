@@ -45,7 +45,7 @@ const writeDataToFile = (data) => {
   }
 };
 
-// Delete a comment from an issue
+
 app.delete('/api/issues/:issueId/comments/:commentId', (req, res) => {
   const issueId = parseInt(req.params.issueId, 10);
   const commentId = parseInt(req.params.commentId, 10);
@@ -73,7 +73,6 @@ app.delete('/api/issues/:issueId/comments/:commentId', (req, res) => {
   res.status(200).json({ message: 'Comment deleted successfully' });
 });
 
-// Update a comment
 app.put('/api/issues/:issueId/comments/:commentId', (req, res) => {
   const issueId = parseInt(req.params.issueId, 10);
   const commentId = parseInt(req.params.commentId, 10);
@@ -101,10 +100,6 @@ app.put('/api/issues/:issueId/comments/:commentId', (req, res) => {
 
   res.status(200).json({ message: 'Comment updated successfully', comment: issues[issueIndex].comment[commentIndex] });
 });
-
-
-
-
 
 app.post('/api/issues', (req, res) => {
   const issues = readDataFromFile();
@@ -142,7 +137,7 @@ app.get('/api/issues/:id/comment', (req, res) => {
 
 app.post('/api/issues/:id/comment', (req, res) => {
   const issueId = parseInt(req.params.id, 10);
-  const { id, text } = req.body.comment; // Destructure 'id' and 'text' from the comment object
+  const { id, text } = req.body.comment; 
 
   const issues = readDataFromFile();
   const issueIndex = issues.findIndex(issue => issue.id === issueId);
@@ -155,13 +150,12 @@ app.post('/api/issues/:id/comment', (req, res) => {
     issues[issueIndex].comment = [];
   }
 
-  // Push the comment object with the 'id' and 'text' properties to the comments array
+
   issues[issueIndex].comment.push({ id, text });
   writeDataToFile(issues);
 
   res.status(201).json({ message: 'comment submitted successfully' });
 });
-
 
 
 app.post('/api/upload', upload.array('files'), (req, res) => {
