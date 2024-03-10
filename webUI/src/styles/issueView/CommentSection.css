@@ -35,7 +35,7 @@
     align-items: center;
   }
 
-  input[type="text" i] {
+  .input[type="text" i] {
     padding-block: 1px;
     margin-bottom: inherit;
 }
