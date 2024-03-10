@@ -1,6 +1,5 @@
 .Dashboard {
     display: flex;
-    height: 100vh;
   }
   
   .sidebar {
@@ -85,6 +84,7 @@
 .main-container {
     flex-grow: 1;
     display: flex;
+    flex-direction: column;
     background-color: #ffffff; 
     padding: 20px;
     box-sizing: border-box;

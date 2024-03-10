@@ -1,21 +1,16 @@
+
+
 [
   {
-    "id": 4574380,
-    "title": "backed_log",
-    "description": "this is a test ",
-    "status": "In Progress",
-    "priority": "HIGH",
-    "assignee": "Mark",
-    "reporter": "John"
-  },
-  {
     "id": 1796084,
+    "ticketName": "T-3",
     "title": "UI Component issue",
     "description": "There is a problem with component that give invalid data to the UI",
     "status": "To do",
     "priority": "MEDIUM",
     "assignee": "John",
     "reporter": "Mark",
+     "estimate": "3",
     "comment": [
           {
             "id": 440,
@@ -40,12 +35,50 @@
         ]
       },
       {
-    "id": 9775276,
-    "title": "backed_log item1",
-    "description": "this can be  a test ",
-    "status": "To do",
-    "priority": "LOW",
-    "assignee": "Daniel",
-    "reporter": "Daniel"
-  }
+=====
+    "id": 1796080,
+    "ticketName": "T-3",
+    "title": "Login page",
+    "description": "design login page with 2 fields",
+    "status": "Done",
+    "priority": "HIGH",
+    "assignee": "Mark",
+    "reporter": "John",
+    "estimate": "3",
+    "comments": [
+      {
+        "id": 1,
+        "text": "This is a comment"
+      },
+      {
+        "id": 2,
+        "text": "This is another comment"
+      },
+      {
+        "id": 3,
+        "text": "This is another comment"
+      },
+      {
+        "id": 4,
+        "text": "This is another comment"
+      },
+      {
+        "id": 5,
+        "text": "This is another comment"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "ticketName": "T-3",
+    "title": "Login page",
+    "description": "design login page with 2 fields",
+    "status": "To Do",
+    "priority": "HIGH",
+    "assignee": "Athul Krishna",
+    "reporter": "John",
+    "estimate": "3"
+     }
 ]
+
+ 
