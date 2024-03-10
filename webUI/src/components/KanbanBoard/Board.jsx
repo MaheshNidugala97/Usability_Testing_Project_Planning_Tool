@@ -14,12 +14,16 @@ const KanbanBoard = () => {
   const [popupIssueId, setPopupIssueId] = useState();
   const [filteredTickets, setFilteredTickets] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [forceBoardRefresh, setForceBoardRefresh] = useState(false);
 
   const openPopupWithIssue = (id) => {
     setPopupIssueId(id);
     setShowIssuePopup(true);
   };
 
+  const refreshBoard = () => {
+    setForceBoardRefresh(!forceBoardRefresh);
+  };
   useEffect(() => {
     const getTickets = async () => {
       try {
@@ -37,7 +41,7 @@ const KanbanBoard = () => {
       }
     };
     getTickets();
-  }, []);
+  }, [forceBoardRefresh]);
 
   useEffect(() => {
     setFilteredTickets(
@@ -78,6 +82,7 @@ const KanbanBoard = () => {
       {showIssuePopup && (
         <IssuePopup
           issueId={popupIssueId}
+          refreshBoard={refreshBoard}
           onClose={() => {
             setShowIssuePopup(false);
           }}

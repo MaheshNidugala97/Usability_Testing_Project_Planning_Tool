@@ -51,6 +51,7 @@
     height: 100px;
     margin-right: 10px;
     margin-bottom: 10px;
+    border: 1px solid #ccc;
   }
   
   .attachment-thumbnail img {

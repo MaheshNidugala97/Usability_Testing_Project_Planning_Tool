@@ -1,25 +1,20 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import IssueHeader from "./IssueHeader";
-import ColorPicker from "./ColorPicker";
 import AttachmentUploader from "./AttachmentUploader";
 import IssueDetails from "./IssueDetails";
 import CommentSection from "./CommentSection";
 
 import "../../styles/issueView/IssuePopup.css";
 
-const IssuePopup = ({ issueId, onClose }) => {
+const IssuePopup = ({ issueId, refreshBoard, onClose }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [issue, setIssue] = useState(null);
   const [selectedStatus, setSelectedStatus] = useState("");
-  const [selectedColor, setSelectedColor] = useState("#007bff");
-  const [showColorOptions, setShowColorOptions] = useState(false);
   const [attachments, setAttachments] = useState([]);
   const [fileInputKey, setFileInputKey] = useState(0);
   const [message, setMessage] = useState("");
   const [showDetails, setShowDetails] = useState(false);
-  const [comment, setcomment] = useState("");
-  const [commentList, setcommentList] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,13 +24,7 @@ const IssuePopup = ({ issueId, onClose }) => {
         );
         // const issueResponse = await axios.get(`http://localhost:3009/api/issues/1796084`);
         setIssue(issueResponse.data);
-        setSelectedStatus(issueResponse.data.status === "Done" ? "done" : "");
-
-        const commentResponse = await axios.get(
-          `http://localhost:3009/api/issues/${issueId}/comment`
-        );
-        // const commentResponse = await axios.get(`http://localhost:3009/api/issues/1796084/comment`);
-        setcommentList(commentResponse.data);
+        setSelectedStatus(issueResponse.data.status);
       } catch (error) {
         console.error("Error fetching issue:", error);
       }
@@ -45,7 +34,6 @@ const IssuePopup = ({ issueId, onClose }) => {
 
     return () => {
       setIssue(null);
-      setcommentList([]);
     };
   }, [issueId]);
 
@@ -53,13 +41,24 @@ const IssuePopup = ({ issueId, onClose }) => {
     setIsExpanded(!isExpanded);
   };
 
-  const handleStatusChange = (e) => {
+  const handleStatusChange = async (e) => {
     setSelectedStatus(e.target.value);
-  };
-
-  const handleColorChange = (color) => {
-    setSelectedColor(color);
-    setShowColorOptions(false);
+    try {
+      await axios.patch(
+        `${process.env.REACT_APP_TICKET_API_ENDPOINT}issues/${issueId}`,
+        {
+          status: e.target.value,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      refreshBoard();
+    } catch (error) {
+      console.error("Error updating status:", error);
+    }
   };
 
   const toggleDetails = () => {
@@ -72,12 +71,6 @@ const IssuePopup = ({ issueId, onClose }) => {
         <IssueHeader onClose={onClose} onExpand={toggleExpandedView} />
         {issue ? (
           <>
-            <ColorPicker
-              selectedColor={selectedColor}
-              onSelectColor={handleColorChange}
-              showColorOptions={showColorOptions}
-              setShowColorOptions={setShowColorOptions}
-            />
             <AttachmentUploader
               attachments={attachments}
               setAttachments={setAttachments}
@@ -91,15 +84,10 @@ const IssuePopup = ({ issueId, onClose }) => {
               handleStatusChange={handleStatusChange}
               toggleDetails={toggleDetails}
               showDetails={showDetails}
+              refreshBoard={refreshBoard}
             />
-            <CommentSection
-              issueId={issueId}
-              comment={comment}
-              setcomment={setcomment}
-              commentList={commentList}
-              setcommentList={setcommentList}
-              setMessage={setMessage}
-            />
+            {/* Pass down props to CommentSection */}
+            <CommentSection issueId={issueId} />
           </>
         ) : (
           <p>Loading...</p>

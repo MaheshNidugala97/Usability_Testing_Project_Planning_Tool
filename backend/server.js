@@ -45,7 +45,62 @@ const writeDataToFile = (data) => {
   }
 };
 
-app.post("/api/issues", (req, res) => {
+app.delete('/api/issues/:issueId/comments/:commentId', (req, res) => {
+  const issueId = parseInt(req.params.issueId, 10);
+  const commentId = parseInt(req.params.commentId, 10);
+
+  const issues = readDataFromFile();
+  const issueIndex = issues.findIndex(issue => issue.id === issueId);
+
+  if (issueIndex === -1) {
+    return res.status(404).send('Issue not found');
+  }
+
+  if (!issues[issueIndex].comment) {
+    return res.status(404).send('No comments found for this issue');
+  }
+
+  const commentIndex = issues[issueIndex].comment.findIndex(comment => comment.id === commentId);
+
+  if (commentIndex === -1) {
+    return res.status(404).send('Comment not found');
+  }
+
+  issues[issueIndex].comment.splice(commentIndex, 1);
+  writeDataToFile(issues);
+
+  res.status(200).json({ message: 'Comment deleted successfully' });
+});
+
+app.put('/api/issues/:issueId/comments/:commentId', (req, res) => {
+  const issueId = parseInt(req.params.issueId, 10);
+  const commentId = parseInt(req.params.commentId, 10);
+  const { text } = req.body;
+
+  const issues = readDataFromFile();
+  const issueIndex = issues.findIndex(issue => issue.id === issueId);
+
+  if (issueIndex === -1) {
+    return res.status(404).send('Issue not found');
+  }
+
+  if (!issues[issueIndex].comment) {
+    return res.status(404).send('No comments found for this issue');
+  }
+
+  const commentIndex = issues[issueIndex].comment.findIndex(comment => comment.id === commentId);
+
+  if (commentIndex === -1) {
+    return res.status(404).send('Comment not found');
+  }
+
+  issues[issueIndex].comment[commentIndex].text = text;
+  writeDataToFile(issues);
+
+  res.status(200).json({ message: 'Comment updated successfully', comment: issues[issueIndex].comment[commentIndex] });
+});
+
+app.post('/api/issues', (req, res) => {
   const issues = readDataFromFile();
   const newIssue = { id: issues.length + 1, ...req.body };
   issues.push(newIssue);
@@ -134,7 +189,7 @@ app.get("/api/issues/:id/comment", (req, res) => {
 
 app.post("/api/issues/:id/comment", (req, res) => {
   const issueId = parseInt(req.params.id, 10);
-  const commentText = req.body.comment;
+  const { id, text } = req.body.comment; 
 
   const issues = readDataFromFile();
   const issueIndex = issues.findIndex((issue) => issue.id === issueId);
@@ -147,7 +202,8 @@ app.post("/api/issues/:id/comment", (req, res) => {
     issues[issueIndex].comment = [];
   }
 
-  issues[issueIndex].comment.push(commentText);
+
+  issues[issueIndex].comment.push({ id, text });
   writeDataToFile(issues);
   res.status(201).json({ message: "comment submitted successfully" });
 });
