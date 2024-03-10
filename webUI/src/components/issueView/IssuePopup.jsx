@@ -22,7 +22,9 @@ const IssuePopup = ({ issueId, onClose }) => {
       try {
         const issueResponse = await axios.get(`http://localhost:3009/api/issues/${issueId}`);
         // const issueResponse = await axios.get(`http://localhost:3009/api/issues/1796084`);
+        
         setIssue(issueResponse.data);
+        setSelectedStatus(issueResponse.data.status === "Done" ? "done" : "");
 
       } catch (error) {
         console.error("Error fetching issue:", error);
