@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import '../../styles/issueView/CommentSection.css';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import "../../styles/issueView/CommentSection.css";
 
 const CommentSection = ({ issueId }) => {
   const [comment, setComment] = useState("");
@@ -11,7 +11,9 @@ const CommentSection = ({ issueId }) => {
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const response = await axios.get(`http://localhost:3009/api/issues/${issueId}/comment`);
+        const response = await axios.get(
+          `http://localhost:3009/api/issues/${issueId}/comment`
+        );
         setComments(response.data);
       } catch (error) {
         console.error("Error fetching comments:", error);
@@ -26,7 +28,6 @@ const CommentSection = ({ issueId }) => {
   };
 
   const submitComment = async () => {
-
     if (comment.trim() === "") {
       alert("Please enter a comment before submitting.");
       return;
@@ -34,9 +35,12 @@ const CommentSection = ({ issueId }) => {
 
     try {
       const commentId = Math.floor(Math.random() * 1000) + 1;
-      const response = await axios.post(`http://localhost:3009/api/issues/${issueId}/comment`, {
-        comment: { id: commentId, text: comment },
-      });
+      const response = await axios.post(
+        `http://localhost:3009/api/issues/${issueId}/comment`,
+        {
+          comment: { id: commentId, text: comment },
+        }
+      );
       alert(response.data.message);
       setComments([...comments, { id: commentId, text: comment }]);
       setComment("");
@@ -47,9 +51,11 @@ const CommentSection = ({ issueId }) => {
 
   const deleteComment = async (commentId) => {
     try {
-      await axios.delete(`http://localhost:3009/api/issues/${issueId}/comments/${commentId}`);
-      setComments(comments.filter(comment => comment.id !== commentId));
-      alert('Comment deleted successfully');
+      await axios.delete(
+        `http://localhost:3009/api/issues/${issueId}/comments/${commentId}`
+      );
+      setComments(comments.filter((comment) => comment.id !== commentId));
+      alert("Comment deleted successfully");
     } catch (error) {
       console.error("Error deleting comment:", error);
     }
@@ -57,16 +63,21 @@ const CommentSection = ({ issueId }) => {
 
   const editComment = async (commentId, newText) => {
     try {
-      await axios.put(`http://localhost:3009/api/issues/${issueId}/comments/${commentId}`, { text: newText });
-      setComments(comments.map(comment => {
-        if (comment.id === commentId) {
-          return { ...comment, text: newText };
-        }
-        return comment;
-      }));
+      await axios.put(
+        `http://localhost:3009/api/issues/${issueId}/comments/${commentId}`,
+        { text: newText }
+      );
+      setComments(
+        comments.map((comment) => {
+          if (comment.id === commentId) {
+            return { ...comment, text: newText };
+          }
+          return comment;
+        })
+      );
       setEditMode(null);
       setEditText("");
-      alert('Comment edited successfully');
+      alert("Comment edited successfully");
     } catch (error) {
       console.error("Error editing comment:", error);
     }
@@ -79,8 +90,15 @@ const CommentSection = ({ issueId }) => {
         value={comment}
         onChange={handleCommentChange}
         placeholder="Enter your comment..."
+        data-testid="comments-ta"
       ></textarea>
-      <button className="submit-button" onClick={submitComment}>Submit comment</button>
+      <button
+        className="submit-button"
+        onClick={submitComment}
+        data-testid="add-comment-button"
+      >
+        Submit comment
+      </button>
       <div className="comment-list">
         {comments.map((comment, index) => (
           <div key={index} className="comment-item">
@@ -95,17 +113,34 @@ const CommentSection = ({ issueId }) => {
               <span>{comment.text}</span>
             )}
             <div className="button-container">
-              <button className="delete" onClick={() => deleteComment(comment.id)}>Delete</button>
+              <button
+                className="delete"
+                onClick={() => deleteComment(comment.id)}
+              >
+                Delete
+              </button>
               {editMode === comment.id ? (
                 <>
-                  <button className="save" onClick={() => editComment(comment.id, editText)}>Save</button>
-                  <button className="cancel" onClick={() => setEditMode(null)}>Cancel</button>
+                  <button
+                    className="save"
+                    onClick={() => editComment(comment.id, editText)}
+                  >
+                    Save
+                  </button>
+                  <button className="cancel" onClick={() => setEditMode(null)}>
+                    Cancel
+                  </button>
                 </>
               ) : (
-                <button className="edit" onClick={() => {
-                  setEditMode(comment.id);
-                  setEditText(comment.text);
-                }}>Edit</button>
+                <button
+                  className="edit"
+                  onClick={() => {
+                    setEditMode(comment.id);
+                    setEditText(comment.text);
+                  }}
+                >
+                  Edit
+                </button>
               )}
             </div>
           </div>
