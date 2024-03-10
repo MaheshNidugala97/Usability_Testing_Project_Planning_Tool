@@ -17,23 +17,32 @@
     "assignee": "John",
     "reporter": "Mark",
     "comment": [
-      "nbnbnnbnb",
-      "bnbnn",
-      "ffssddsdds",
-      "dsddddds",
-      "",
-      "ddsdsdsds",
-      "dsdsddsds",
-      "dsdsddsdsddddsdd",
-      "",
-      "awfafaf",
-      "okay"
-    ]
-  },
-  {
+          {
+            "id": 440,
+            "text": "This is a sample text"
+          },
+          {
+            "id": 470,
+            "text": "Hello, world!"
+          },
+          {
+            "id": 403,
+            "text": "Lorem ipsum dolor sit amet"
+          },
+          {
+            "id": 480,
+            "text": "Testing 123"
+          },
+          {
+            "id": 400,
+            "text": "Some meaningful text"
+          }
+        ]
+      },
+      {
     "id": 9775276,
-    "title": "hihiih",
-    "description": "vghgbhjnkhghjnk",
+    "title": "backed_log item1",
+    "description": "this can be  a test ",
     "status": "To do",
     "priority": "LOW",
     "assignee": "Daniel",
