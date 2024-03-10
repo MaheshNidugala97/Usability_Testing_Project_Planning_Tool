@@ -55,8 +55,6 @@
     "jest": "^27.5.1"
   },
   "jest": {
-    "setupFilesAfterEnv": ["<rootDir>/enzyme.setup.js"],
-    
     "moduleNameMapper": {
       "^axios$": "axios/dist/node/axios.cjs"
     },
