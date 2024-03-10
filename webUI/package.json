@@ -48,14 +48,23 @@
     ]
   },
   "devDependencies": {
-    "dotenv-cli": "^7.4.0"
+    "@babel/preset-env": "^7.24.0",
+    "@babel/preset-react": "^7.23.3",
+    "babel-jest": "^29.7.0",
+    "dotenv-cli": "^7.4.0",
+    "jest": "^27.5.1"
   },
   "jest": {
+    "setupFilesAfterEnv": ["<rootDir>/enzyme.setup.js"],
+    
     "moduleNameMapper": {
       "^axios$": "axios/dist/node/axios.cjs"
     },
     "transformIgnorePatterns": [
       "node_modules/(?!@ngrx|(?!deck.gl)|ng-dynamic)"
-    ]
+    ],
+    "transform": {
+      "^.+\\.[t|j]sx?$": "babel-jest"
+    }
   }
 }
