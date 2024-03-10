@@ -1,54 +1,74 @@
-// KanbanBoard.js
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import Column from "./Column";
 import "./Board.css";
+import IssuePopup from "../issueView/IssuePopup";
 
 const KanbanBoard = () => {
-  const [tickets, setTickets] = useState([
-    { id: "ticket-1", title: "Fix bug in login", status: "To Do" },
-    { id: "ticket-2", title: "Implement new feature", status: "In Progress" },
-    { id: "ticket-3", title: "Write documentation", status: "Done" },
-  ]);
-  
-  useEffect(() => {
-    const maxTickets = Math.max(
-      tickets.filter(ticket => ticket.status === 'To Do').length,
-      tickets.filter(ticket => ticket.status === 'In Progress').length,
-      tickets.filter(ticket => ticket.status === 'Done').length
-    );
+  const [tickets, setTickets] = useState([]);
 
-    const columnHeight = maxTickets * 90;
-    const columns = document.querySelectorAll('.column');
-    columns.forEach(column => {
-      column.style.height = `${columnHeight}px`;
-    });
-  }, [tickets])
+  const [showIssuePopup, setShowIssuePopup] = useState(false);
+  const [popupIssueId, setPopupIssueId] = useState();
+
+  const openPopupWithIssue = (id) => {
+    setPopupIssueId(id);
+    setShowIssuePopup(true);
+  };
+
+  useEffect(() => {
+    const getTickets = async () => {
+      try {
+        console.log(process.env.REACT_APP_TICKET_API_ENDPOINT)
+        const issues = await axios.get(`${process.env.REACT_APP_TICKET_API_ENDPOINT}issues`);
+        if (!issues?.data) {
+          throw new Error("Failed to get tickets");
+        }
+        setTickets(issues.data);
+      } catch (error) {
+        console.error("Error fetching issue:", error);
+      }
+    };
+    getTickets();
+  }, []);
 
   return (
-    <DndProvider backend={HTML5Backend}>
-      <div className="kanban-board">
-        <Column
-          title="To Do"
-          status="To Do"
-          tickets={tickets}
-          setTickets={setTickets}
+    <>
+      <DndProvider backend={HTML5Backend}>
+        <div className="kanban-board">
+          <Column
+            title="To Do"
+            status="To Do"
+            tickets={tickets}
+            setTickets={setTickets}
+            openPopupWithIssue={openPopupWithIssue}
+          />
+          <Column
+            title="In Progress"
+            status="In Progress"
+            tickets={tickets}
+            setTickets={setTickets}
+            openPopupWithIssue={openPopupWithIssue}
+          />
+          <Column
+            title="Done"
+            status="Done"
+            tickets={tickets}
+            setTickets={setTickets}
+            openPopupWithIssue={openPopupWithIssue}
+          />
+        </div>
+      </DndProvider>
+      {showIssuePopup && (
+        <IssuePopup
+          issueId={popupIssueId}
+          onClose={() => {
+            setShowIssuePopup(false);
+          }}
         />
-        <Column
-          title="In Progress"
-          status="In Progress"
-          tickets={tickets}
-          setTickets={setTickets}
-        />
-        <Column
-          title="Done"
-          status="Done"
-          tickets={tickets}
-          setTickets={setTickets}
-        />
-      </div>
-    </DndProvider>
+      )}
+    </>
   );
 };
 
