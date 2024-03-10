@@ -1,0 +1,14 @@
+
+.searching-bar {
+    position: relative;
+    display: flex;
+    top:40px;
+    width: 15%;
+    left: 10px;
+    
+  }
+  
+  .searching-bar .MuiFormLabel-root {
+    font-size: 14px; 
+    align-items: center;
+  } 
