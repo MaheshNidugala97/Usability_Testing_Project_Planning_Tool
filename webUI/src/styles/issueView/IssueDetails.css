@@ -1,60 +1,83 @@
 .details-section {
-    margin-top: 20px;
-  }
-  
-  .details-button {
-    background-color: #aeb4ba;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    padding: 10px 158px;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  
-  .details-button:hover {
-    background-color: #0056b3;
-  }
-  
-  .details-content {
-    display: flex;
-    flex-direction: column;
-    margin-top: 10px;
-    
-  }
-  
-  .details-content .issue-detail {
-    margin-bottom: 10px;
-    margin-left: 10px;
-  }
-  
-  .details-content .label {
-    font-weight: bold;
-    margin-right: 145px;
-  
-  }
-  .status-section {
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-  }
-  
-  .status-section label {
-    margin-right: 15px;
-  }
-  
-  .status-section select {
-    width: 125px;
-    background-color: #007bff;
-    color: #fff;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  
-  .status-section select:hover {
-    background-color: #0056b3;
-  }
-  
+  margin-top: 20px;
+}
+
+.details-button {
+  background-color: #aeb4ba;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 158px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.details-button:hover {
+  background-color: #0056b3;
+}
+
+.details-content {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+  border: solid 1px #ccc;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.details-content .issue-detail {
+  margin-bottom: 10px;
+  margin-left: 10px;
+}
+
+.details-content .label {
+  font-weight: bold;
+  margin-right: 145px;
+}
+.status-section {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.status-section label {
+  margin-right: 15px;
+}
+
+:is(.status-section, .issue-detail) select {
+  width: 125px;
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+:is(.status-section, .issue-detail) select:hover {
+  background-color: #0056b3;
+}
+
+.description-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.description-box button {
+  height: 30px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: red;
+}
+
+.description-box textarea {
+  flex: 1;
+  border-radius: 5px;
+  resize: vertical;
+  font-family: unset;
+  border: 1px solid #ccc;
+}
