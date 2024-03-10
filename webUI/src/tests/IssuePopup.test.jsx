@@ -6,10 +6,13 @@ import {
     screen,
   } from "@testing-library/react";
   import userEvent from "@testing-library/user-event";
-  import IssuePopup from "./IssuePopup";
+  import IssuePopup from "../components/issueView/IssuePopup.jsx";
   import axios from "axios";
   
   jest.mock("axios");
+  
+window.alert = jest.fn();
+
   
   describe("IssuePopup Component", () => {
     beforeEach(() => {
