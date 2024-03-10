@@ -1,9 +1,7 @@
 import React from 'react';
 import '../../styles/issueView/IssueDetails.css';
 
-
-
-const IssueDetails = ({ issue, selectedStatus, handleStatusChange, toggleDetails, showDetails }) => {
+const IssueDetails = ({ issue, selectedStatus, handleStatusChange, toggleDetails, showDetails, isExpanded }) => {
   return (
     <div className="issue-details">
       <div className="title-section">
@@ -22,29 +20,49 @@ const IssueDetails = ({ issue, selectedStatus, handleStatusChange, toggleDetails
           <p className="description-text">{issue.description}</p>
         </div>
       </div>
-      <div className="details-section">
-        <button className="details-button" onClick={toggleDetails}>
-          {showDetails ? 'Hide Details' : 'Show Details'}
-        </button>
-        {showDetails && (
-          <div className="details-content">
-            <div className="issue-detail">
-              <span className="label">Priority:</span>
-              <span>{issue.priority}</span>
+
+
+      {!isExpanded && (
+        <div className="details-section">
+          <button className="details-button" onClick={toggleDetails}>
+            {showDetails ? 'Hide Details' : 'Show Details'}
+          </button>
+          {showDetails && (
+            <div className="details-content">
+
+              <DetailContent issue={issue} />
             </div>
-            <div className="issue-detail">
-              <span className="label">Assignee:</span>
-              <span>{issue.assignee}</span>
-            </div>
-            <div className="issue-detail">
-              <span className="label">Reporter:</span>
-              <span>{issue.reporter}</span>
-            </div>
-          </div>
-        )}
-      </div>
+          )}
+        </div>
+      )}
+
+
+
+      {isExpanded && (
+        <div className="details-content">
+          <DetailContent issue={issue} />
+        </div>
+      )}
     </div>
   );
 };
 
+const DetailContent = ({ issue }) => (
+  <>
+    <div className="issue-detail">
+      <span className="label">Priority:</span>
+      <span>{issue.priority}</span>
+    </div>
+    <div className="issue-detail">
+      <span className="label">Assignee:</span>
+      <span>{issue.assignee}</span>
+    </div>
+    <div className="issue-detail">
+      <span className="label">Reporter:</span>
+      <span>{issue.reporter}</span>
+    </div>
+  </>
+);
+
 export default IssueDetails;
+
