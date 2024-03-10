@@ -2,42 +2,20 @@
   {
     "id": 1796084,
     "ticketName": "T-3",
-    "title": "UI Component issue",
-    "description": "There is a problem with component that give invalid data to the UI",
-    "status": "To Do",
-    "priority": "MEDIUM",
-    "assignee": "John",
-    "reporter": "Mark",
-    "estimate": "3",
-    "comment": [
-      {
-        "id": 440,
-        "text": "This is a sample text"
-      },
-      {
-        "id": 470,
-        "text": "Hello, world!"
-      },
-      {
-        "id": 403,
-        "text": "Lorem ipsum dolor sit amet"
-      },
-      {
-        "id": 480,
-        "text": "Testing 123"
-      },
-      {
-        "id": 400,
-        "text": "Some meaningful text"
-      }
-    ]
+    "title": "Cart page",
+    "description": "design login page with 2 fields",
+    "status": "In Progress",
+    "priority": "HIGH",
+    "assignee": "Athul Krishna",
+    "reporter": "John",
+    "estimate": "3"
   },
   {
     "id": 1796080,
     "ticketName": "T-3",
-    "title": "Login page",
+    "title": "Login page 2",
     "description": "design login page with 2 fields",
-    "status": "To Do",
+    "status": "Done",
     "priority": "HIGH",
     "assignee": "Mark",
     "reporter": "John",
@@ -66,36 +44,25 @@
     ]
   },
   {
-    "id": 1796481,
-    "ticketName": "T-4",
-    "title": "Login page no 12 fields",
-    "description": "design login page with 12 fields",
+    "id": 3,
+    "ticketName": "T-3",
+    "title": "Register page",
+    "description": "design login page with 2 fields",
     "status": "Done",
     "priority": "HIGH",
-    "assignee": "Mark",
-    "reporter": "david",
-    "estimate": "3",
-    "comment": [
-      {
-        "id": 1,
-        "text": "This is a comment"
-      },
-      {
-        "id": 2,
-        "text": "This is another comment"
-      },
-      {
-        "id": 3,
-        "text": "This is another comment"
-      },
-      {
-        "id": 4,
-        "text": "This is another comment"
-      },
-      {
-        "id": 5,
-        "text": "This is another comment"
-      }
-    ]
+    "assignee": "Athul Krishna",
+    "reporter": "John",
+    "estimate": "3"
+  },
+  {
+    "id": 4,
+    "ticketName": "T-3",
+    "title": "Login page",
+    "description": "design login page with 2 fields",
+    "status": "Backlog",
+    "priority": "HIGH",
+    "assignee": "Athul Krishna",
+    "reporter": "John",
+    "estimate": "3"
   }
 ]

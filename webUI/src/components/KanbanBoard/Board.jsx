@@ -5,12 +5,15 @@ import { HTML5Backend } from "react-dnd-html5-backend";
 import Column from "./Column";
 import "./Board.css";
 import IssuePopup from "../issueView/IssuePopup";
+import Search from "./Search";
 
 const KanbanBoard = () => {
   const [tickets, setTickets] = useState([]);
 
   const [showIssuePopup, setShowIssuePopup] = useState(false);
   const [popupIssueId, setPopupIssueId] = useState();
+  const [filteredTickets, setFilteredTickets] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
   const [forceBoardRefresh, setForceBoardRefresh] = useState(false);
 
   const openPopupWithIssue = (id) => {
@@ -31,7 +34,8 @@ const KanbanBoard = () => {
         if (!issues?.data) {
           throw new Error("Failed to get tickets");
         }
-        setTickets(issues.data);
+
+        setTickets(issues.data.filter((issue) => issue.status !== "Backlog"));
       } catch (error) {
         console.error("Error fetching issue:", error);
       }
@@ -39,28 +43,37 @@ const KanbanBoard = () => {
     getTickets();
   }, [forceBoardRefresh]);
 
+  useEffect(() => {
+    setFilteredTickets(
+      tickets.filter((ticket) =>
+        ticket.title.toLowerCase().includes(searchQuery.toLowerCase())
+      )
+    );
+  }, [tickets, searchQuery]);
+
   return (
-    <>
+    <div className="board-container">
+      <Search searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
       <DndProvider backend={HTML5Backend}>
         <div className="kanban-board">
           <Column
             title="To Do"
             status="To Do"
-            tickets={tickets}
+            tickets={filteredTickets}
             setTickets={setTickets}
             openPopupWithIssue={openPopupWithIssue}
           />
           <Column
             title="In Progress"
             status="In Progress"
-            tickets={tickets}
+            tickets={filteredTickets}
             setTickets={setTickets}
             openPopupWithIssue={openPopupWithIssue}
           />
           <Column
             title="Done"
             status="Done"
-            tickets={tickets}
+            tickets={filteredTickets}
             setTickets={setTickets}
             openPopupWithIssue={openPopupWithIssue}
           />
@@ -75,7 +88,7 @@ const KanbanBoard = () => {
           }}
         />
       )}
-    </>
+    </div>
   );
 };
 
