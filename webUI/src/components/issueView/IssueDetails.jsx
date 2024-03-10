@@ -21,6 +21,7 @@ const IssueDetails = ({
           value={selectedStatus}
           onChange={handleStatusChange}
         >
+          <option value="todo">To Do</option>
           <option value="inprogress">In Progress</option>
           <option value="done">Done</option>
         </select>

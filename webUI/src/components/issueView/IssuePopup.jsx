@@ -1,31 +1,32 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import IssueHeader from './IssueHeader'; 
-import AttachmentUploader from './AttachmentUploader'; 
-import IssueDetails from './IssueDetails'; 
-import CommentSection from './CommentSection'; 
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import IssueHeader from "./IssueHeader";
+import AttachmentUploader from "./AttachmentUploader";
+import IssueDetails from "./IssueDetails";
+import CommentSection from "./CommentSection";
 
 import "../../styles/issueView/IssuePopup.css";
 
 const IssuePopup = ({ issueId, onClose }) => {
-
   const [isExpanded, setIsExpanded] = useState(false);
   const [issue, setIssue] = useState(null);
   const [selectedStatus, setSelectedStatus] = useState("");
   const [attachments, setAttachments] = useState([]);
-  const [fileInputKey, setFileInputKey] = useState(0); 
-  const [message, setMessage] = useState(""); 
+  const [fileInputKey, setFileInputKey] = useState(0);
+  const [message, setMessage] = useState("");
   const [showDetails, setShowDetails] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const issueResponse = await axios.get(`http://localhost:3009/api/issues/${issueId}`);
+        const issueResponse = await axios.get(
+          `http://localhost:3009/api/issues/${issueId}`
+        );
         // const issueResponse = await axios.get(`http://localhost:3009/api/issues/1796084`);
-        
         setIssue(issueResponse.data);
-        setSelectedStatus(issueResponse.data.status === "Done" ? "done" : "");
-
+        setSelectedStatus(
+          issueResponse.data.status.replace(/\s/g, "").toLowerCase()
+        );
       } catch (error) {
         console.error("Error fetching issue:", error);
       }
@@ -51,20 +52,11 @@ const IssuePopup = ({ issueId, onClose }) => {
   };
 
   return (
-    <div className={`issue-popup-container ${isExpanded ? 'expanded' : ''}`}>
-  <div className={`issue-popup ${isExpanded ? 'expanded' : ''}`}>
-  <IssueHeader onClose={onClose} onExpand={toggleExpandedView} isExpanded={isExpanded} />
+    <div className={`issue-popup-container ${isExpanded ? "expanded" : ""}`}>
+      <div className={`issue-popup ${isExpanded ? "expanded" : ""}`}>
+        <IssueHeader onClose={onClose} onExpand={toggleExpandedView} />
         {issue ? (
           <>
-            
-            <IssueDetails
-              issue={issue}
-              selectedStatus={selectedStatus}
-              handleStatusChange={handleStatusChange}
-              toggleDetails={toggleDetails}
-              showDetails={showDetails}
-              isExpanded={isExpanded}
-            />
             <AttachmentUploader
               attachments={attachments}
               setAttachments={setAttachments}
@@ -72,10 +64,15 @@ const IssuePopup = ({ issueId, onClose }) => {
               setFileInputKey={setFileInputKey}
               setMessage={setMessage}
             />
-
-            <CommentSection
-              issueId={issueId}
+            <IssueDetails
+              issue={issue}
+              selectedStatus={selectedStatus}
+              handleStatusChange={handleStatusChange}
+              toggleDetails={toggleDetails}
+              showDetails={showDetails}
             />
+            {/* Pass down props to CommentSection */}
+            <CommentSection issueId={issueId} />
           </>
         ) : (
           <p>Loading...</p>
@@ -85,6 +82,5 @@ const IssuePopup = ({ issueId, onClose }) => {
     </div>
   );
 };
-
 
 export default IssuePopup;
