@@ -22,7 +22,6 @@ const IssuePopup = ({ issueId, refreshBoard, onClose }) => {
         const issueResponse = await axios.get(
           `http://localhost:3009/api/issues/${issueId}`
         );
-        // const issueResponse = await axios.get(`http://localhost:3009/api/issues/1796084`);
         setIssue(issueResponse.data);
         setSelectedStatus(issueResponse.data.status);
       } catch (error) {
@@ -86,14 +85,12 @@ const IssuePopup = ({ issueId, refreshBoard, onClose }) => {
               showDetails={showDetails}
               refreshBoard={refreshBoard}
             />
-            {/* Pass down props to CommentSection */}
             <CommentSection issueId={issueId} />
           </>
         ) : (
           <p>Loading...</p>
         )}
       </div>
-      {/* {message && <div className="message">{message}</div>} */}
     </div>
   );
 };
