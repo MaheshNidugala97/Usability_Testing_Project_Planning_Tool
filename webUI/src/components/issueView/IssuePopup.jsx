@@ -15,6 +15,7 @@ const IssuePopup = ({ issueId, refreshBoard, onClose }) => {
   const [fileInputKey, setFileInputKey] = useState(0);
   const [message, setMessage] = useState("");
   const [showDetails, setShowDetails] = useState(false);
+  const [time, setTime] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -24,6 +25,8 @@ const IssuePopup = ({ issueId, refreshBoard, onClose }) => {
         );
         setIssue(issueResponse.data);
         setSelectedStatus(issueResponse.data.status);
+        setTime(issueResponse.data.time);
+        
       } catch (error) {
         console.error("Error fetching issue:", error);
       }
@@ -67,9 +70,19 @@ const IssuePopup = ({ issueId, refreshBoard, onClose }) => {
   return (
     <div className={`issue-popup-container ${isExpanded ? "expanded" : ""}`}>
       <div className={`issue-popup ${isExpanded ? "expanded" : ""}`}>
-        <IssueHeader onClose={onClose} onExpand={toggleExpandedView} />
-        {issue ? (
+      <IssueHeader onClose={onClose} onExpand={toggleExpandedView} isExpanded={isExpanded} time={time} />
+      {issue ? (
           <>
+          <IssueDetails
+              issue={issue}
+              selectedStatus={selectedStatus}
+              handleStatusChange={handleStatusChange}
+              toggleDetails={toggleDetails}
+              showDetails={showDetails}
+              refreshBoard={refreshBoard}
+              isExpanded={isExpanded}
+            />
+
             <AttachmentUploader
               attachments={attachments}
               setAttachments={setAttachments}
@@ -85,6 +98,8 @@ const IssuePopup = ({ issueId, refreshBoard, onClose }) => {
               showDetails={showDetails}
               refreshBoard={refreshBoard}
             />
+           
+            {/* Pass down props to CommentSection */}
             <CommentSection issueId={issueId} />
           </>
         ) : (

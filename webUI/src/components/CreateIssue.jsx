@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect } from 'react';
 import axios from 'axios';
 import '../styles/CreateIssue.css';
 
@@ -8,16 +8,25 @@ const CreateIssue = ({ onClose }) => {
     description: '',
     status: 'Backlog',
     priority: 'LOW',
-    assignee: 'Daniel',
-    reporter: 'Daniel',
     estimate: 0 
   };
 
   const [issue, setIssue] = useState(initialState);
   const [estimate, setEstimate] = useState(0); 
+  const [members, setMembers] = useState([]); 
 
-  const assignees = ['Mark', 'John', 'Daniel'];
-  const reporters = ['Mark', 'John', 'Daniel'];
+  useEffect(() => {
+    const fetchMembers = async () => {
+      try {
+        const response = await axios.get('http://localhost:3009/api/members');
+        setMembers(response.data); 
+      } catch (error) {
+        console.error('Error fetching members:', error);
+      }
+    };
+
+    fetchMembers();
+  }, []); 
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -102,17 +111,17 @@ const CreateIssue = ({ onClose }) => {
               <option value="HIGH">HIGH</option>
             </select>
             <label htmlFor="assignee">Assignee</label>
-            <select id="assignee" name="assignee" value={issue.assignee} onChange={handleInputChange}>
-              {assignees.map(assignee => (
-                <option key={assignee} value={assignee}>{assignee}</option>
-              ))}
-            </select>
-            <label htmlFor="reporter">Reporter</label>
-            <select id="reporter" name="reporter" value={issue.reporter} onChange={handleInputChange}>
-              {reporters.map(reporter => (
-                <option key={reporter} value={reporter}>{reporter}</option>
-              ))}
-            </select>
+        <select id="assignee" name="assignee" value={issue.assignee} onChange={handleInputChange}>
+          {members.map(member => (
+            <option key={member.id} value={member.name}>{member.name}</option>
+          ))}
+        </select>
+        <label htmlFor="reporter">Reporter</label>
+        <select id="reporter" name="reporter" value={issue.reporter} onChange={handleInputChange}>
+          {members.map(member => (
+            <option key={member.id} value={member.name}>{member.name}</option>
+          ))}
+        </select>
           </div>
         </div>
         <button type="submit" className="accept-button">Accept</button>
@@ -122,3 +131,6 @@ const CreateIssue = ({ onClose }) => {
 };
 
 export default CreateIssue;
+
+
+
