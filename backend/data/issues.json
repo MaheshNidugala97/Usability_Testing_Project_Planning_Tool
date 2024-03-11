@@ -48,9 +48,9 @@
     "ticketName": "T-3",
     "title": "Register page",
     "description": "design login page with 2 fields",
-    "status": "Done",
+    "status": "To Do",
     "priority": "HIGH",
-    "assignee": "Athul Krishna",
+    "assignee": "Mahesh Nidugala",
     "reporter": "John",
     "estimate": "3"
   },
