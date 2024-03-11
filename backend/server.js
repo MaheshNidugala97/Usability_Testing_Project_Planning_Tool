@@ -42,6 +42,18 @@ app.post('/api/issues', (req, res) => {
 
 
 
+app.get('/api/issues/:id', (req, res) => {
+  const issues = readDataFromFile();
+  const issueId = parseInt(req.params.id, 10); 
+  const issue = issues.find(issue => issue.id === issueId);
+
+  if (!issue) {
+    return res.status(404).send('Issue not found');
+  }
+
+  res.status(200).json(issue);
+});
+
 
 app.use((req, res, next) => {
   res.status(404).send("Sorry, that route doesn't exist.");
