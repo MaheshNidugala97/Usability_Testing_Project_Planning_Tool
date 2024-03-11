@@ -1,0 +1,69 @@
+.attachment-section {
+    margin-bottom: 20px;
+    margin-top: 20px;
+  }
+  
+  .attachment-section label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .file-input-section {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .file-input-section input[type="file"] {
+    display: none;
+  }
+  
+  .file-input-section .upload-button,
+  .file-input-section button {
+    background-color: #acadad;
+    color: #fff;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 13px;
+    margin-left: 5px;
+    margin-right: -15px;
+  }
+  
+  .file-input-section .upload-button:hover,
+  .file-input-section button:hover {
+    background-color: #0056b3;
+  }
+  
+  .file-input-section button {
+    margin-left: 30px;
+    margin-top: 9px;
+  }
+  
+  .attachment-thumbnails {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .attachment-thumbnail {
+    width: 100px;
+    height: 100px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+  }
+  
+  .attachment-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+  }
+  
+  .upload-message {
+    margin-top: 10px;
+    color: green;
+  }
+  

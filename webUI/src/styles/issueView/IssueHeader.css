@@ -1,0 +1,38 @@
+ .header-issue {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.issue-close-button,
+.expand-button {
+  margin-left: 10px; 
+  cursor: pointer;
+  border: none;
+  background-color: #007bff; 
+  color: white;
+  padding: 5px 15px; 
+  border-radius: 5px; 
+  font-size: 16px; 
+  transition: background-color 0.3s; 
+}
+
+.issue-close-button:hover,
+.expand-button:hover {
+  background-color: #0056b3; 
+}
+
+.header-issue.expanded {
+  max-height: 30px;
+}
+
+p.issue-date {
+  margin: 0;
+  font-size: 14px;
+  color: #6c757d;
+  visibility: hidden;
+}
+
+.header-issue.expanded p.issue-date {
+  visibility: visible;
+}

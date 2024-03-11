@@ -1,40 +1,46 @@
 import React, { useState } from 'react';
-import Sidebar from '../components/Sidebar.jsx';
-import Navbar from '../components/NavBar.jsx';
-import BacklogBoard from '../components/Backlog/index.jsx';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Sidebar from '../components/sideBars/Sidebar.jsx';
+import Navbar from '../components/sideBars/NavBar.jsx';
+import Backlog from '../components/Backlog.jsx';
 import Board from '../components/KanbanBoard/Board.jsx';
 import ProjectSettings from '../components/ProjectSettings.jsx';
 import CreateIssue from '../components/CreateIssue.jsx';
 import '../styles/Dashboard.css';
 
 function Dashboard() {
-  const [activeSection, setActiveSection] = useState('Board');
+  
+  const [showCreateIssue, setShowCreateIssue] = useState(false);
+
 
   const handleCloseCreateIssue = () => {
-    setActiveSection('Board');
+    setShowCreateIssue(false);
   };
 
-  const getActiveComponent = () => {
-    switch (activeSection) {
-      case 'Board': return <Board />;
-      case 'Project Settings': return <ProjectSettings />;
-      case 'Create Issue': return <CreateIssue onClose={handleCloseCreateIssue} />;
-      case 'Backlog': return <BacklogBoard />;
-      default: return <div>Select a project from the menu</div>;
-    }
+  const handleOpenCreateIssue = () => {
+    setShowCreateIssue(true);
   };
 
   return (
-    <div className="Dashboard">
-      <Sidebar />
-      <div className="main-section">
-        <Navbar activeSection={activeSection} setActiveSection={setActiveSection} />
-        <div className="main-container">
-          {getActiveComponent()}
+    <Router>
+      <div className="Dashboard">
+        <Sidebar />
+        <div className="main-section">
+          <Navbar onOpenCreateIssue={handleOpenCreateIssue} />
+          <div className="main-container">
+            <Routes>
+              <Route path="/board" element={<Board />} />
+              <Route path="/project-settings" element={<ProjectSettings />} />
+              <Route path="/backlog" element={<Backlog />} />
+              <Route path="/" element={<div>Select a project from the menu</div>} />
+            </Routes>
+            {showCreateIssue && <CreateIssue onClose={handleCloseCreateIssue} />}
+          </div>
         </div>
       </div>
-    </div>
+    </Router>
   );
 }
 
 export default Dashboard;
+

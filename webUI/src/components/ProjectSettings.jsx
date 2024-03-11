@@ -1,7 +1,7 @@
-import React from 'react';
-
+import React from "react";
+ 
 const ProjectSettings = () => {
-  return <div>Project Settings Content</div>;
+  return <div>Project Settings</div>;
 };
-
 export default ProjectSettings;
+
