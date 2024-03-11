@@ -54,6 +54,7 @@
 }
 
 .issue-form input[type="text"],
+.issue-form input[type="number"],
 .issue-form select,
 .issue-form textarea {
   padding: 10px;
@@ -89,4 +90,6 @@
   .form-column {
     width: 100%;
   }
-}
+} 
+
+

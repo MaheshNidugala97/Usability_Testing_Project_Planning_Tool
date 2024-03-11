@@ -12,6 +12,7 @@ app.use(express.json());
 const issueFilePath = path.join(__dirname, "data", "issues.json");
 const uploadsDir = path.join(__dirname, "src", "Assets", "uploads");
 const membersFilePath = path.join(__dirname, "data", "members.json");
+const sprintsFilePath = path.join(__dirname, "data", "sprints.json");
 
 if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir, { recursive: true });
@@ -45,6 +46,38 @@ const writeDataToFile = (data, filePath) => {
     console.error(err);
   }
 };
+
+/**
+ * @description  Get all sprints
+ */
+app.get("/api/sprints", (req, res) => {
+  const sprints = readDataFromFile(sprintsFilePath);
+  if (!sprints) {
+    return res.status(404).send("Sprints not found");
+  }
+  res.status(200).json(sprints);
+});
+
+/**
+ * @description  Update sprints
+ */
+app.patch("/api/sprints/:id", (req, res) => {
+  const sprints = readDataFromFile(sprintsFilePath);
+  if (!sprints) {
+    return res.status(404).send("Sprints not found");
+  }
+
+  const { id } = req.params;
+  const index = sprints.findIndex((sprint) => sprint.id === parseInt(id));
+
+  if (index === -1) {
+    return res.status(404).send("Sprint not found");
+  }
+  const updatedFields = req.body;
+  Object.assign(sprints[index], updatedFields);
+  writeDataToFile(sprints, sprintsFilePath);
+  res.status(200).json(sprints);
+});
 
 /**
  * @description  Get all members
