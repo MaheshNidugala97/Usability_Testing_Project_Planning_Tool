@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../../styles/issueView/IssueDetails.css";
 
@@ -109,7 +109,20 @@ const IssueDetails = ({
 };
 
 const DetailContent = ({ issue, refreshBoard }) => {
-  const employees = ["Mark", "John", "Daniel"];
+  const [employees, setEmployees] = useState([]);
+  useEffect(() => {
+    const fetchMembers = async () => {
+      try {
+        const response = await axios.get("http://localhost:3009/api/members");
+        if (response.data) {
+          setEmployees(response.data);
+        }
+      } catch (error) {
+        console.error("Error fetching members:", error);
+      }
+    };
+    fetchMembers();
+  }, [employees]);
   const [assignee, setAssignee] = useState(issue.assignee);
   const updateAssignee = async (newAssignee) => {
     try {
@@ -145,10 +158,10 @@ const DetailContent = ({ issue, refreshBoard }) => {
             updateAssignee(e.target.value);
           }}
         >
-          {employees.map((e, i) => {
+          {employees.map((employee, index) => {
             return (
-              <option value={e} key={i}>
-                {e}
+              <option value={employee.name} key={index}>
+                {employee.name}
               </option>
             );
           })}

@@ -1,8 +1,7 @@
-.header-issue {
+ .header-issue {
   display: flex;
-    justify-content: flex-start;
-    padding: 10px;
-    flex-direction: row-reverse;
+  justify-content: space-between;
+  padding: 10px;
 }
 
 .issue-close-button,
@@ -23,3 +22,17 @@
   background-color: #0056b3; 
 }
 
+.header-issue.expanded {
+  max-height: 30px;
+}
+
+p.issue-date {
+  margin: 0;
+  font-size: 14px;
+  color: #6c757d;
+  visibility: hidden;
+}
+
+.header-issue.expanded p.issue-date {
+  visibility: visible;
+}
