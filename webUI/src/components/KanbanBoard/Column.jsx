@@ -10,8 +10,7 @@ const Column = (props) => {
     ticketsCopy.splice(hoverIndex, 0, draggedTicket);
     props.setTickets(ticketsCopy);
   };
-
-
+  
   const [, drop] = useDrop({
     accept: "ticket",
     drop: (item, monitor) => {

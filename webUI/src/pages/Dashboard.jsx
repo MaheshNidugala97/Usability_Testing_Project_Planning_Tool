@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Sidebar from '../components/Sidebar.jsx';
 import Navbar from '../components/NavBar.jsx';
-import Backlog from '../components/Backlog.jsx';
+import BacklogBoard from '../components/Backlog/index.jsx';
 import Board from '../components/KanbanBoard/Board.jsx';
 import ProjectSettings from '../components/ProjectSettings.jsx';
 import CreateIssue from '../components/CreateIssue.jsx';
@@ -19,7 +19,7 @@ function Dashboard() {
       case 'Board': return <Board />;
       case 'Project Settings': return <ProjectSettings />;
       case 'Create Issue': return <CreateIssue onClose={handleCloseCreateIssue} />;
-      case 'Backlog': return <Backlog />;
+      case 'Backlog': return <BacklogBoard />;
       default: return <div>Select a project from the menu</div>;
     }
   };

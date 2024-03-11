@@ -1,0 +1,15 @@
+.backlog {
+    font-weight: bold;
+    font-size:30px;
+    margin-left:10px;
+}
+
+.search {
+    width: 150%;
+    margin-left: 10px;
+    margin-top: 15px;
+}
+
+.collapse {
+    margin-top: 10px;
+}

@@ -1,0 +1,58 @@
+.collapsible-content-edonec {
+    overflow: hidden;
+    transition: height 0.2s ease-in-out;
+    border-bottom: 1px solid #dee2e6 !important;
+  }
+  .title-text-edonec {
+    display: block;
+    font-size: 1em;
+    margin-block-start: 0.83em;
+    margin-block-end: 0.83em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+    margin-top: 8px;
+    margin-left: 10px;
+  }
+  .collapsible-header-edonec {
+    display: flex;
+    padding: 2px 20px 2px 20px;
+    border-bottom: 1px solid #dee2e6 !important;
+  }
+  .collapsible-content-padding-edonec {
+    padding: 20px 20px 20px 20px;
+  }
+  .rotate-center-edonec {
+    -moz-transition: all 0.2s linear;
+    -webkit-transition: all 0.2s linear;
+    transition: all 0.2s linear;
+  }
+  .rotate-center-edonec.down {
+    -moz-transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+  }
+  .rotate-center-edonec.up {
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+  .collapsible-icon-button-edonec {
+    cursor: pointer;
+    background-color: Transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    overflow: hidden;
+    outline: none;
+  }
+  
+  .collapsible-card-edonec {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    transition: 0.3s;
+  }
+  
+  .collapsible-card-edonec:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  }
+  
