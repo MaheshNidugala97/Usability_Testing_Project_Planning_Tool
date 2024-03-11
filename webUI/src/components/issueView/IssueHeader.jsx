@@ -16,7 +16,7 @@ const IssueHeader = ({ onClose, onExpand, isExpanded, time }) => {
       <p className="issue-date">{formattedDate}</p>
       <div>
         <button type="button" className="expand-button" onClick={onExpand}>
-          {isExpanded ? "Collapse" : "Expand"}
+          {isExpanded ? "Shrink" : "Expand"}
         </button>
         <button type="button" className="issue-close-button" onClick={onClose}>
           ×
