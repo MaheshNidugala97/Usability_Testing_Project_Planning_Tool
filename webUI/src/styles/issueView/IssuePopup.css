@@ -38,8 +38,7 @@ position: relative;
   overflow-y: auto;
   margin: 20px;
   background-color: #fff;
-  border-radius: 10px;
-
+border-radius: 0%;
 }
 .issue-popup.expanded {
   display: flex;
@@ -50,3 +49,4 @@ position: relative;
 .issue-popup.expanded > div {
   flex: 1 0 50%;
 }
+
