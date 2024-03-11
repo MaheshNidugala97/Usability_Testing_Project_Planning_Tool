@@ -8,7 +8,8 @@
     "priority": "HIGH",
     "assignee": "Athul Krishna",
     "reporter": "John",
-    "estimate": "3"
+    "estimate": "3",
+    "completedInPreviousSprint": false
   },
   {
     "id": 1796080,
@@ -20,6 +21,7 @@
     "assignee": "Mark",
     "reporter": "John",
     "estimate": "3",
+    "completedInPreviousSprint": false,
     "comment": [
       {
         "id": 1,
@@ -52,7 +54,8 @@
     "priority": "HIGH",
     "assignee": "Mahesh Nidugala",
     "reporter": "John",
-    "estimate": "3"
+    "estimate": "3",
+    "completedInPreviousSprint": false
   },
   {
     "id": 4,
@@ -63,6 +66,20 @@
     "priority": "HIGH",
     "assignee": "Athul Krishna",
     "reporter": "John",
-    "estimate": "3"
+    "estimate": "3",
+    "completedInPreviousSprint": false
+  },
+  {
+    "id": 9542699,
+    "title": "Api Creation",
+    "description": "Api Creation",
+    "status": "Backlog",
+    "priority": "LOW",
+    "assignee": "Mark",
+    "reporter": "Mark",
+    "estimate": 3,
+    "time": "2024-03-11T08:25:17.273Z",
+    "ticketName": "T-878",
+    "completedInPreviousSprint": false
   }
 ]
