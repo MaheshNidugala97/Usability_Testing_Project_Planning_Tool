@@ -100,6 +100,7 @@ const Ticket = (props) => {
           title={props.ticket.assignee}
           open={showFullName}
           onClose={() => setShowFullName(false)}
+          arrow
         >
           <div
             className="assignee-image"
