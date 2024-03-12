@@ -83,7 +83,7 @@
   width: 50px;
 }
 
-.description-icon-button {
+.description-icon-button{
   height: 40px;
   width: 40px;
   border-radius: 40px;
@@ -91,6 +91,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  &:hover {
+    background-color: #0056b3; 
+  }
 }
 
 .description-box textarea {

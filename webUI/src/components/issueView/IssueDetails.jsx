@@ -38,6 +38,7 @@ const IssueDetails = ({
       console.error("Error updating status:", error);
     }
   };
+  
 
   return (
     <div className="issue-details" data-testid="issue-details">
@@ -65,7 +66,7 @@ const IssueDetails = ({
             onChange={handleDescriptionChange}
           ></textarea>
           <div className="description-icon-button">
-            <DoneRoundedIcon sx={{ fontSize: "30px", color: "white" }} />
+            <DoneRoundedIcon sx={{ fontSize: "30px", color: "white", cursor: "pointer"}} />
           </div>
         </div>
       </div>
