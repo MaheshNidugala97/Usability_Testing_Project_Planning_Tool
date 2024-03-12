@@ -11,6 +11,7 @@ import "./Board.css";
 import IssuePopup from "../issueView/IssuePopup";
 import Search from "./Search";
 import AddMemberModal from "./AddMembers";
+import SprintCompleteModal from "./CompleteSprintModal";
 
 const KanbanBoard = () => {
   const [tickets, setTickets] = useState([]);
@@ -21,7 +22,10 @@ const KanbanBoard = () => {
   const [forceBoardRefresh, setForceBoardRefresh] = useState(false);
   const [members, setMembers] = useState([]);
   const [sprints, setSprints] = useState([]);
+  const [isSprint, setIsSprint] = useState(false);
   const [isAddMemberModalOpen, setAddMemberModalOpen] = useState(false);
+  const [isSprintCompleteModalOpen, setSprintCompleteModalOpen] =
+    useState(false);
   const [sprintRemainingDays, setSprintRemainingDays] = useState(0);
   const [selectedMember, setSelectedMember] = useState(null);
 
@@ -68,14 +72,18 @@ const KanbanBoard = () => {
       }
     };
     fetchMembers();
-  }, [members]);
+  }, []);
 
   useEffect(() => {
     const fetchSprints = async () => {
       try {
         const response = await axios.get("http://localhost:3009/api/sprints");
-        if (response.data) {
+        if (response?.data) {
+          console.log("sprint data", response.data);
           setSprints(response.data);
+          response.data[0].sprintName !== null
+            ? setIsSprint(true)
+            : setIsSprint(false);
           response.data.forEach((sprint) => {
             const remainingDays = sprintDayCalculation(sprint.endDate);
             setSprintRemainingDays(remainingDays);
@@ -86,7 +94,7 @@ const KanbanBoard = () => {
       }
     };
     fetchSprints();
-  }, [sprints]);
+  }, []);
 
   useEffect(() => {
     setFilteredTickets(
@@ -109,8 +117,56 @@ const KanbanBoard = () => {
           },
         }
       );
+      setMembers([...members, { name }]);
     } catch (error) {
       console.error("Error fetching members:", error);
+    }
+  };
+
+  const handleSprintComplete = async () => {
+    try {
+      const issues = await axios.patch(
+        "http://localhost:3009/api/issues",
+        {
+          completedInPreviousSprint: true,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (issues?.data) {
+        setTickets(
+          issues.data.filter(
+            (issue) =>
+              issue.status !== "Backlog" && !issue.completedInPreviousSprint
+          )
+        );
+      }
+    } catch (error) {
+      console.error("Error completing sprint:", error);
+    }
+    try {
+      const sprints = await axios.patch(
+        "http://localhost:3009/api/sprints/1",
+        {
+          sprintName: null,
+          startDate: null,
+          endDate: null,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (sprints?.data) {
+        setSprints(sprints.data);
+        setIsSprint(false);
+      }
+    } catch (error) {
+      console.error("Error Updating Sprint Details:", error);
     }
   };
 
@@ -142,61 +198,69 @@ const KanbanBoard = () => {
             className="sprint-name"
             style={{ fontWeight: 400, marginLeft: "10px", color: "black" }}
           >
-            {sprint.sprintName}
+            {sprint.sprintName !== null
+              ? sprint.sprintName
+              : "No Active Sprint"}
           </Typography>
         ))}
-        <div className="time-container">
-          {sprints.map((sprint, index) => (
-            <Tooltip
-              key={index}
-              title={
-                <Typography variant="body" component="h4">
-                  Sprint start date:
-                  <br />
-                  {sprint.startDate}
-                  <br />
-                  Sprint end date:
-                  <br />
-                  {sprint.endDate}
-                </Typography>
-              }
-              arrow
+        {isSprint && (
+          <div className="time-container">
+            {sprints.map((sprint, index) => (
+              <Tooltip
+                key={index}
+                title={
+                  <Typography variant="body" component="h4">
+                    Sprint start date:
+                    <br />
+                    {sprint.startDate}
+                    <br />
+                    Sprint end date:
+                    <br />
+                    {sprint.endDate}
+                  </Typography>
+                }
+                arrow
+              >
+                <AccessTimeIcon
+                  fontSize="small"
+                  style={{
+                    marginTop: "6px",
+                    marginRight: "8px",
+                    color: "gray",
+                  }}
+                ></AccessTimeIcon>
+              </Tooltip>
+            ))}
+            <Typography
+              variant="body"
+              component={"h5"}
+              style={{
+                marginTop: "7px",
+                color: "gray",
+                marginRight: "30px",
+                fontWeight: "normal",
+              }}
             >
-              <AccessTimeIcon
-                fontSize="small"
-                style={{ marginTop: "6px", marginRight: "8px", color: "gray" }}
-              ></AccessTimeIcon>
-            </Tooltip>
-          ))}
-          <Typography
-            variant="body"
-            component={"h5"}
-            style={{
-              marginTop: "7px",
-              color: "gray",
-              marginRight: "30px",
-              fontWeight: "normal",
-            }}
-          >
-            {sprintRemainingDays} days remaining
-          </Typography>
-          <Button
-            onClick={handleAddMember}
-            sx={{
-              fontSize: "0.8rem",
-              fontWeight: "semibold",
-              color: "black",
-              textTransform: "none",
-              backgroundColor: "#f0f0f0",
-              "&:hover": {
-                backgroundColor: "lightgray",
-              },
-              marginRight: "15px",
-            }}
-          >
-            Complete sprint
-          </Button>
-        </div>
+              {sprintRemainingDays} days remaining
+            </Typography>
+            <Button
+              onClick={() => setSprintCompleteModalOpen(true)}
+              sx={{
+                fontSize: "0.8rem",
+                fontWeight: "semibold",
+                color: "black",
+                textTransform: "none",
+                backgroundColor: "#f0f0f0",
+                "&:hover": {
+                  backgroundColor: "lightgray",
+                },
+                marginRight: "15px",
+              }}
+            >
+              Complete sprint
+            </Button>
+          </div>
+        )}
       </div>
       <div className="search-container">
         <Search searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
@@ -266,6 +330,22 @@ const KanbanBoard = () => {
         open={isAddMemberModalOpen}
         onClose={() => setAddMemberModalOpen(false)}
         onAddMember={handleAddMember}
+      />
+      <SprintCompleteModal
+        open={isSprintCompleteModalOpen}
+        onClose={() => setSprintCompleteModalOpen(false)}
+        onSprintComplete={handleSprintComplete}
+        sprintName={sprints[0]?.sprintName}
+        todoCount={
+          filteredTickets.filter((ticket) => ticket.status === "To Do").length
+        }
+        inProgressCount={
+          filteredTickets.filter((ticket) => ticket.status === "In Progress")
+            .length
+        }
+        doneCount={
+          filteredTickets.filter((ticket) => ticket.status === "Done").length
+        }
       />
     </div>
   );

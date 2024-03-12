@@ -1,68 +1,10 @@
 [
   {
-    "id": 1796084,
-    "ticketName": "T-3",
-    "title": "Cart page",
-    "description": "design login page with 2 fields",
-    "status": "In Progress",
-    "priority": "HIGH",
-    "assignee": "Athul Krishna",
-    "reporter": "John",
-    "estimate": "3",
-    "completedInPreviousSprint": false
-  },
-  {
-    "id": 1796080,
-    "ticketName": "T-3",
-    "title": "Login page 2",
-    "description": "design login page with 2 fields",
-    "status": "Done",
-    "priority": "HIGH",
-    "assignee": "Mark",
-    "reporter": "John",
-    "estimate": "3",
-    "completedInPreviousSprint": false,
-    "comment": [
-      {
-        "id": 1,
-        "text": "This is a comment"
-      },
-      {
-        "id": 2,
-        "text": "This is another comment"
-      },
-      {
-        "id": 3,
-        "text": "This is another comment"
-      },
-      {
-        "id": 4,
-        "text": "This is another comment"
-      },
-      {
-        "id": 5,
-        "text": "This is another comment"
-      }
-    ]
-  },
-  {
-    "id": 3,
-    "ticketName": "T-3",
-    "title": "Register page",
-    "description": "design login page with 2 fields",
-    "status": "To Do",
-    "priority": "HIGH",
-    "assignee": "Adit Jain",
-    "reporter": "John",
-    "estimate": "3",
-    "completedInPreviousSprint": false
-  },
-  {
     "id": 4,
     "ticketName": "T-3",
     "title": "Login page",
     "description": "design login page with 2 fields",
-    "status": "Backlog",
+    "status": "To Do",
     "priority": "HIGH",
     "assignee": "Athul Krishna",
     "reporter": "John",
@@ -73,7 +15,7 @@
     "id": 9542699,
     "title": "Api Creation",
     "description": "Api Creation",
-    "status": "Backlog",
+    "status": "In Progress",
     "priority": "LOW",
     "assignee": "Mark",
     "reporter": "Mark",

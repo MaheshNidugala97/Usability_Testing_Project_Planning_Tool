@@ -24,7 +24,6 @@
   text-align: left;
 }
 
-
 .column p:hover {
   cursor: pointer;
   background-color: #ebebeb;
@@ -36,9 +35,9 @@
 }
 
 .assignee-image {
-  position: absolute; 
-  bottom: 10px; 
-  right: 5px; 
+  position: absolute;
+  bottom: 10px;
+  right: 5px;
   width: 30px;
   height: 30px;
   border-radius: 50%;
@@ -47,22 +46,20 @@
   align-items: center;
   justify-content: center;
   font-weight: semi-bold;
-  font-size: 0.800rem;
+  font-size: 0.8rem;
   margin-right: 10px;
   color: white;
 }
 
 .assignee-image:hover {
   cursor: pointer;
-  background-color: rgb(146, 5, 5)
+  background-color: rgb(146, 5, 5);
 }
 
-
-.estimate
-{
-  position: absolute; 
-  bottom: 13px; 
-  right: 50px; 
+.estimate {
+  position: absolute;
+  bottom: 13px;
+  right: 50px;
   width: 18px;
   height: 18px;
   border-radius: 100%;
@@ -70,8 +67,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: semi-bold;
-  font-size: 0.600rem;
+  font-weight: bold;
+  font-size: 0.6rem;
   color: black;
 }
 
@@ -83,23 +80,21 @@
 .search-box {
   position: relative;
   display: flex;
-  top:40px;
-  width: 15%;
+  top: 40px;
+  width: 18%;
   left: 10px;
-  
 }
 
 .search-box .MuiFormLabel-root {
-  font-size: 14px; 
+  font-size: 13px;
   align-items: center;
-} 
+}
 .board-container {
   margin-top: 50px;
   display: flex;
   flex-direction: column;
 }
-.search-container
-{
+.search-container {
   display: flex;
   flex-direction: row;
   width: 70%;
@@ -107,7 +102,7 @@
 .member-icons {
   display: flex;
   margin-left: 60px;
-  margin-top:45px
+  margin-top: 45px;
 }
 
 .member-icon {
@@ -126,10 +121,9 @@
 
 .member-icon:hover {
   cursor: pointer;
-  background-color: rgb(146, 5, 5)
+  background-color: rgb(146, 5, 5);
 }
-.add-member-icon
-{
+.add-member-icon {
   width: 40px;
   height: 40px;
   background-color: lightgray;
@@ -140,25 +134,38 @@
 }
 .add-member-icon:hover {
   cursor: pointer;
-  background-color: darkgray
+  background-color: darkgray;
 }
 
-.sprint-container
-{
+.sprint-container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   width: 70%;
-
 }
 
-.time-container
-{
+.time-container {
   display: flex;
   flex-direction: row;
 }
 
 .highlighted {
   border: 1px solid blue;
-  padding: 2px; 
+  padding: 2px;
+}
+
+.inprogress {
+  background-color: rgb(52, 52, 234);
+  color: white;
+}
+.inprogress:hover {
+  background-color: rgb(6, 6, 175);
+}
+
+.done {
+  background-color: rgb(39, 160, 39);
+  color: white;
+}
+.done:hover {
+  background-color: rgb(13, 101, 13);
 }
