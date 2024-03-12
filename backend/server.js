@@ -165,9 +165,13 @@ app.put("/api/issues/:issueId/comments/:commentId", (req, res) => {
   });
 });
 
+/**
+ * @description  Create ticket
+ */
 app.post("/api/issues", (req, res) => {
   const issues = readDataFromFile(issueFilePath);
-  const newIssue = { id: issues.length + 1, ...req.body };
+  let newIssue = { id: issues.length + 1, ...req.body };
+  newIssue = { ...newIssue, completedInPreviousSprint: false };
   issues.push(newIssue);
   writeDataToFile(issues, issueFilePath);
   res
@@ -236,6 +240,35 @@ app.patch("/api/issues/:id", (req, res) => {
   Object.assign(issues[index], updatedFields);
   writeDataToFile(issues, issueFilePath);
   res.status(200).json(issues);
+});
+
+/**
+ * @description sprint complete
+ */
+app.patch("/api/issues", (req, res) => {
+  try {
+    const issues = readDataFromFile(issueFilePath);
+    if (!issues) {
+      return res.status(404).send("Issues not found");
+    }
+    const filteredIssue = issues.filter(
+      (issue) => issue.status !== "Backlog" && !issue.completedInPreviousSprint
+    );
+
+    const updatedFields = req.body;
+    filteredIssue.forEach((issue) => {
+      if (issue.status === "Done") {
+        Object.assign(issue, updatedFields);
+      } else {
+        Object.assign(issue, { status: "Backlog" });
+      }
+    });
+
+    writeDataToFile(issues, issueFilePath);
+    res.status(200).json(issues);
+  } catch (error) {
+    console.error("Error fetching issue:", error);
+  }
 });
 
 app.get("/api/issues/:id/comment", (req, res) => {
