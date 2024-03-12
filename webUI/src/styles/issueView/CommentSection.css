@@ -33,6 +33,8 @@
   .button-container {
     display: flex;
     align-items: center;
+    margin-top: 10px;
+
   }
 
   .input[type="text" i] {
