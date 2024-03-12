@@ -1,3 +1,116 @@
+.issue-details {
+  padding: 20px;
+  border-radius: 10px;  
+  margin-top: 15px;
+}
+
+.issue-detail {
+  display: flex;
+  margin-bottom: 20px;
+ 
+}
+
+.issue-detail > .label {
+  flex: 1;
+  font-weight: bold;
+  margin-right: 35px;
+  
+}
+
+.issue-detail > :not(.label) {
+  flex: 2;
+}
+
+
+.issue-detail .MuiFormControl-root {
+  width: 50%;
+}
+
+.issue-detail .MuiSelect-select {
+  font-size: 13px;
+  padding: 8px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.issue-detail .MuiSelect-select:hover {
+  background-color: #0056b3;
+}
+
+.title-section {
+  margin-bottom: 20px;
+}
+
+.title {
+  font-size: 24px;
+}
+
+.status-section {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  max-width: 230px;
+}
+
+.status-section label {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.MuiFormControl-root {
+  width: 100%;
+}
+
+.MuiSelect-select {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.MuiSelect-select:hover {
+  background-color: #0056b3;
+}
+
+.description-section {
+  margin-bottom: 20px;
+}
+
+.description-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.description-text {
+  flex: 1;
+  border-radius: 5px;
+  resize: vertical;
+  font-family: unset;
+  border: 1px solid #ccc;
+  padding: 10px;
+}
+
+.description-icon-button {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  background-color: #007bff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  &:hover {
+    background-color: #0056b3;
+  }
+}
+
 .details-section {
   margin-top: 20px;
   display: flex;
@@ -5,16 +118,16 @@
 }
 
 .details-button {
-  background-color: #aeb4ba;
+  background-color: #007bff;
   color: #fff;
   border: none;
   border-radius: 5px;
   padding: 10px;
   cursor: pointer;
   font-size: 16px;
-  width: 100%; 
-  box-sizing: border-box;  
-  text-align: center;  
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
   margin-bottom: 10px;
 }
 
@@ -28,89 +141,24 @@
   border: solid 1px #ccc;
   border-radius: 5px;
   padding: 10px;
+  margin-top: 25px;
 }
 
-.details-content .issue-detail {
-  margin-bottom: 20px;
-  
+
+.status-section .MuiFormControl-root {
+  width: 50%;
 }
 
-.details-content .label {
-  font-weight: bold;
-  margin-right: 1px;
-}
-.status-section {
-  margin-bottom: 20px;
-  display: flex;
-  align-items: center;
-}
-
-.status-section label {
-  margin-right: 10px;
-}
-
-:is(.status-section, .issue-detail) select {
-  width: 140px;
+.status-section .MuiSelect-select {
+  font-size: 13px;
+  padding: 8px;
   background-color: #007bff;
   color: #fff;
-  padding: 10px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 14px;
 }
 
-:is(.status-section, .issue-detail) select:hover {
+.status-section .MuiSelect-select:hover {
   background-color: #0056b3;
-  
-}
-
-
-
-.description-box {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.description-box button {
-  height: 30px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  color: #007bff;
-  width: 50px;
-}
-
-.description-icon-button{
-  height: 40px;
-  width: 40px;
-  border-radius: 40px;
-  background-color: #007bff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  &:hover {
-    background-color: #0056b3; 
-  }
-}
-
-.description-box textarea {
-  flex: 1;
-  border-radius: 5px;
-  resize: vertical;
-  font-family: unset;
-  border: 1px solid #ccc;
-}
-
-.issue-detail {
-  display: flex;
-}
-
-.issue-detail > .label {
-  flex: 1;
-}
-.issue-detail > :not(.label) {
-  flex: 2;
 }
