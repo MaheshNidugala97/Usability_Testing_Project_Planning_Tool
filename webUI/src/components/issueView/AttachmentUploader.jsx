@@ -28,7 +28,6 @@ const AttachmentUploader = ({ attachments, setAttachments, fileInputKey, setFile
       alert(response.data.message); 
 
       setMessage('Files uploaded successfully!');
-      // setAttachments([]); 
     } catch (error) {
       console.error('Error uploading files:', error);
       setMessage('Error uploading files');

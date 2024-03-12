@@ -23,7 +23,6 @@ const IssuePopup = ({ issueId, refreshBoard, onClose }) => {
         const issueResponse = await axios.get(
           `http://localhost:3009/api/issues/${issueId}`
         );
-        // const issueResponse = await axios.get(`http://localhost:3009/api/issues/1796084`);
         setIssue(issueResponse.data);
         setSelectedStatus(issueResponse.data.status);
         setTime(issueResponse.data.time);
@@ -91,6 +90,14 @@ const IssuePopup = ({ issueId, refreshBoard, onClose }) => {
               setFileInputKey={setFileInputKey}
               setMessage={setMessage}
             />
+            <IssueDetails
+              issue={issue}
+              selectedStatus={selectedStatus}
+              handleStatusChange={handleStatusChange}
+              toggleDetails={toggleDetails}
+              showDetails={showDetails}
+              refreshBoard={refreshBoard}
+            />
            
             {/* Pass down props to CommentSection */}
             <CommentSection issueId={issueId} />
@@ -99,7 +106,6 @@ const IssuePopup = ({ issueId, refreshBoard, onClose }) => {
           <p>Loading...</p>
         )}
       </div>
-      {/* {message && <div className="message">{message}</div>} */}
     </div>
   );
 };
