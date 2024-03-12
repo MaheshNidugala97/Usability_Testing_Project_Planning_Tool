@@ -90,14 +90,6 @@ const IssuePopup = ({ issueId, refreshBoard, onClose }) => {
               setFileInputKey={setFileInputKey}
               setMessage={setMessage}
             />
-            <IssueDetails
-              issue={issue}
-              selectedStatus={selectedStatus}
-              handleStatusChange={handleStatusChange}
-              toggleDetails={toggleDetails}
-              showDetails={showDetails}
-              refreshBoard={refreshBoard}
-            />
            
             {/* Pass down props to CommentSection */}
             <CommentSection issueId={issueId} />
