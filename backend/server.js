@@ -12,6 +12,7 @@ app.use(express.json());
 const issueFilePath = path.join(__dirname, "data", "issues.json");
 const uploadsDir = path.join(__dirname, "src", "Assets", "uploads");
 const membersFilePath = path.join(__dirname, "data", "members.json");
+const sprintsFilePath = path.join(__dirname, "data", "sprints.json");
 
 if (!fs.existsSync(uploadsDir)) {
   fs.mkdirSync(uploadsDir, { recursive: true });
@@ -45,6 +46,38 @@ const writeDataToFile = (data, filePath) => {
     console.error(err);
   }
 };
+
+/**
+ * @description  Get all sprints
+ */
+app.get("/api/sprints", (req, res) => {
+  const sprints = readDataFromFile(sprintsFilePath);
+  if (!sprints) {
+    return res.status(404).send("Sprints not found");
+  }
+  res.status(200).json(sprints);
+});
+
+/**
+ * @description  Update sprints
+ */
+app.patch("/api/sprints/:id", (req, res) => {
+  const sprints = readDataFromFile(sprintsFilePath);
+  if (!sprints) {
+    return res.status(404).send("Sprints not found");
+  }
+
+  const { id } = req.params;
+  const index = sprints.findIndex((sprint) => sprint.id === parseInt(id));
+
+  if (index === -1) {
+    return res.status(404).send("Sprint not found");
+  }
+  const updatedFields = req.body;
+  Object.assign(sprints[index], updatedFields);
+  writeDataToFile(sprints, sprintsFilePath);
+  res.status(200).json(sprints);
+});
 
 /**
  * @description  Get all members
@@ -132,9 +165,13 @@ app.put("/api/issues/:issueId/comments/:commentId", (req, res) => {
   });
 });
 
+/**
+ * @description  Create ticket
+ */
 app.post("/api/issues", (req, res) => {
   const issues = readDataFromFile(issueFilePath);
-  const newIssue = { id: issues.length + 1, ...req.body };
+  let newIssue = { id: issues.length + 1, ...req.body };
+  newIssue = { ...newIssue, completedInPreviousSprint: false };
   issues.push(newIssue);
   writeDataToFile(issues, issueFilePath);
   res
@@ -203,6 +240,35 @@ app.patch("/api/issues/:id", (req, res) => {
   Object.assign(issues[index], updatedFields);
   writeDataToFile(issues, issueFilePath);
   res.status(200).json(issues);
+});
+
+/**
+ * @description sprint complete
+ */
+app.patch("/api/issues", (req, res) => {
+  try {
+    const issues = readDataFromFile(issueFilePath);
+    if (!issues) {
+      return res.status(404).send("Issues not found");
+    }
+    const filteredIssue = issues.filter(
+      (issue) => issue.status !== "Backlog" && !issue.completedInPreviousSprint
+    );
+
+    const updatedFields = req.body;
+    filteredIssue.forEach((issue) => {
+      if (issue.status === "Done") {
+        Object.assign(issue, updatedFields);
+      } else {
+        Object.assign(issue, { status: "Backlog" });
+      }
+    });
+
+    writeDataToFile(issues, issueFilePath);
+    res.status(200).json(issues);
+  } catch (error) {
+    console.error("Error fetching issue:", error);
+  }
 });
 
 app.get("/api/issues/:id/comment", (req, res) => {
