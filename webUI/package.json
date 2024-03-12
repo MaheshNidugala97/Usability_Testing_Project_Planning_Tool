@@ -3,14 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@cfaester/enzyme-adapter-react-18": "^0.7.1",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.0",
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
-    "@material-ui/core": "^4.12.4",
     "@mui/icons-material": "^5.15.12",
+    "@mui/material": "^5.15.12",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
@@ -35,6 +34,7 @@
     "start": "dotenv -e ./config/development.env react-scripts start",
     "build": "dotenv -e ./config/development.env react-scripts build",
     "test": "react-scripts test --verbose",
+    "test-coverage": "react-scripts test --verbose --coverage",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
