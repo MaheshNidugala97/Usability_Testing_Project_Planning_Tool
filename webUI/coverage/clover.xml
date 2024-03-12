@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1710262079906" clover="3.2.0">
+  <project timestamp="1710262079906" name="All files">
+    <metrics statements="96" coveredstatements="25" conditionals="12" coveredconditionals="1" methods="29" coveredmethods="5" elements="137" coveredelements="31" complexity="0" loc="96" ncloc="96" packages="4" files="4" classes="4"/>
+    <package name="components">
+      <metrics statements="36" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="8" coveredmethods="0"/>
+      <file name="CreateIssue.jsx" path="/Users/alankmathew/Documents/GitHub/forked/webUI/src/components/CreateIssue.jsx">
+        <metrics statements="36" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="8" coveredmethods="0"/>
+        <line num="157" count="0" type="stmt"/>
+        <line num="158" count="0" type="stmt"/>
+        <line num="168" count="0" type="stmt"/>
+        <line num="169" count="0" type="stmt"/>
+        <line num="170" count="0" type="stmt"/>
+        <line num="172" count="0" type="stmt"/>
+        <line num="173" count="0" type="stmt"/>
+        <line num="174" count="0" type="stmt"/>
+        <line num="175" count="0" type="stmt"/>
+        <line num="176" count="0" type="stmt"/>
+        <line num="178" count="0" type="stmt"/>
+        <line num="182" count="0" type="stmt"/>
+        <line num="185" count="0" type="stmt"/>
+        <line num="186" count="0" type="stmt"/>
+        <line num="187" count="0" type="stmt"/>
+        <line num="190" count="0" type="stmt"/>
+        <line num="191" count="0" type="stmt"/>
+        <line num="192" count="0" type="stmt"/>
+        <line num="195" count="0" type="stmt"/>
+        <line num="196" count="0" type="stmt"/>
+        <line num="197" count="0" type="stmt"/>
+        <line num="198" count="0" type="stmt"/>
+        <line num="199" count="0" type="stmt"/>
+        <line num="200" count="0" type="stmt"/>
+        <line num="201" count="0" type="stmt"/>
+        <line num="202" count="0" type="stmt"/>
+        <line num="204" count="0" type="stmt"/>
+        <line num="206" count="0" type="stmt"/>
+        <line num="208" count="0" type="stmt"/>
+        <line num="218" count="0" type="stmt"/>
+        <line num="219" count="0" type="stmt"/>
+        <line num="220" count="0" type="stmt"/>
+        <line num="222" count="0" type="stmt"/>
+        <line num="226" count="0" type="stmt"/>
+        <line num="303" count="0" type="stmt"/>
+        <line num="318" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="components.issueView">
+      <metrics statements="50" coveredstatements="25" conditionals="8" coveredconditionals="1" methods="15" coveredmethods="5"/>
+      <file name="CommentSection.jsx" path="/Users/alankmathew/Documents/GitHub/forked/webUI/src/components/issueView/CommentSection.jsx">
+        <metrics statements="50" coveredstatements="25" conditionals="8" coveredconditionals="1" methods="15" coveredmethods="5"/>
+        <line num="196" count="2" type="stmt"/>
+        <line num="197" count="8" type="stmt"/>
+        <line num="198" count="8" type="stmt"/>
+        <line num="199" count="8" type="stmt"/>
+        <line num="200" count="8" type="stmt"/>
+        <line num="202" count="8" type="stmt"/>
+        <line num="203" count="7" type="stmt"/>
+        <line num="204" count="7" type="stmt"/>
+        <line num="205" count="7" type="stmt"/>
+        <line num="208" count="7" type="stmt"/>
+        <line num="210" count="2" type="stmt"/>
+        <line num="214" count="7" type="stmt"/>
+        <line num="217" count="8" type="stmt"/>
+        <line num="218" count="1" type="stmt"/>
+        <line num="221" count="8" type="stmt"/>
+        <line num="222" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="223" count="0" type="stmt"/>
+        <line num="232" count="0" type="stmt"/>
+        <line num="235" count="1" type="stmt"/>
+        <line num="236" count="1" type="stmt"/>
+        <line num="237" count="1" type="stmt"/>
+        <line num="243" count="1" type="stmt"/>
+        <line num="252" count="1" type="stmt"/>
+        <line num="253" count="1" type="stmt"/>
+        <line num="255" count="0" type="stmt"/>
+        <line num="259" count="8" type="stmt"/>
+        <line num="260" count="0" type="stmt"/>
+        <line num="261" count="0" type="stmt"/>
+        <line num="264" count="0" type="stmt"/>
+        <line num="265" count="0" type="stmt"/>
+        <line num="275" count="0" type="stmt"/>
+        <line num="279" count="8" type="stmt"/>
+        <line num="280" count="0" type="stmt"/>
+        <line num="281" count="0" type="stmt"/>
+        <line num="285" count="0" type="stmt"/>
+        <line num="287" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="288" count="0" type="stmt"/>
+        <line num="290" count="0" type="stmt"/>
+        <line num="293" count="0" type="stmt"/>
+        <line num="294" count="0" type="stmt"/>
+        <line num="295" count="0" type="stmt"/>
+        <line num="306" count="0" type="stmt"/>
+        <line num="312" count="8" type="stmt"/>
+        <line num="330" count="0" type="stmt"/>
+        <line num="335" count="0" type="stmt"/>
+        <line num="345" count="0" type="stmt"/>
+        <line num="354" count="0" type="stmt"/>
+        <line num="359" count="0" type="stmt"/>
+        <line num="367" count="0" type="stmt"/>
+        <line num="368" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="components.sideBars">
+      <metrics statements="4" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="3" coveredmethods="0"/>
+      <file name="NavBar.jsx" path="/Users/alankmathew/Documents/GitHub/forked/webUI/src/components/sideBars/NavBar.jsx">
+        <metrics statements="4" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="3" coveredmethods="0"/>
+        <line num="12" count="0" type="stmt"/>
+        <line num="17" count="0" type="stmt"/>
+        <line num="25" count="0" type="stmt"/>
+        <line num="28" count="0" type="cond" truecount="0" falsecount="2"/>
+      </file>
+    </package>
+    <package name="pages">
+      <metrics statements="6" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="3" coveredmethods="0"/>
+      <file name="Dashboard.jsx" path="/Users/alankmathew/Documents/GitHub/forked/webUI/src/pages/Dashboard.jsx">
+        <metrics statements="6" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="3" coveredmethods="0"/>
+        <line num="12" count="0" type="stmt"/>
+        <line num="15" count="0" type="stmt"/>
+        <line num="16" count="0" type="stmt"/>
+        <line num="19" count="0" type="stmt"/>
+        <line num="20" count="0" type="stmt"/>
+        <line num="23" count="0" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>
