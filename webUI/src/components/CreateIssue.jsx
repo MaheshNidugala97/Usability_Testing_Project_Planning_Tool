@@ -1,6 +1,9 @@
 import React, { useState , useEffect } from 'react';
 import axios from 'axios';
 import '../styles/CreateIssue.css';
+import Swal from 'sweetalert2';
+import { FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
+
 
 const CreateIssue = ({ onClose }) => {
   const initialState = {
@@ -8,7 +11,9 @@ const CreateIssue = ({ onClose }) => {
     description: '',
     status: 'Backlog',
     priority: 'LOW',
-    estimate: 0 
+    estimate: "1",
+    assignee: "Alan K Mathew",
+    reporter: "Alan K Mathew",
   };
 
   const [issue, setIssue] = useState(initialState);
@@ -51,7 +56,16 @@ const CreateIssue = ({ onClose }) => {
   
       const response = await axios.post('http://localhost:3009/api/issues', issueWithId);
       
-      alert(response.data.message);
+      Swal.fire({
+        title: 'Success!',
+        text: response.data.message,
+        icon: 'success',
+        position: 'top-end', 
+        showConfirmButton: false,
+        timer: 3000, 
+        toast: true, 
+      });
+      
       setIssue(initialState);
       setEstimate(0); 
       onClose();
@@ -82,7 +96,8 @@ const CreateIssue = ({ onClose }) => {
               id="estimate"
               name="estimate"
               type="number"
-              value={estimate}
+              min="1"
+              value={estimate || 1}
               onChange={handleEstimateChange}
               placeholder="Enter estimate"
               required
@@ -97,33 +112,67 @@ const CreateIssue = ({ onClose }) => {
               required
             />
           </div>
-          <div className="form-column">
-            <label htmlFor="status">Status</label>
-            <select id="status" name="status" value={issue.status} onChange={handleInputChange}>
-              <option value="To Do">To Do</option>
-              <option value="Backlog">Backlog</option>
-             
-            </select>
-            <label htmlFor="priority">Priority</label>
-            <select id="priority" name="priority" value={issue.priority} onChange={handleInputChange}>
-              <option value="LOW">LOW</option>
-              <option value="MEDIUM">MEDIUM</option>
-              <option value="HIGH">HIGH</option>
-            </select>
-            <label htmlFor="assignee">Assignee</label>
-        <select id="assignee" name="assignee" value={issue.assignee} onChange={handleInputChange}>
-          {members.map(member => (
-            <option key={member.id} value={member.name}>{member.name}</option>
-          ))}
-        </select>
-        <label htmlFor="reporter">Reporter</label>
-        <select id="reporter" name="reporter" value={issue.reporter} onChange={handleInputChange}>
-          {members.map(member => (
-            <option key={member.id} value={member.name}>{member.name}</option>
-          ))}
-        </select>
-          </div>
-        </div>
+<div className="form-column2">
+<FormControl>
+  <InputLabel  id="status-label">Status</InputLabel>
+  <Select
+    labelId="status-label"
+    id="status"
+    name="status"
+    value={issue.status}
+    onChange={handleInputChange}
+  >
+    <MenuItem value="To Do">To Do</MenuItem>
+    <MenuItem value="Backlog">Backlog</MenuItem>
+  </Select>
+  </FormControl>
+
+<FormControl>
+  <InputLabel  id="priority-label">Priority</InputLabel>
+  <Select
+    labelId="priority-label"
+    id="priority"
+    name="priority"
+    value={issue.priority}
+    onChange={handleInputChange}
+  >
+    <MenuItem value="LOW">LOW</MenuItem>
+    <MenuItem value="MEDIUM">MEDIUM</MenuItem>
+    <MenuItem value="HIGH">HIGH</MenuItem>
+  </Select>
+</FormControl>
+
+<FormControl className="myFormControl">
+  <InputLabel id="assignee-label">Assignee</InputLabel>
+  <Select
+    labelId="assignee-label"
+    id="assignee"
+    name="assignee"
+    value={issue.assignee}
+    onChange={handleInputChange}
+  >
+    {members.map((member) => (
+      <MenuItem key={member.id} value={member.name}>{member.name}</MenuItem>
+    ))}
+  </Select>
+</FormControl>
+
+<FormControl>
+  <InputLabel id="reporter-label">Reporter</InputLabel>
+  <Select 
+    labelId="reporter-label"
+    id="reporter"
+    name="reporter"
+    value={issue.reporter}
+    onChange={handleInputChange}
+  >
+    {members.map((member) => (
+      <MenuItem key={member.id} value={member.name}>{member.name}</MenuItem>
+    ))}
+  </Select>
+</FormControl>
+</div>
+</div>
         <button type="submit" className="accept-button">Accept</button>
       </form>
     </div>
