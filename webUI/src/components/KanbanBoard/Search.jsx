@@ -18,12 +18,13 @@ const Search = ({ searchQuery, setSearchQuery }) => {
       InputProps={{
         endAdornment: searchQuery && (
           <InputAdornment position='end'>
-            <IconButton size='small' style={{ marginRight: '-10px' }}>
-              <ClearIcon
-                fontSize='small'
-                onClick={clearSearchQuery}
-                data-testid='clear-icon'
-              />
+            <IconButton
+              size='small'
+              style={{ marginRight: '-10px' }}
+              onClick={clearSearchQuery}
+              data-testid='clear-icon'
+            >
+              <ClearIcon fontSize='small' />
             </IconButton>
           </InputAdornment>
         ),
