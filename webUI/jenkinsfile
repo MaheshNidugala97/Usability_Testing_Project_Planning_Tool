@@ -1,0 +1,42 @@
+pipeline {
+    agent any
+    tools {
+        nodejs 'nodejs' 
+    }
+    environment {
+        HEROKU_API_KEY = credentials('HEROKU_API_KEY')
+    }
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+        stage('Build') {
+            steps {
+                dir('webui') {
+                    echo 'Building Frontend...'
+                    sh 'dir'
+                    sh 'npm run tests'
+            
+                }
+            }
+        }
+        stage('Deploy') {
+            steps {
+                dir('webui') {
+                    echo 'Deploying to Heroku...'
+                    script {
+                        withCredentials([string(credentialsId: 'HEROKU_API_KEY', variable: 'HEROKU_API_KEY')]) {
+                            sh '''
+                                echo "machine api.heroku.com login _ password $HEROKU_API_KEY" > ~/.netrc
+                                chmod 600 ~/.netrc
+                                git push https://heroku:$HEROKU_API_KEY@git.heroku.com/projectpilotwebui.git master
+                            '''
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

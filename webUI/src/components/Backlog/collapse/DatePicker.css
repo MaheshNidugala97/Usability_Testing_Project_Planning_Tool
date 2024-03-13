@@ -1,0 +1,63 @@
+
+  
+  .date-picker {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 6px;
+    width: 172%;
+    height: 55px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+  }
+  
+  .date-picker-input {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .date-picker-input-field {
+    border: none;
+    flex-grow: 1;
+    padding: 6px;
+    box-sizing: border-box;
+  }
+  
+  .date-picker-icon {
+    margin-left: 8px;
+  }
+
+  .react-datepicker {
+    position: relative;
+    left: 100px;
+    right: 0;
+    top:-10px
+  }
+  
+  .react-datepicker__triangle {
+    display: none; /* Hide the triangle pointer */
+  }
+
+ .modal{
+  position: fixed;
+  top: 10;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  overflow-y: auto;
+ } 
+  
+ .close-button {
+  position: absolute;
+  right: 585px;
+  top: 150px;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}

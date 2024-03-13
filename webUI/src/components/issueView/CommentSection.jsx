@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Swal from 'sweetalert2';
 import "../../styles/issueView/CommentSection.css";
 
 const CommentSection = ({ issueId }) => {
@@ -29,7 +30,15 @@ const CommentSection = ({ issueId }) => {
 
   const submitComment = async () => {
     if (comment.trim() === "") {
-      alert("Please enter a comment before submitting.");
+      Swal.fire({
+        title: 'Error!',
+        text: 'Please enter a comment',
+        icon: 'error',
+        position: 'top-end', 
+        showConfirmButton: false,
+        timer: 3000, 
+        toast: true, 
+      });
       return;
     }
 
@@ -41,7 +50,15 @@ const CommentSection = ({ issueId }) => {
           comment: { id: commentId, text: comment },
         }
       );
-      alert(response.data.message);
+      Swal.fire({
+        title: 'Success!',
+        text: response.data.message,
+        icon: 'success',
+        position: 'top-end', 
+        showConfirmButton: false,
+        timer: 3000, 
+        toast: true, 
+      });
       setComments([...comments, { id: commentId, text: comment }]);
       setComment("");
     } catch (error) {
@@ -55,7 +72,15 @@ const CommentSection = ({ issueId }) => {
         `http://localhost:3009/api/issues/${issueId}/comments/${commentId}`
       );
       setComments(comments.filter((comment) => comment.id !== commentId));
-      alert("Comment deleted successfully");
+      Swal.fire({
+        title: 'Success!',
+        text: 'Comment deleted successfully',
+        icon: 'success',
+        position: 'top-end', 
+        showConfirmButton: false,
+        timer: 3000, 
+        toast: true, 
+      });
     } catch (error) {
       console.error("Error deleting comment:", error);
     }
@@ -77,77 +102,87 @@ const CommentSection = ({ issueId }) => {
       );
       setEditMode(null);
       setEditText("");
-      alert("Comment edited successfully");
+      Swal.fire({
+        title: 'Success!',
+        text: 'Comment edited successfully',
+        icon: 'success',
+        position: 'top-end', 
+        showConfirmButton: false,
+        timer: 3000, 
+        toast: true, 
+      });
+
     } catch (error) {
       console.error("Error editing comment:", error);
     }
   };
 
-  return (
-    <div className="comment-section">
-      <h3>Comment:</h3>
-      <textarea
-        value={comment}
-        onChange={handleCommentChange}
-        placeholder="Enter your comment..."
-        data-testid="comments-ta"
-      ></textarea>
-      <button
-        className="submit-button"
-        onClick={submitComment}
-        data-testid="add-comment-button"
-      >
-        Submit comment
-      </button>
-      <div className="comment-list">
-        {comments.map((comment, index) => (
-          <div key={index} className="comment-item">
+
+
+return (
+  <div className="comment-section">
+    <h3>Comment:</h3>
+    <textarea
+      value={comment}
+      onChange={handleCommentChange}
+      placeholder="Enter your comment..."
+    ></textarea>
+    <button
+      className="submit-button"
+      onClick={submitComment}
+    >
+      Submit comment
+    </button>
+    <div className="comment-list">
+      {comments.map((comment, index) => (
+        <div key={index} className="comment-item">
+          {editMode === comment.id ? (
+            <input
+              type="text"
+              value={editText}
+              onChange={(e) => setEditText(e.target.value)}
+              placeholder="Enter new comment text..."
+            />
+          ) : (
+            <span data-testid={`comment-text-${comment.id}`}>{comment.text}</span>
+          )}
+          <div className="button-container">
+            <button
+              className="delete"
+              onClick={() => deleteComment(comment.id)}
+            >
+              Delete
+            </button>
             {editMode === comment.id ? (
-              <input
-                type="text"
-                value={editText}
-                onChange={(e) => setEditText(e.target.value)}
-                placeholder="Enter new comment text..."
-              />
-            ) : (
-              <span>{comment.text}</span>
-            )}
-            <div className="button-container">
-              <button
-                className="delete"
-                onClick={() => deleteComment(comment.id)}
-              >
-                Delete
-              </button>
-              {editMode === comment.id ? (
-                <>
-                  <button
-                    className="save"
-                    onClick={() => editComment(comment.id, editText)}
-                  >
-                    Save
-                  </button>
-                  <button className="cancel" onClick={() => setEditMode(null)}>
-                    Cancel
-                  </button>
-                </>
-              ) : (
+              <>
                 <button
-                  className="edit"
-                  onClick={() => {
-                    setEditMode(comment.id);
-                    setEditText(comment.text);
-                  }}
+                  className="save"
+                  onClick={() => editComment(comment.id, editText)}
                 >
-                  Edit
+                  Save
                 </button>
-              )}
-            </div>
+                <button className="cancel" onClick={() => setEditMode(null)}>
+                  Cancel
+                </button>
+              </>
+            ) : (
+              <button
+                className="edit"
+                onClick={() => {
+                  setEditMode(comment.id);
+                  setEditText(comment.text);
+                }}
+              >
+                Edit
+              </button>
+            )}
           </div>
-        ))}
-      </div>
+        </div>
+      ))}
     </div>
-  );
+  </div>
+);
+
 };
 
 export default CommentSection;
