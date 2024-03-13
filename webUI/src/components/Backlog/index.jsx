@@ -22,9 +22,7 @@ export default function Backlog() {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
-        if (!response?.data) {
-          throw new Error("Failed to get tickets");
-        }
+        
         const jsonData = await response.json();
         setData(jsonData);
         setSprintData(jsonData.filter(item => item.status !== "Backlog" && item.completedInPreviousSprint == false));
