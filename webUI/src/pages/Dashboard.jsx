@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Sidebar from '../components/sideBars/Sidebar.jsx';
 import Navbar from '../components/sideBars/NavBar.jsx';
-import Backlog from '../components/Backlog.jsx';
+import Backlog from '../components/Backlog/index.jsx';
 import Board from '../components/KanbanBoard/Board.jsx';
 import ProjectSettings from '../components/ProjectSettings.jsx';
 import CreateIssue from '../components/CreateIssue.jsx';
