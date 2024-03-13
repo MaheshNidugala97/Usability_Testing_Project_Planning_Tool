@@ -7,8 +7,8 @@ import CommentSection from "./CommentSection";
 
 import "../../styles/issueView/IssuePopup.css";
 
-const IssuePopup = ({ issueId, refreshBoard, onClose }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
+const IssuePopup = ({ issueId, refreshBoard, onClose, isExpanded, setIsExpanded }) => {
+ // const [isExpanded, setIsExpanded] = useState(false);
   const [issue, setIssue] = useState(null);
   const [selectedStatus, setSelectedStatus] = useState("");
   const [attachments, setAttachments] = useState([]);
@@ -42,7 +42,7 @@ const IssuePopup = ({ issueId, refreshBoard, onClose }) => {
   const toggleExpandedView = () => {
     setIsExpanded(!isExpanded);
   };
-
+  
   const handleStatusChange = async (e) => {
     setSelectedStatus(e.target.value);
     try {
