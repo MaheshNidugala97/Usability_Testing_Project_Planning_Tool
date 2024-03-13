@@ -7,16 +7,34 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 import './DatePicker.css';
+import Swal from 'sweetalert2';
 
 export default function AddDate({ open, onClose, onDateChange, sprintName, setSprintName, startDate, setStartDate, endDate, setEndDate }) {
+  
   const handleSubmit = async () => {
     if (!sprintName || !startDate || !endDate) {
-      alert("Please fill all required fields");
+      Swal.fire({
+        title: 'Warning!',
+        text: "Please fill out all the fields",
+        icon: 'warning',
+        position: 'top-end', 
+        showConfirmButton: false,
+        timer: 3000, 
+        toast: true, 
+      });
       return;
     }
 
     if (endDate <= startDate || endDate == startDate) {
-      alert("End date must be greater than start date");
+      Swal.fire({
+        title: 'Error!',
+        text: "End date must be greater than start date",
+        icon: 'error',
+        position: 'top-end', 
+        showConfirmButton: false,
+        timer: 3000, 
+        toast: true, 
+      });
       return;
     }
 
@@ -33,7 +51,15 @@ export default function AddDate({ open, onClose, onDateChange, sprintName, setSp
     try {
       // Example: Send form data to API endpoint
       const response = await axios.patch('http://localhost:3009/api/sprints/1', formData);
-      console.log('Form data submitted:', response.data);
+      Swal.fire({
+        title: 'Success!',
+        text: response.data.message,
+        icon: 'success',
+        position: 'top-end', 
+        showConfirmButton: false,
+        timer: 3000, 
+        toast: true, 
+      });
       onClose();
       onDateChange(startDate, endDate); // Close the popup after successful submission
     } catch (error) {

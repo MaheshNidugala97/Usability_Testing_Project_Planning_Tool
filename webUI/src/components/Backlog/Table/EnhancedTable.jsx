@@ -7,7 +7,7 @@ import { Box, Paper, Table, TableContainer, TableBody, TablePagination, TableRow
 import BpCheckbox from '../../../utilities/BpCheckbox';
 import { Draggable } from 'react-beautiful-dnd';
 import Collapsible from "../collapse/Collapsible";
-import "../collapse/index.css";
+import "../../../styles/collapsible.css";
 import axios from "axios";
 import DeleteTicketModal from "../collapse/DeleteModal";
 import IssuePopup from "../../issueView/IssuePopup";
@@ -87,17 +87,14 @@ function EnhancedTable({ header, data, setData, placeholder, setPage, page, filt
   };
 
   const handleDeleteItems = async (selectedIds) => {
-    console.log("selectedIds-------------->",selectedIds);
     // const selectedIds = [...selected];
     try {
       await Promise.all(selectedIds.map(async (id) => {
         await axios.delete(`http://localhost:3009/api/issues/${id}`);
       }));
       const updatedData = data.filter((row) => !selectedIds.includes((row.id).toString()));
-      console.log("updatedData------------------>",updatedData)
       setData(updatedData);
       setSelected([]);
-      console.log('Selected objects deleted successfully!');
     } catch (error) {
       console.error('Error deleting selected objects:', error);
     }

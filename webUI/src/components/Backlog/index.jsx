@@ -14,14 +14,16 @@ export default function Backlog() {
   const [backlogData, setBacklogData] = useState([]);
   const [page, setPage] = useState(0);
   const [filterName, setFilterName] = useState('');
-  const [selected, setSelected] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:3009/api/issues"); 
+        const response = await fetch("http://localhost:3009/api/issues");
         if (!response.ok) {
           throw new Error('Network response was not ok');
+        }
+        if (!response?.data) {
+          throw new Error("Failed to get tickets");
         }
         const jsonData = await response.json();
         setData(jsonData);
@@ -33,21 +35,18 @@ export default function Backlog() {
     };
 
     fetchData();
-  }, []); 
+  }, []);
 
-  const handleDragEnd = async(result) => {
+  const handleDragEnd = async (result) => {
     const { source, destination } = result;
     const taskId = parseInt(result.draggableId);
-    console.log("taskId------------>",typeof(taskId), taskId);
     if (!destination || source.droppableId === destination.droppableId) {
       return;
     }
-    console.log("result--------------->", result);
-    console.log("source, destination",source, destination);
     let newStatus;
     if (destination.droppableId === 'sprintData') {
       newStatus = 'To Do';
-    } else if (destination.droppableId === 'Backlog' ) {
+    } else if (destination.droppableId === 'Backlog') {
       newStatus = 'Backlog';
     }
 
@@ -64,7 +63,6 @@ export default function Backlog() {
     try {
       // Example: Send update to API endpoint
       await axios.patch(`http://localhost:3009/api/issues/${taskId}`, { status: newStatus });
-      console.log('Task status updated successfully!');
     } catch (error) {
       console.error('Error updating task status:', error);
     }
@@ -74,35 +72,35 @@ export default function Backlog() {
     setPage(0);
     setFilterName(event);
   };
-
+  
   return (
     <DndProvider backend={HTML5Backend}>
       <DragDropContext onDragEnd={handleDragEnd}>
         <div>
           <div className='backlog'>Backlog</div>
-          <div  className="searchBox">
-          <ReactSearchBox
-            placeholder="Search"
-            data={data}
-            onChange={handleSearch}
-            sx={{ mt:'20'}}
-          />
+          <div className="searchBox">
+            <ReactSearchBox
+              placeholder="Search"
+              data={data}
+              onChange={handleSearch}
+              sx={{ mt: '20' }}
+            />
           </div>
           <Droppable droppableId='sprintData'>
             {(provided) => (
               <div className='collapse' ref={provided.innerRef} sx={{ mt: '100' }} {...provided.droppableProps} style={{ marginTop: "30px" }}>
                 {/* <Collapsible open header="Selected for Development" onDelete> */}
-                  <EnhancedTable
-                    header="Selected for Development"
-                    data={sprintData}
-                    setData={setSprintData}
-                    placeholder={provided.placeholder}
-                    setPage={setPage}
-                    page={page}
-                    filterName={filterName}
-                    setFilterName={setFilterName}
-                    onDelete
-                  />
+                <EnhancedTable
+                  header="Selected for Development"
+                  data={sprintData}
+                  setData={setSprintData}
+                  placeholder={provided.placeholder}
+                  setPage={setPage}
+                  page={page}
+                  filterName={filterName}
+                  setFilterName={setFilterName}
+                  onDelete
+                />
                 {/* </Collapsible> */}
               </div>
             )}
@@ -111,17 +109,17 @@ export default function Backlog() {
             {(provided) => (
               <div className='collapse' ref={provided.innerRef}  {...provided.droppableProps} style={{ marginTop: "30px" }}>
                 {/* <Collapsible open header="Backlog" onDelete> */}
-                  <EnhancedTable
-                    header="Backlog Items"
-                    data={backlogData}
-                    setData={setBacklogData}
-                    placeholder={provided.placeholder}
-                    setPage={setPage}
-                    page={page}
-                    filterName={filterName}
-                    setFilterName={setFilterName}
-                    onDelete
-                  />
+                <EnhancedTable
+                  header="Backlog Items"
+                  data={backlogData}
+                  setData={setBacklogData}
+                  placeholder={provided.placeholder}
+                  setPage={setPage}
+                  page={page}
+                  filterName={filterName}
+                  setFilterName={setFilterName}
+                  onDelete
+                />
                 {/* </Collapsible> */}
               </div>
             )}
