@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { TableHead, TableRow, TableCell, Checkbox, TableSortLabel, Box } from '@mui/material';
 import BpCheckbox from '../../../utilities/BpCheckbox';
 
-
 const headCells = [
     {
         id: 'Task',
