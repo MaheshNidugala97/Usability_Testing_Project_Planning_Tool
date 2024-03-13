@@ -13,7 +13,7 @@ const formatDate = (time) => {
   });
 };
 
-const YourComponent = ({ isExpanded, time, onExpand, onClose }) => {
+const IssueHeader = ({ isExpanded, time, onExpand, onClose }) => {
   const formattedDate = formatDate(time);
 
   return (
@@ -53,4 +53,4 @@ const YourComponent = ({ isExpanded, time, onExpand, onClose }) => {
   );
 };
 
-export default YourComponent;
+export default IssueHeader;
