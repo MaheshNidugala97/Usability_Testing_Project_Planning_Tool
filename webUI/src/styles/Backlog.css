@@ -4,12 +4,8 @@
     margin-left:10px;
 }
 
-.search {
-    width: 150%;
-    margin-left: 10px;
+.searchBox {
+    width: 30%;
     margin-top: 15px;
-}
-
-.collapse {
-    margin-top: 10px;
+    margin-left: 10px;
 }

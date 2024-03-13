@@ -55,7 +55,7 @@ export default function BpCheckbox({ isItemSelected, numSelected, rowCount, isCu
         } : {
             '&:hover': { bgcolor: 'transparent' },
         },
-        color:"primary",
+        color: "primary",
         indeterminate:isCustomized ? (numSelected > 0 && numSelected < rowCount) :  false ,
         checked: isCustomized ? (rowCount > 0 && numSelected === rowCount) : isItemSelected,
         onChange:isCustomized ? onSelectAllClick : null,
