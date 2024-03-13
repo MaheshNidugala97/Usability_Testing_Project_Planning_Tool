@@ -16,6 +16,7 @@
     "axios": "^1.6.7",
     "dotenv": "^16.4.5",
     "enzyme": "^3.11.0",
+    "history": "^5.3.0",
     "react": "^18.2.0",
     "react-beautiful-dnd": "^13.1.1",
     "react-collapsible": "^2.10.0",
@@ -33,8 +34,9 @@
   "scripts": {
     "start": "dotenv -e ./config/development.env react-scripts start",
     "build": "dotenv -e ./config/development.env react-scripts build",
-    "test": "react-scripts test --verbose",
+    "test": "react-scripts test --verbose ",
     "test-coverage": "react-scripts test --verbose --coverage",
+    "test-coverage-report": "react-scripts test --verbose --watchAll=false --coverage",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -71,6 +73,16 @@
     ],
     "transform": {
       "^.+\\.[t|j]sx?$": "babel-jest"
-    }
+    },
+    "coverageReporters": [
+      "json",
+      "lcov",
+      "text",
+      "clover"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}",
+      "!**/node_modules/**"
+    ]
   }
 }
