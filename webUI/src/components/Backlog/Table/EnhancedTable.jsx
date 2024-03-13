@@ -21,8 +21,9 @@ function EnhancedTable({ header, data, setData, placeholder, setPage, page, filt
   const [ticketIdsToDelete, setTicketIdsToDelete] = useState([]);
   const [showIssuePopup, setShowIssuePopup] = useState(false);
   const [popupIssueId, setPopupIssueId] = useState(null);
-
-
+  const [forceBoardRefresh, setForceBoardRefresh] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(true);
+  
   useEffect(() => {
     // Fetch data using props.data if needed
   }, [data]);
@@ -39,6 +40,10 @@ function EnhancedTable({ header, data, setData, placeholder, setPage, page, filt
       return;
     }
     setSelected([]);
+  };
+
+  const refreshBoard = () => {
+    setForceBoardRefresh(!forceBoardRefresh);
   };
 
   const handleDoubleClick = (event, id) => {
@@ -228,11 +233,13 @@ function EnhancedTable({ header, data, setData, placeholder, setPage, page, filt
         </Paper>
         {showIssuePopup && (
         <IssuePopup
-          isExpandedView={true}
+          refreshBoard={refreshBoard}
           issueId={popupIssueId}
           onClose={() => {
             setShowIssuePopup(false);
           }}
+          isExpanded={isExpanded}
+          setIsExpanded={setIsExpanded}
         />
       )}
       </Collapsible>
