@@ -3,20 +3,22 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@cfaester/enzyme-adapter-react-18": "^0.7.1",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.0",
     "@fortawesome/fontawesome-svg-core": "^6.5.1",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
+    "@iconify/react": "^4.1.1",
     "@material-ui/core": "^4.12.4",
     "@mui/icons-material": "^5.15.12",
+    "@mui/material": "^5.15.12",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.6.7",
     "dotenv": "^16.4.5",
     "enzyme": "^3.11.0",
+    "history": "^5.3.0",
     "react": "^18.2.0",
     "react-beautiful-dnd": "^13.1.1",
     "react-collapsible": "^2.10.0",
@@ -34,8 +36,9 @@
   "scripts": {
     "start": "dotenv -e ./config/development.env react-scripts start",
     "build": "dotenv -e ./config/development.env react-scripts build",
-    "test": "react-scripts test --verbose",
+    "test": "react-scripts test --verbose ",
     "test-coverage": "react-scripts test --verbose --coverage",
+    "test-coverage-report": "react-scripts test --verbose --watchAll=false --coverage",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -72,6 +75,16 @@
     ],
     "transform": {
       "^.+\\.[t|j]sx?$": "babel-jest"
-    }
+    },
+    "coverageReporters": [
+      "json",
+      "lcov",
+      "text",
+      "clover"
+    ],
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx}",
+      "!**/node_modules/**"
+    ]
   }
 }
