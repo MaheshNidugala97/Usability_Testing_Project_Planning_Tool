@@ -19,6 +19,8 @@ function EnhancedTable({ header, data, setData, placeholder, setPage, page, filt
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
   const [ticketIdsToDelete, setTicketIdsToDelete] = useState([]);
+  const [showIssuePopup, setShowIssuePopup] = useState(false);
+  const [popupIssueId, setPopupIssueId] = useState(null);
 
 
   useEffect(() => {
@@ -39,8 +41,13 @@ function EnhancedTable({ header, data, setData, placeholder, setPage, page, filt
     setSelected([]);
   };
 
+  const handleDoubleClick = (event, id) => {
+    setShowIssuePopup(true);
+    setPopupIssueId(id);
+  }
+
   const handleClick = (event, id) => {
-    const selectedIndex = selected.indexOf(id);
+   const selectedIndex = selected.indexOf(id);
     let newSelected = [];
 
     if (selectedIndex === -1) {
@@ -147,6 +154,7 @@ function EnhancedTable({ header, data, setData, placeholder, setPage, page, filt
                                 {...provided.dragHandleProps}
                                 hover
                                 onClick={(event) => handleClick(event, (row.id).toString())}
+                                onDoubleClick={(event) => handleDoubleClick(event, (row.id).toString())}
                                 role="checkbox"
                                 aria-checked={isItemSelected}
                                 tabIndex={-1}
@@ -173,6 +181,7 @@ function EnhancedTable({ header, data, setData, placeholder, setPage, page, filt
                           <TableRow
                             hover
                             onClick={(event) => handleClick(event, (row.id).toString())}
+                            onDoubleClick={(event) => handleDoubleClick(event, (row.id).toString())}
                             role="checkbox"
                             aria-checked={isItemSelected}
                             tabIndex={-1}
@@ -217,6 +226,15 @@ function EnhancedTable({ header, data, setData, placeholder, setPage, page, filt
           />
           
         </Paper>
+        {showIssuePopup && (
+        <IssuePopup
+          isExpandedView={true}
+          issueId={popupIssueId}
+          onClose={() => {
+            setShowIssuePopup(false);
+          }}
+        />
+      )}
       </Collapsible>
     </Box>
 
