@@ -1,36 +1,44 @@
-import React from 'react';
-import axios from 'axios';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPaperclip } from '@fortawesome/free-solid-svg-icons';
-import '../../styles/issueView/FileUploader.css';
+import React from "react";
+import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPaperclip } from "@fortawesome/free-solid-svg-icons";
+import "../../styles/issueView/FileUploader.css";
 
-
-const AttachmentUploader = ({ attachments, setAttachments, fileInputKey, setFileInputKey, setMessage }) => {
+const AttachmentUploader = ({
+  attachments,
+  setAttachments,
+  fileInputKey,
+  setFileInputKey,
+  setMessage,
+}) => {
   const handleFileChange = (e) => {
     const files = e.target.files;
     setAttachments([...attachments, ...files]);
-    setFileInputKey(prevKey => prevKey + 1);
+    setFileInputKey((prevKey) => prevKey + 1);
   };
 
   const handleFileUpload = async () => {
     try {
       const formData = new FormData();
-      attachments.forEach(file => {
-        formData.append('files', file);
+      attachments.forEach((file) => {
+        formData.append("files", file);
       });
 
-        const response = await axios.post('http://localhost:3009/api/upload', formData, {
-        headers: {
-        'Content-Type': 'multipart/form-data',
+      const response = await axios.post(
+        "http://localhost:3009/api/upload",
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      alert(response.data.message);
 
-        },
-      });
-      alert(response.data.message); 
-
-      setMessage('Files uploaded successfully!');
+      setMessage("Files uploaded successfully!");
     } catch (error) {
-      console.error('Error uploading files:', error);
-      setMessage('Error uploading files');
+      console.error("Error uploading files:", error);
+      setMessage("Error uploading files");
     }
   };
 
@@ -39,6 +47,7 @@ const AttachmentUploader = ({ attachments, setAttachments, fileInputKey, setFile
       <label htmlFor="fileInput">Attachments:</label>
       <div className="file-input-section">
         <input
+          data-testid="fileInput"
           key={fileInputKey}
           type="file"
           id="fileInput"
@@ -51,7 +60,10 @@ const AttachmentUploader = ({ attachments, setAttachments, fileInputKey, setFile
         <button onClick={handleFileUpload}>Upload</button>
       </div>
       {attachments.length > 0 && (
-        <div className="attachment-thumbnails">
+        <div
+          className="attachment-thumbnails"
+          data-testid="attachments-container"
+        >
           {attachments.map((file, index) => (
             <div key={index} className="attachment-thumbnail">
               <img

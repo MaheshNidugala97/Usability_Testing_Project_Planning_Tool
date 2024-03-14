@@ -1,7 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import {
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  Button,
+  TextField,
+} from "@mui/material";
 import "../../styles/issueView/IssueDetails.css";
-import DoneRoundedIcon from "@mui/icons-material/DoneRounded";
 
 const IssueDetails = ({
   issue,
@@ -14,10 +21,12 @@ const IssueDetails = ({
 }) => {
   const [descriptionText, setDescriptionText] = useState(issue.description);
   const [descriptionChanged, setDescriptionChanged] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
 
   const handleDescriptionChange = (e) => {
     setDescriptionText(e.target.value);
     setDescriptionChanged(true);
+    setIsEditing(true);
   };
 
   const updateDescription = async () => {
@@ -34,52 +43,69 @@ const IssueDetails = ({
         }
       );
       setDescriptionChanged(false);
+      setIsEditing(false);
     } catch (error) {
       console.error("Error updating status:", error);
     }
   };
-  
 
   return (
     <div className="issue-details" data-testid="issue-details">
       <div className="title-section">
         <h2 className="title">{issue.title}</h2>
       </div>
-      <div className={`status-section ${selectedStatus}`}>
+      <div
+        className={`status-section ${selectedStatus}`}
+        data-testid="status-container"
+      >
         <label htmlFor="status">Status:</label>
-        <select
-          id="status"
-          value={selectedStatus}
-          onChange={handleStatusChange}
-        >
-          <option value="To Do">To Do</option>
-          <option value="In Progress">In Progress</option>
-          <option value="Done">Done</option>
-        </select>
+        <FormControl fullWidth>
+          <Select
+            labelId="status-label"
+            id="status"
+            value={selectedStatus}
+            onChange={handleStatusChange}
+          >
+            <MenuItem value="To Do">To Do</MenuItem>
+            <MenuItem value="In Progress">In Progress</MenuItem>
+            <MenuItem value="Done">Done</MenuItem>
+          </Select>
+        </FormControl>
       </div>
       <div className="description-section">
         <h3>Description:</h3>
         <div className="description-box">
           <textarea
             className="description-text"
+            data-testid="description-ta"
             value={descriptionText}
             onChange={handleDescriptionChange}
           ></textarea>
-          <div className="description-icon-button">
-            <DoneRoundedIcon sx={{ fontSize: "30px", color: "white", cursor: "pointer"}} />
-          </div>
+
+          <Button
+            disabled={!isEditing}
+            variant="contained"
+            color="primary"
+            onClick={updateDescription}
+            sx={{ marginLeft: "10px" }}
+            data-testid="edit-description-button"
+          >
+            Save
+          </Button>
         </div>
       </div>
 
       {!isExpanded && (
         <div className="details-section">
-          <button
+          <Button
             className="details-button"
             onClick={toggleDetails}
+            variant="contained"
+            color="primary"
             data-testid="show-hide-details-button"
           >
             {showDetails ? "Hide Details" : "Show Details"}
-          </button>
+          </Button>
           {showDetails && (
             <div className="details-content" data-testid="details-content">
               <DetailContent issue={issue} refreshBoard={refreshBoard} />
@@ -97,9 +123,8 @@ const IssueDetails = ({
   );
 };
 
-
 const DetailContent = ({ issue, refreshBoard, toggleDetails }) => {
-  const [employees, setEmployees] = useState([]);
+  const [employees, setEmployees] = useState([issue.assignee]);
   const [assignee, setAssignee] = useState(issue.assignee);
   const [sprint, setSprint] = useState(Number(issue.estimate));
   const [isEditingSprint, setIsEditingSprint] = useState(false);
@@ -163,7 +188,7 @@ const DetailContent = ({ issue, refreshBoard, toggleDetails }) => {
 
   const handleSprintBlur = () => {
     setIsEditingSprint(false);
-    updateSprint(); {/* Add updateSprint when blur */}
+    updateSprint();
   };
 
   return (
@@ -174,19 +199,20 @@ const DetailContent = ({ issue, refreshBoard, toggleDetails }) => {
       </div>
       <div className="issue-detail">
         <span className="label">Assignee:</span>
-        <select
-          id="assignee"
-          value={assignee}
-          onChange={(e) => {
-            updateAssignee(e.target.value);
-          }}
-        >
-          {employees.map((employee, index) => (
-            <option value={employee.name} key={index}>
-              {employee.name}
-            </option>
-          ))}
-        </select>
+        <FormControl fullWidth>
+          <Select
+            labelId="assignee-label"
+            id="assignee"
+            value={assignee}
+            onChange={(e) => updateAssignee(e.target.value)}
+          >
+            {employees.map((employee, index) => (
+              <MenuItem key={index} value={employee.name}>
+                {employee.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
       </div>
       <div className="issue-detail">
         <span className="label">Reporter:</span>
@@ -195,11 +221,14 @@ const DetailContent = ({ issue, refreshBoard, toggleDetails }) => {
       <div className="issue-detail">
         <span className="label">Sprint:</span>
         {isEditingSprint ? (
-          <input
+          <TextField
             type="number"
             value={sprint}
             onChange={(e) => setSprint(parseInt(e.target.value, 10) || 0)}
             onBlur={handleSprintBlur}
+            variant="outlined"
+            fullWidth
+            size="small"
           />
         ) : (
           <span onClick={handleSprintClick} className="sprint-value">
