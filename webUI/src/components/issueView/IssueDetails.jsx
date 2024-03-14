@@ -141,7 +141,7 @@ const DetailContent = ({ issue, refreshBoard, toggleDetails }) => {
       }
     };
     fetchMembers();
-  }, [employees]);
+  }, []);
 
   const updateAssignee = async (newAssignee) => {
     try {
@@ -229,9 +229,14 @@ const DetailContent = ({ issue, refreshBoard, toggleDetails }) => {
             variant="outlined"
             fullWidth
             size="small"
+            data-testid="sprint-number-input"
           />
         ) : (
-          <span onClick={handleSprintClick} className="sprint-value">
+          <span
+            onClick={handleSprintClick}
+            className="sprint-value"
+            data-testid="sprint-number-span"
+          >
             {sprint}
           </span>
         )}
