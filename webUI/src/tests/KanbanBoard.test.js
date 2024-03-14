@@ -15,6 +15,7 @@ import SprintCompleteModal from '../components/KanbanBoard/CompleteSprintModal.j
 import Search from '../components/KanbanBoard/Search.jsx';
 import Column from '../components/KanbanBoard/Column.jsx';
 import Ticket from '../components/KanbanBoard/Ticket.jsx';
+import KanbanBoard from '../components/KanbanBoard/Board.jsx';
 
 jest.mock('axios');
 
@@ -22,6 +23,10 @@ jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
   useNavigate: () => jest.fn(),
 }));
+
+afterEach(() => {
+  jest.clearAllMocks();
+});
 
 describe('components/KanbanBoard/AddMemberModal.jsx', () => {
   test('renders properly', () => {
@@ -450,6 +455,286 @@ describe('component/KanbanBoard/Ticket.jsx', () => {
 
     await waitFor(() => {
       expect(screen.queryByText('Mahesh Nidugala')).not.toBeInTheDocument();
+    });
+  });
+});
+
+describe('component/KanbanBoard/Board.jsx', () => {
+  it('renders KanbanBoard component', async () => {
+    const mockTickets = [
+      {
+        id: 7883168,
+        title: 'GET Api Call',
+        description: 'GET Api Call Implementation',
+        status: 'To Do',
+        priority: 'LOW',
+        assignee: 'Mahesh Nidugala',
+        reporter: 'Mahesh Nidugala',
+        estimate: 3,
+        time: '2024-03-12T16:38:16.802Z',
+        ticketName: 'T-816',
+        completedInPreviousSprint: false,
+      },
+      {
+        id: 7883169,
+        title: 'POST Api Call',
+        description: 'POST Api Call Implementation',
+        status: 'In Progress',
+        priority: 'LOW',
+        assignee: 'Mahesh Nidugala',
+        reporter: 'Mahesh Nidugala',
+        estimate: 3,
+        time: '2024-03-12T16:38:16.802Z',
+        ticketName: 'T-817',
+        completedInPreviousSprint: false,
+      },
+    ];
+
+    const mockMembers = [
+      { id: 1, name: 'Mahesh Nidugala' },
+      { id: 2, name: 'Athul Krishna' },
+    ];
+    const mockSprints = [
+      {
+        id: 1,
+        sprintName: 'Test Sprint',
+        startDate: '2024-03-14',
+        endDate: '2024-03-20',
+      },
+    ];
+
+    axios.get.mockResolvedValueOnce({ data: mockTickets });
+    axios.get.mockResolvedValueOnce({ data: mockMembers });
+    axios.get.mockResolvedValueOnce({ data: mockSprints });
+
+    const remainingDays = Math.ceil(
+      (new Date(mockSprints[0].endDate) - new Date()) / (1000 * 60 * 60 * 24)
+    );
+    render(<KanbanBoard />);
+    await waitFor(() => {
+      expect(screen.getByTestId('column-To Do').textContent).toContain(
+        'GET Api Call'
+      );
+    });
+    await waitFor(() => {
+      expect(screen.getByTestId('column-In Progress').textContent).toContain(
+        'POST Api Call'
+      );
+    });
+    expect(screen.getByText('Test Sprint')).toBeInTheDocument();
+
+    expect(screen.getByTestId('search-input')).toBeInTheDocument();
+
+    expect(screen.getAllByTestId('test-member-icon')).toHaveLength(2);
+
+    expect(screen.getByTestId('test-add-member-icon')).toBeInTheDocument();
+
+    expect(
+      screen.getByText(`${remainingDays} days remaining`)
+    ).toBeInTheDocument();
+
+    expect(screen.getByText('Complete sprint')).toBeInTheDocument();
+  });
+
+  it('Complete Sprint button should be not disabled on sprint data is null', async () => {
+    const mockTickets = [
+      {
+        id: 7883168,
+        title: 'GET Api Call',
+        description: 'GET Api Call Implementation',
+        status: 'To Do',
+        priority: 'LOW',
+        assignee: 'Mahesh Nidugala',
+        reporter: 'Mahesh Nidugala',
+        estimate: 3,
+        time: '2024-03-12T16:38:16.802Z',
+        ticketName: 'T-816',
+        completedInPreviousSprint: false,
+      },
+      {
+        id: 7883169,
+        title: 'POST Api Call',
+        description: 'POST Api Call Implementation',
+        status: 'In Progress',
+        priority: 'LOW',
+        assignee: 'Mahesh Nidugala',
+        reporter: 'Mahesh Nidugala',
+        estimate: 3,
+        time: '2024-03-12T16:38:16.802Z',
+        ticketName: 'T-817',
+        completedInPreviousSprint: false,
+      },
+    ];
+
+    const mockMembers = [
+      { id: 1, name: 'Mahesh Nidugala' },
+      { id: 2, name: 'Athul Krishna' },
+    ];
+    const mockSprints = [
+      {
+        id: 1,
+        sprintName: null,
+        startDate: null,
+        endDate: null,
+      },
+    ];
+
+    axios.get.mockResolvedValueOnce({ data: mockTickets });
+    axios.get.mockResolvedValueOnce({ data: mockMembers });
+    axios.get.mockResolvedValueOnce({ data: mockSprints });
+
+    render(<KanbanBoard />);
+
+    await waitFor(() => {
+      expect(screen.queryByText('Complete sprint')).not.toBeInTheDocument();
+    });
+
+    await waitFor(() => {
+      expect(screen.queryByText(/days remaining/i)).not.toBeInTheDocument();
+    });
+  });
+
+  it('Filters tickets by search query', async () => {
+    const mockTickets = [
+      {
+        id: 7883168,
+        title: 'GET Api Call',
+        description: 'GET Api Call Implementation',
+        status: 'To Do',
+        priority: 'LOW',
+        assignee: 'Mahesh Nidugala',
+        reporter: 'Mahesh Nidugala',
+        estimate: 3,
+        time: '2024-03-12T16:38:16.802Z',
+        ticketName: 'T-816',
+        completedInPreviousSprint: false,
+      },
+      {
+        id: 7883169,
+        title: 'POST Api Call',
+        description: 'POST Api Call Implementation',
+        status: 'In Progress',
+        priority: 'LOW',
+        assignee: 'Mahesh Nidugala',
+        reporter: 'Mahesh Nidugala',
+        estimate: 3,
+        time: '2024-03-12T16:38:16.802Z',
+        ticketName: 'T-817',
+        completedInPreviousSprint: false,
+      },
+    ];
+
+    const mockMembers = [
+      { id: 1, name: 'Mahesh Nidugala' },
+      { id: 2, name: 'Athul Krishna' },
+    ];
+    const mockSprints = [
+      {
+        id: 1,
+        sprintName: 'Test Sprint',
+        startDate: '2024-03-14',
+        endDate: '2024-03-20',
+      },
+    ];
+    axios.get.mockResolvedValueOnce({ data: mockTickets });
+    axios.get.mockResolvedValueOnce({ data: mockMembers });
+    axios.get.mockResolvedValueOnce({ data: mockSprints });
+
+    render(<KanbanBoard />);
+
+    await waitFor(() => {
+      expect(screen.getByTestId('column-To Do').textContent).toContain(
+        'GET Api Call'
+      );
+    });
+    await waitFor(() => {
+      expect(screen.getByTestId('column-In Progress').textContent).toContain(
+        'POST Api Call'
+      );
+    });
+
+    fireEvent.change(screen.getByTestId('search-input'), {
+      target: { value: 'GET Api' },
+    });
+
+    await waitFor(() => {
+      expect(screen.getByTestId('ticket-T-816')).toBeInTheDocument();
+    });
+    await waitFor(() => {
+      expect(screen.queryByTestId('ticket-T-817')).not.toBeInTheDocument();
+    });
+  });
+  it('Filters tickets on click of assignee icons', async () => {
+    const mockTickets = [
+      {
+        id: 7883168,
+        title: 'GET Api Call',
+        description: 'GET Api Call Implementation',
+        status: 'To Do',
+        priority: 'LOW',
+        assignee: 'Mahesh Nidugala',
+        reporter: 'Mahesh Nidugala',
+        estimate: 3,
+        time: '2024-03-12T16:38:16.802Z',
+        ticketName: 'T-816',
+        completedInPreviousSprint: false,
+      },
+      {
+        id: 7883169,
+        title: 'POST Api Call',
+        description: 'POST Api Call Implementation',
+        status: 'In Progress',
+        priority: 'LOW',
+        assignee: 'Athul Krishna',
+        reporter: 'Mahesh Nidugala',
+        estimate: 3,
+        time: '2024-03-12T16:38:16.802Z',
+        ticketName: 'T-817',
+        completedInPreviousSprint: false,
+      },
+    ];
+
+    const mockMembers = [
+      { id: 1, name: 'Mahesh Nidugala' },
+      { id: 2, name: 'Athul Krishna' },
+    ];
+
+    const mockSprints = [
+      {
+        id: 1,
+        sprintName: 'Test Sprint',
+        startDate: '2024-03-14',
+        endDate: '2024-03-20',
+      },
+    ];
+    axios.get.mockResolvedValueOnce({ data: mockTickets });
+    axios.get.mockResolvedValueOnce({ data: mockMembers });
+    axios.get.mockResolvedValueOnce({ data: mockSprints });
+
+    render(<KanbanBoard />);
+
+    await waitFor(() => {
+      expect(screen.getByTestId('column-To Do').textContent).toContain(
+        'GET Api Call'
+      );
+    });
+    await waitFor(() => {
+      expect(screen.getByTestId('column-In Progress').textContent).toContain(
+        'POST Api Call'
+      );
+    });
+
+    const maheshNidugalaIcon = screen.getAllByTestId('test-member-icon');
+    await waitFor(() => {
+      expect(maheshNidugalaIcon[0].textContent).toContain('MN');
+    });
+    fireEvent.click(maheshNidugalaIcon[0]);
+    await waitFor(() => {
+      expect(screen.queryByTestId('ticket-T-817')).not.toBeInTheDocument();
+    });
+    fireEvent.click(maheshNidugalaIcon[0]);
+    await waitFor(() => {
+      expect(screen.getByTestId('ticket-T-817')).toBeInTheDocument();
     });
   });
 });

@@ -1,24 +1,24 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
-import { Tooltip, Typography } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
-import Button from "@mui/material/Button";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import Column from "./Column";
-import "./Board.css";
-import IssuePopup from "../issueView/IssuePopup";
-import Search from "./Search";
-import AddMemberModal from "./AddMembers";
-import SprintCompleteModal from "./CompleteSprintModal";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { Tooltip, Typography } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
+import Button from '@mui/material/Button';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import Column from './Column';
+import './Board.css';
+import IssuePopup from '../issueView/IssuePopup';
+import Search from './Search';
+import AddMemberModal from './AddMembers';
+import SprintCompleteModal from './CompleteSprintModal';
 
 const KanbanBoard = () => {
   const [tickets, setTickets] = useState([]);
   const [showIssuePopup, setShowIssuePopup] = useState(false);
   const [popupIssueId, setPopupIssueId] = useState();
   const [filteredTickets, setFilteredTickets] = useState([]);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [forceBoardRefresh, setForceBoardRefresh] = useState(false);
   const [members, setMembers] = useState([]);
   const [sprints, setSprints] = useState([]);
@@ -45,17 +45,17 @@ const KanbanBoard = () => {
           `${process.env.REACT_APP_TICKET_API_ENDPOINT}issues`
         );
         if (!issues?.data) {
-          throw new Error("Failed to get tickets");
+          throw new Error('Failed to get tickets');
         }
 
         setTickets(
           issues.data.filter(
             (issue) =>
-              issue.status !== "Backlog" && !issue.completedInPreviousSprint
+              issue.status !== 'Backlog' && !issue.completedInPreviousSprint
           )
         );
       } catch (error) {
-        console.error("Error fetching issue:", error);
+        console.error('Error fetching issue:', error);
       }
     };
     getTickets();
@@ -64,12 +64,12 @@ const KanbanBoard = () => {
   useEffect(() => {
     const fetchMembers = async () => {
       try {
-        const response = await axios.get("http://localhost:3009/api/members");
+        const response = await axios.get('http://localhost:3009/api/members');
         if (response.data) {
           setMembers(response.data);
         }
       } catch (error) {
-        console.error("Error fetching members:", error);
+        console.error('Error fetching members:', error);
       }
     };
     fetchMembers();
@@ -78,9 +78,8 @@ const KanbanBoard = () => {
   useEffect(() => {
     const fetchSprints = async () => {
       try {
-        const response = await axios.get("http://localhost:3009/api/sprints");
+        const response = await axios.get('http://localhost:3009/api/sprints');
         if (response?.data) {
-          console.log("sprint data", response.data);
           setSprints(response.data);
           response.data[0].sprintName !== null
             ? setIsSprint(true)
@@ -91,7 +90,7 @@ const KanbanBoard = () => {
           });
         }
       } catch (error) {
-        console.error("Error fetching sprint details:", error);
+        console.error('Error fetching sprint details:', error);
       }
     };
     fetchSprints();
@@ -108,32 +107,32 @@ const KanbanBoard = () => {
   const handleAddMember = async (name) => {
     try {
       await axios.post(
-        "http://localhost:3009/api/members",
+        'http://localhost:3009/api/members',
         {
           name,
         },
         {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
         }
       );
       setMembers([...members, { name }]);
     } catch (error) {
-      console.error("Error fetching members:", error);
+      console.error('Error fetching members:', error);
     }
   };
 
   const handleSprintComplete = async () => {
     try {
       const issues = await axios.patch(
-        "http://localhost:3009/api/issues",
+        'http://localhost:3009/api/issues',
         {
           completedInPreviousSprint: true,
         },
         {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
         }
       );
@@ -141,16 +140,16 @@ const KanbanBoard = () => {
         setTickets(
           issues.data.filter(
             (issue) =>
-              issue.status !== "Backlog" && !issue.completedInPreviousSprint
+              issue.status !== 'Backlog' && !issue.completedInPreviousSprint
           )
         );
       }
     } catch (error) {
-      console.error("Error completing sprint:", error);
+      console.error('Error completing sprint:', error);
     }
     try {
       const sprints = await axios.patch(
-        "http://localhost:3009/api/sprints/1",
+        'http://localhost:3009/api/sprints/1',
         {
           sprintName: null,
           startDate: null,
@@ -158,7 +157,7 @@ const KanbanBoard = () => {
         },
         {
           headers: {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           },
         }
       );
@@ -167,7 +166,7 @@ const KanbanBoard = () => {
         setIsSprint(false);
       }
     } catch (error) {
-      console.error("Error Updating Sprint Details:", error);
+      console.error('Error Updating Sprint Details:', error);
     }
   };
 
@@ -190,27 +189,28 @@ const KanbanBoard = () => {
   };
 
   return (
-    <div className="board-container">
-      <div className="sprint-container">
+    <div className='board-container'>
+      <div className='sprint-container'>
         {sprints.map((sprint, index) => (
           <Typography
-            variant="h5"
-            component="h4"
-            className="sprint-name"
-            style={{ fontWeight: 400, marginLeft: "10px", color: "black" }}
+            key={index}
+            variant='h5'
+            component='h4'
+            className='sprint-name'
+            style={{ fontWeight: 400, marginLeft: '10px', color: 'black' }}
           >
             {sprint.sprintName !== null
               ? sprint.sprintName
-              : "No Active Sprint"}
+              : 'No Active Sprint'}
           </Typography>
         ))}
         {isSprint && (
-          <div className="time-container">
+          <div className='time-container'>
             {sprints.map((sprint, index) => (
               <Tooltip
                 key={index}
                 title={
-                  <Typography variant="body" component="h4">
+                  <Typography variant='body' component='h4'>
                     Sprint start date:
                     <br />
                     {sprint.startDate}
@@ -223,23 +223,23 @@ const KanbanBoard = () => {
                 arrow
               >
                 <AccessTimeIcon
-                  fontSize="small"
+                  fontSize='small'
                   style={{
-                    marginTop: "6px",
-                    marginRight: "8px",
-                    color: "gray",
+                    marginTop: '6px',
+                    marginRight: '8px',
+                    color: 'gray',
                   }}
                 ></AccessTimeIcon>
               </Tooltip>
             ))}
             <Typography
-              variant="body"
-              component={"h5"}
+              variant='body'
+              component={'h5'}
               style={{
-                marginTop: "7px",
-                color: "gray",
-                marginRight: "30px",
-                fontWeight: "normal",
+                marginTop: '7px',
+                color: 'gray',
+                marginRight: '30px',
+                fontWeight: 'normal',
               }}
             >
               {sprintRemainingDays} days remaining
@@ -247,15 +247,15 @@ const KanbanBoard = () => {
             <Button
               onClick={() => setSprintCompleteModalOpen(true)}
               sx={{
-                fontSize: "0.8rem",
-                fontWeight: "semibold",
-                color: "black",
-                textTransform: "none",
-                backgroundColor: "#f0f0f0",
-                "&:hover": {
-                  backgroundColor: "lightgray",
+                fontSize: '0.8rem',
+                fontWeight: 'semibold',
+                color: 'black',
+                textTransform: 'none',
+                backgroundColor: '#f0f0f0',
+                '&:hover': {
+                  backgroundColor: 'lightgray',
                 },
-                marginRight: "15px",
+                marginRight: '15px',
               }}
             >
               Complete sprint
@@ -263,30 +263,32 @@ const KanbanBoard = () => {
           </div>
         )}
       </div>
-      <div className="search-container">
+      <div className='search-container'>
         <Search searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
-        <div className="member-icons">
+        <div className='member-icons'>
           {members.map((member, index) => (
             <Tooltip key={index} title={member.name} arrow>
               <div
                 key={index}
                 className={
-                  "member-icon" +
-                  (selectedMember === member.name ? " highlighted" : "")
+                  'member-icon' +
+                  (selectedMember === member.name ? ' highlighted' : '')
                 }
                 onClick={() => memberOnClick(member.name)}
+                data-testid='test-member-icon'
               >
                 {member.name
-                  .split(" ")
+                  .split(' ')
                   .map((namePart) => namePart[0])
-                  .join("")}
+                  .join('')}
               </div>
             </Tooltip>
           ))}
-          <Tooltip title="Add Member" arrow>
+          <Tooltip title='Add Member' arrow>
             <div
-              className="add-member-icon"
+              className='add-member-icon'
               onClick={() => setAddMemberModalOpen(true)}
+              data-testid='test-add-member-icon'
             >
               <AddIcon />
             </div>
@@ -294,24 +296,24 @@ const KanbanBoard = () => {
         </div>
       </div>
       <DndProvider backend={HTML5Backend}>
-        <div className="kanban-board">
+        <div className='kanban-board'>
           <Column
-            title="To Do"
-            status="To Do"
+            title='To Do'
+            status='To Do'
             tickets={filteredTickets}
             setTickets={setTickets}
             openPopupWithIssue={openPopupWithIssue}
           />
           <Column
-            title="In Progress"
-            status="In Progress"
+            title='In Progress'
+            status='In Progress'
             tickets={filteredTickets}
             setTickets={setTickets}
             openPopupWithIssue={openPopupWithIssue}
           />
           <Column
-            title="Done"
-            status="Done"
+            title='Done'
+            status='Done'
             tickets={filteredTickets}
             setTickets={setTickets}
             openPopupWithIssue={openPopupWithIssue}
@@ -340,14 +342,14 @@ const KanbanBoard = () => {
         onSprintComplete={handleSprintComplete}
         sprintName={sprints[0]?.sprintName}
         todoCount={
-          filteredTickets.filter((ticket) => ticket.status === "To Do").length
+          filteredTickets.filter((ticket) => ticket.status === 'To Do').length
         }
         inProgressCount={
-          filteredTickets.filter((ticket) => ticket.status === "In Progress")
+          filteredTickets.filter((ticket) => ticket.status === 'In Progress')
             .length
         }
         doneCount={
-          filteredTickets.filter((ticket) => ticket.status === "Done").length
+          filteredTickets.filter((ticket) => ticket.status === 'Done').length
         }
       />
     </div>
