@@ -1,22 +1,22 @@
-import React, { useState } from "react";
-import { useDrag } from "react-dnd";
-import axios from "axios";
+import React, { useState } from 'react';
+import { useDrag } from 'react-dnd';
+import axios from 'axios';
 import {
   Card,
   CardContent,
   Typography,
   Tooltip,
   IconButton,
-} from "@mui/material";
-import { Delete } from "@mui/icons-material";
-import "./Board.css";
-import DeleteTicketModal from "./DeleteModal";
+} from '@mui/material';
+import { Delete } from '@mui/icons-material';
+import './Board.css';
+import DeleteTicketModal from './DeleteModal';
 
 const Ticket = (props) => {
   const [{ isDragging }, drag] = useDrag({
-    type: "ticket",
+    type: 'ticket',
     item: {
-      type: "ticket",
+      type: 'ticket',
       id: props.ticket.id,
       status: props.ticket.status,
       index: props.index,
@@ -31,13 +31,13 @@ const Ticket = (props) => {
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
 
   const handleMouseEnter = (e) => {
-    e.target.className === "assignee-image"
+    e.target.className === 'assignee-image'
       ? setShowFullName(true)
       : setIsHovered(true);
   };
 
   const handleMouseLeave = (e) => {
-    e.target.className === "assignee-image"
+    e.target.className === 'assignee-image'
       ? setShowFullName(false)
       : setIsHovered(false);
     setShowFullName(false);
@@ -49,24 +49,25 @@ const Ticket = (props) => {
         `${process.env.REACT_APP_TICKET_API_ENDPOINT}issues/${id}`
       );
       if (!response?.data) {
-        console.log("Deleting ticket with ID:", props.ticket.id);
+        console.log('Deleting ticket with ID:', props.ticket.id);
       }
       props.setTickets(response.data);
     } catch (error) {
-      console.error("Error deleting ticket:", error);
+      console.error('Error deleting ticket:', error);
     }
   };
 
   return (
     <>
       <Card
+        data-testid={`ticket-${props.ticket.ticketName}`}
         ref={drag}
         style={{
           opacity: isDragging ? 0.5 : 1,
-          marginBottom: "10px",
-          position: "relative",
-          transition: "opacity 0.3s",
-          backgroundColor: isHovered ? "lightgray" : "",
+          marginBottom: '10px',
+          position: 'relative',
+          transition: 'opacity 0.3s',
+          backgroundColor: isHovered ? 'lightgray' : '',
         }}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
@@ -80,38 +81,40 @@ const Ticket = (props) => {
             setDeleteModalOpen(true);
           }}
           style={{
-            position: "absolute",
-            top: "5px",
-            right: "5px",
-            color: "gray",
+            position: 'absolute',
+            top: '5px',
+            right: '5px',
+            color: 'gray',
           }}
+          data-testid='delete-ticket-icon'
         >
-          <Delete sx={{ fontSize: "large" }} />
+          <Delete sx={{ fontSize: 'large' }} />
         </IconButton>
 
         <CardContent>
           <Typography
-            variant="body"
-            component="h5"
-            style={{ fontWeight: 400, color: "black" }}
+            variant='body'
+            component='h5'
+            style={{ fontWeight: 400, color: 'black' }}
           >
             {props.ticket.title}
           </Typography>
           <Typography
-            variant="body"
-            component="h5"
-            style={{ fontWeight: "bold", color: "gray", marginTop: "10px" }}
+            variant='body'
+            component='h5'
+            style={{ fontWeight: 'bold', color: 'gray', marginTop: '10px' }}
           >
             {props.ticket.ticketName}
           </Typography>
           <Tooltip
+            data-testid='tooltip-assignee'
             title={props.ticket.assignee}
             open={showFullName}
             onClose={() => setShowFullName(false)}
             arrow
           >
             <div
-              className="assignee-image"
+              className='assignee-image'
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
             >
@@ -120,12 +123,12 @@ const Ticket = (props) => {
           </Tooltip>
           <div
             className={
-              "estimate" +
-              (props.ticket.status === "In Progress"
-                ? " inprogress"
-                : props.ticket.status === "Done"
-                ? " done"
-                : "")
+              'estimate' +
+              (props.ticket.status === 'In Progress'
+                ? ' inprogress'
+                : props.ticket.status === 'Done'
+                ? ' done'
+                : '')
             }
           >
             {props.ticket.estimate}

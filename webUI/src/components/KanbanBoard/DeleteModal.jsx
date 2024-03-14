@@ -17,6 +17,7 @@ const DeleteTicketModal = (props) => {
       open={props.open}
       onClose={props.onClose}
       sx={{ marginBottom: '400px' }}
+      data-testid='delete-ticket-modal'
     >
       <DialogTitle sx={{ display: 'flex', alignItems: 'center' }}>
         <ErrorOutlineIcon
@@ -43,6 +44,7 @@ const DeleteTicketModal = (props) => {
           variant='contained'
           color='error'
           sx={{ fontSize: '0.8rem', textTransform: 'none' }}
+          data-testid='delete-ticket-button'
         >
           Delete
         </Button>
