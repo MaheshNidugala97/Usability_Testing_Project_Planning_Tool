@@ -117,31 +117,33 @@ const CommentSection = ({ issueId }) => {
     }
   };
 
-
-
+  
 return (
-  <div className="comment-section">
+  <div className="comment-section" data-testid="comment-section">
     <h3>Comment:</h3>
     <textarea
       value={comment}
       onChange={handleCommentChange}
       placeholder="Enter your comment..."
+      data-testid="comment-input"
     ></textarea>
     <button
       className="submit-button"
       onClick={submitComment}
+      data-testid="submit-button"
     >
       Submit comment
     </button>
-    <div className="comment-list">
+    <div className="comment-list" data-testid="comment-list">
       {comments.map((comment, index) => (
-        <div key={index} className="comment-item">
+        <div key={index} className="comment-item" data-testid={`comment-item-${comment.id}`}>
           {editMode === comment.id ? (
             <input
               type="text"
               value={editText}
               onChange={(e) => setEditText(e.target.value)}
               placeholder="Enter new comment text..."
+              data-testid={`edit-input-${comment.id}`}
             />
           ) : (
             <span data-testid={`comment-text-${comment.id}`}>{comment.text}</span>
@@ -150,6 +152,7 @@ return (
             <button
               className="delete"
               onClick={() => deleteComment(comment.id)}
+              data-testid={`delete-button-${comment.id}`}
             >
               Delete
             </button>
@@ -158,10 +161,11 @@ return (
                 <button
                   className="save"
                   onClick={() => editComment(comment.id, editText)}
+                  data-testid={`save-button-${comment.id}`}
                 >
                   Save
                 </button>
-                <button className="cancel" onClick={() => setEditMode(null)}>
+                <button className="cancel" onClick={() => setEditMode(null)} data-testid={`cancel-button-${comment.id}`}>
                   Cancel
                 </button>
               </>
@@ -172,6 +176,7 @@ return (
                   setEditMode(comment.id);
                   setEditText(comment.text);
                 }}
+                data-testid={`edit-button-${comment.id}`}
               >
                 Edit
               </button>

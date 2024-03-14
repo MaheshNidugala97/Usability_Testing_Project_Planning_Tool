@@ -20,10 +20,10 @@ function Dashboard() {
 
   return (
     <div className="Dashboard">
-      <Sidebar data-testid="sidebar"/>
+      <Sidebar />
       <div className="main-section">
-        <Navbar data-testid="navbar" onOpenCreateIssue={handleOpenCreateIssue} />
-        <div className="main-container" data-testid="main-container">
+        <Navbar  onOpenCreateIssue={handleOpenCreateIssue} />
+        <div className="main-container">
           <Routes>
             <Route path="/" element={<Navigate to="/board" />} />
             <Route path="/board" element={<Board />} />
@@ -37,3 +37,4 @@ function Dashboard() {
 }
 
 export default Dashboard;
+
