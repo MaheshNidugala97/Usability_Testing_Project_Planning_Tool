@@ -5,19 +5,22 @@ import {
   fireEvent,
   screen,
   renderHook,
-  act,
   waitFor,
 } from '@testing-library/react';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import AddMemberModal from '../components/KanbanBoard/AddMembers.jsx';
 import DeleteTicketModal from '../components/KanbanBoard/DeleteModal.jsx';
 import SprintCompleteModal from '../components/KanbanBoard/CompleteSprintModal.jsx';
 import Search from '../components/KanbanBoard/Search.jsx';
+import Column from '../components/KanbanBoard/Column.jsx';
+import Ticket from '../components/KanbanBoard/Ticket.jsx';
 
 jest.mock('axios');
 
 jest.mock('react-router-dom', () => ({
   ...jest.requireActual('react-router-dom'),
-  useNavigate: () => jest.fn(), // Mock useNavigate
+  useNavigate: () => jest.fn(),
 }));
 
 describe('components/KanbanBoard/AddMemberModal.jsx', () => {
@@ -239,5 +242,214 @@ describe('components/KanbanBoard/Search.jsx', () => {
     render(<Search searchQuery='' setSearchQuery={setSearchQuery} />);
     const clearIcon = screen.queryByTestId('clear-icon');
     expect(clearIcon).toBeNull();
+  });
+});
+
+describe('component/KanbanBoard/Column.jsx', () => {
+  it('test dragging and dropping of Ticket Component', async () => {
+    const mockTickets = [
+      {
+        id: 7883168,
+        title: 'GET Api Call',
+        description: 'GET Api Call Implementation',
+        status: 'To Do',
+        priority: 'LOW',
+        assignee: 'Mahesh Nidugala',
+        reporter: 'Mahesh Nidugala',
+        estimate: 3,
+        time: '2024-03-12T16:38:16.802Z',
+        ticketName: 'T-816',
+        completedInPreviousSprint: false,
+      },
+    ];
+    const mockSetTickets = jest.fn((tickets) =>
+      mockTickets.forEach((ticket) => {
+        const foundTicket = tickets.find((t) => t.id === ticket.id);
+        if (foundTicket) ticket.status = foundTicket.status;
+      })
+    );
+    axios.patch.mockResolvedValue({
+      data: mockTickets.map((ticket) => ({ ...ticket, status: 'In Progress' })),
+    });
+
+    const { rerender } = render(
+      <DndProvider backend={HTML5Backend}>
+        <Column
+          tickets={mockTickets.filter((ticket) => ticket.status === 'To Do')}
+          setTickets={mockSetTickets}
+          status='To Do'
+          title='To Do'
+          openPopupWithIssue={() => {}}
+        />
+        <Column
+          tickets={mockTickets.filter(
+            (ticket) => ticket.status === 'In Progress'
+          )}
+          setTickets={mockSetTickets}
+          status='In Progress'
+          title='In Progress'
+          openPopupWithIssue={() => {}}
+        />
+      </DndProvider>
+    );
+
+    const ToDoTicketElement = await screen.findByTestId('ticket-T-816');
+    expect(ToDoTicketElement).toBeInTheDocument();
+    const InProgressColumnElement = await screen.findByTestId(
+      'column-In Progress'
+    );
+    expect(InProgressColumnElement).toBeInTheDocument();
+
+    fireEvent.dragStart(ToDoTicketElement);
+    fireEvent.dragEnter(InProgressColumnElement);
+    fireEvent.dragOver(InProgressColumnElement);
+    fireEvent.drop(InProgressColumnElement);
+
+    await waitFor(() => {
+      expect(axios.patch).toHaveBeenCalledWith(
+        expect.anything(),
+        { status: 'In Progress' },
+        expect.anything()
+      );
+    });
+
+    await waitFor(() => {
+      expect(mockSetTickets).toHaveBeenCalledWith(
+        expect.arrayContaining([{ ...mockTickets[0], status: 'In Progress' }])
+      );
+    });
+
+    rerender(
+      <DndProvider backend={HTML5Backend}>
+        <Column
+          tickets={mockTickets}
+          setTickets={mockSetTickets}
+          status='In Progress'
+          title='In Progress'
+          openPopupWithIssue={() => {}}
+        />
+      </DndProvider>
+    );
+
+    const ticketInInProgress = await screen.findByTestId('ticket-T-816');
+    expect(ticketInInProgress).toBeInTheDocument();
+  });
+});
+
+describe('component/KanbanBoard/Ticket.jsx', () => {
+  it('renders ticket details and handles delete action', async () => {
+    const mockTickets = [
+      {
+        id: 7883168,
+        title: 'GET Api Call',
+        description: 'GET Api Call Implementation',
+        status: 'To Do',
+        priority: 'LOW',
+        assignee: 'Mahesh Nidugala',
+        reporter: 'Mahesh Nidugala',
+        estimate: 3,
+        time: '2024-03-12T16:38:16.802Z',
+        ticketName: 'T-816',
+        completedInPreviousSprint: false,
+      },
+    ];
+
+    const initialTickets = [...mockTickets];
+    const mockSetTickets = jest.fn((updatedTickets) => {
+      updatedTickets.forEach((updatedTicket) => {
+        const index = initialTickets.findIndex(
+          (ticket) => ticket.id === updatedTicket.id
+        );
+        if (index !== -1) {
+          initialTickets.splice(index, 1);
+        }
+      });
+      initialTickets.push(...updatedTickets);
+    });
+
+    axios.delete.mockResolvedValue({ data: [] });
+
+    render(
+      <DndProvider backend={HTML5Backend}>
+        {mockTickets.map((ticket) => (
+          <Ticket
+            key={ticket.id}
+            ticket={ticket}
+            setTickets={mockSetTickets}
+            assigneeInitials={'MN'}
+            index={0}
+            openPopupWithIssue={() => {}}
+          />
+        ))}
+      </DndProvider>
+    );
+    expect(screen.getByText('GET Api Call')).toBeInTheDocument();
+    expect(screen.getByText('T-816')).toBeInTheDocument();
+    expect(screen.getByLabelText('Mahesh Nidugala')).toBeInTheDocument();
+    expect(screen.getByText('3')).toBeInTheDocument();
+
+    fireEvent.click(screen.getByTestId('delete-ticket-icon'));
+
+    await waitFor(() => {
+      expect(screen.getByTestId('delete-ticket-modal')).toBeInTheDocument();
+    });
+
+    fireEvent.click(screen.getByTestId('delete-ticket-button'));
+
+    await waitFor(() => {
+      expect(axios.delete).toHaveBeenCalledWith(
+        `${process.env.REACT_APP_TICKET_API_ENDPOINT}issues/${mockTickets[0].id}`
+      );
+    });
+
+    await waitFor(() => {
+      expect(mockSetTickets).toHaveBeenCalledWith([]);
+    });
+    await waitFor(() => {
+      expect(
+        screen.queryByTestId('delete-ticket-modal')
+      ).not.toBeInTheDocument();
+    });
+  });
+
+  it('shows full name in tooltip when hovering over the assignee image', async () => {
+    const mockTicket = {
+      id: 7883168,
+      title: 'GET Api Call',
+      description: 'GET Api Call Implementation',
+      status: 'To Do',
+      priority: 'LOW',
+      assignee: 'Mahesh Nidugala',
+      reporter: 'Mahesh Nidugala',
+      estimate: 3,
+      time: '2024-03-12T16:38:16.802Z',
+      ticketName: 'T-816',
+      completedInPreviousSprint: false,
+    };
+
+    render(
+      <DndProvider backend={HTML5Backend}>
+        <Ticket
+          key={'7883168'}
+          ticket={mockTicket}
+          setTickets={() => {}}
+          assigneeInitials={'MN'}
+          index={0}
+          openPopupWithIssue={() => {}}
+        />
+      </DndProvider>
+    );
+
+    const assigneeImage = screen.getByText('MN');
+
+    fireEvent.mouseOver(assigneeImage);
+    expect(screen.getByTestId('tooltip-assignee')).toBeInTheDocument();
+    expect(screen.getByText('Mahesh Nidugala')).toBeInTheDocument();
+
+    fireEvent.mouseLeave(assigneeImage);
+
+    await waitFor(() => {
+      expect(screen.queryByText('Mahesh Nidugala')).not.toBeInTheDocument();
+    });
   });
 });

@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { useDrop } from "react-dnd";
-import Ticket from "./Ticket";
-import "./Board.css";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { useDrop } from 'react-dnd';
+import Ticket from './Ticket';
+import './Board.css';
 
 const Column = (props) => {
   const [totalTickets, setTotalTickets] = useState(0);
@@ -17,8 +17,8 @@ const Column = (props) => {
   }, [props.tickets, props.status]);
 
   const getInitials = (fullName) => {
-    const names = fullName.split(" ");
-    return names[0][0] + (names.length > 1 ? names[names.length - 1][0] : "");
+    const names = fullName.split(' ');
+    return names[0][0] + (names.length > 1 ? names[names.length - 1][0] : '');
   };
 
   const moveTicket = async (ticketId, status) => {
@@ -29,7 +29,7 @@ const Column = (props) => {
       },
       {
         headers: {
-          "Content-Type": "application/json",
+          'Content-Type': 'application/json',
         },
       }
     );
@@ -37,10 +37,9 @@ const Column = (props) => {
   };
 
   const [, drop] = useDrop({
-    accept: "ticket",
+    accept: 'ticket',
     drop: (item, monitor) => {
       if (!monitor.didDrop()) {
-        console.log("index", item.id);
         moveTicket(item.id, props.status);
       }
     },
@@ -51,10 +50,15 @@ const Column = (props) => {
   });
 
   return (
-    <div className="column" id={props.status} ref={drop}>
+    <div
+      className='column'
+      id={props.status}
+      ref={drop}
+      data-testid={`column-${props.status}`}
+    >
       <h2>
-        {props.title} ({totalTickets}){" "}
-        {props.status === "Done" && <span className="tick-mark">&#10004;</span>}
+        {props.title} ({totalTickets}){' '}
+        {props.status === 'Done' && <span className='tick-mark'>&#10004;</span>}
       </h2>
       <div>
         {props.tickets.map((ticket, index) =>
