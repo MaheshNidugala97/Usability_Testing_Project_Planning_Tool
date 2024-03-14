@@ -141,11 +141,11 @@ import {
         (attachmentFI = await screen.findByTestId("fileInput"))
       ).toBeInTheDocument();
       // simulate uploading the image using the file input
-      await waitFor(() =>
-        fireEvent.change(attachmentFI, {
+    //   await waitFor(() =>
+        await fireEvent.change(attachmentFI, {
           target: { files: [file] },
         })
-      );
+    //   );
       // now the attachment-container should be present in the document
       expect(
         await screen.findByTestId("attachments-container")
