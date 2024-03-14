@@ -7,7 +7,7 @@ import { Box, Paper, Table, TableContainer, TableBody, TablePagination, TableRow
 import BpCheckbox from '../../../utilities/BpCheckbox';
 import { Draggable } from 'react-beautiful-dnd';
 import Collapsible from "../collapse/Collapsible";
-import "../collapse/index.css";
+import "../../../styles/collapsible.css";
 import axios from "axios";
 import DeleteTicketModal from "../collapse/DeleteModal";
 import IssuePopup from "../../issueView/IssuePopup";
@@ -21,8 +21,9 @@ function EnhancedTable({ header, data, setData, placeholder, setPage, page, filt
   const [ticketIdsToDelete, setTicketIdsToDelete] = useState([]);
   const [showIssuePopup, setShowIssuePopup] = useState(false);
   const [popupIssueId, setPopupIssueId] = useState(null);
-
-
+  const [forceBoardRefresh, setForceBoardRefresh] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(true);
+  
   useEffect(() => {
     // Fetch data using props.data if needed
   }, [data]);
@@ -39,6 +40,10 @@ function EnhancedTable({ header, data, setData, placeholder, setPage, page, filt
       return;
     }
     setSelected([]);
+  };
+
+  const refreshBoard = () => {
+    setForceBoardRefresh(!forceBoardRefresh);
   };
 
   const handleDoubleClick = (event, id) => {
@@ -82,17 +87,14 @@ function EnhancedTable({ header, data, setData, placeholder, setPage, page, filt
   };
 
   const handleDeleteItems = async (selectedIds) => {
-    console.log("selectedIds-------------->",selectedIds);
     // const selectedIds = [...selected];
     try {
       await Promise.all(selectedIds.map(async (id) => {
         await axios.delete(`http://localhost:3009/api/issues/${id}`);
       }));
       const updatedData = data.filter((row) => !selectedIds.includes((row.id).toString()));
-      console.log("updatedData------------------>",updatedData)
       setData(updatedData);
       setSelected([]);
-      console.log('Selected objects deleted successfully!');
     } catch (error) {
       console.error('Error deleting selected objects:', error);
     }
@@ -228,11 +230,13 @@ function EnhancedTable({ header, data, setData, placeholder, setPage, page, filt
         </Paper>
         {showIssuePopup && (
         <IssuePopup
-          isExpandedView={true}
+          refreshBoard={refreshBoard}
           issueId={popupIssueId}
           onClose={() => {
             setShowIssuePopup(false);
           }}
+          isExpanded={isExpanded}
+          setIsExpanded={setIsExpanded}
         />
       )}
       </Collapsible>

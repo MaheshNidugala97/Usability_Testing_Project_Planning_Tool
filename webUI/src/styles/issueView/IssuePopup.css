@@ -47,6 +47,6 @@ border-radius: 0%;
 }
 
 .issue-popup.expanded > div {
-  flex: 1 0 50%;
+  flex: 1 0 100%;
 }
 

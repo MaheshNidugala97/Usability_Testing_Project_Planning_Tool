@@ -3,7 +3,6 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import projectIcon from '../../Assets/project-image.png';
 import boardIcon from '../../Assets/board-icon.png';
-import settingsIcon from '../../Assets/settings-icon.png';
 import createIcon from '../../Assets/create-icon.png';
 import BacklogIcon from '../../Assets/backlog-icon.png';
 import '../../styles/Navbar.css'; 
@@ -13,14 +12,14 @@ function Navbar({ onOpenCreateIssue }) {
   const menuItems = [
     { title: 'Board', icon: boardIcon, path: '/board' },
     { title: 'Backlog', icon: BacklogIcon, path: '/backlog' },
-    { title: 'Project Settings', icon: settingsIcon, path: '/project-settings' },
+
   ];
 
   return (
     <div className="navbar">
       <div className="project-details">
         <img src={projectIcon} alt="Project" className="project-icon" />
-        <h1 className="project-title">Project Test</h1>
+        <h1 className="project-title">Project Pilot</h1>
         <p className="project-description">Development Project</p>
       </div>
       {menuItems.map((item) => (

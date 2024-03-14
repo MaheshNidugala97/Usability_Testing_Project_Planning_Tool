@@ -28,6 +28,7 @@ const KanbanBoard = () => {
     useState(false);
   const [sprintRemainingDays, setSprintRemainingDays] = useState(0);
   const [selectedMember, setSelectedMember] = useState(null);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   const openPopupWithIssue = (id) => {
     setPopupIssueId(id);
@@ -324,6 +325,8 @@ const KanbanBoard = () => {
           onClose={() => {
             setShowIssuePopup(false);
           }}
+          isExpanded={isExpanded}
+          setIsExpanded={setIsExpanded}
         />
       )}
       <AddMemberModal
