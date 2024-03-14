@@ -4,24 +4,33 @@
     "ticketName": "T-3",
     "title": "Login page",
     "description": "design login page with 2 fields",
-    "status": "In Progress",
+    "status": "Done",
     "priority": "HIGH",
-    "assignee": "Athul Krishna",
+    "assignee": "Mahesh Nidugala",
     "reporter": "John",
-    "estimate": "3",
+    "estimate": "32",
     "time": "2024-03-12T16:38:44.632Z",
     "completedInPreviousSprint": false,
-    "comment": []
+    "comment": [
+      {
+        "id": 673,
+        "text": "gjff"
+      }
+    ],
+    "attachments": [
+      "Screenshot 2024-03-03 at 5.18.06 PM.png",
+      "13857 copy.jpg"
+    ]
   },
   {
     "id": 9542699,
     "title": "Api Creation",
     "description": "Api Creation",
-    "status": "To Do",
+    "status": "Done",
     "priority": "LOW",
-    "assignee": "Athul Krishna",
+    "assignee": "Mahesh Nidugala",
     "reporter": "Mark",
-    "estimate": 3,
+    "estimate": "3",
     "time": "2024-03-11T08:25:17.273Z",
     "ticketName": "T-878",
     "completedInPreviousSprint": false,
@@ -38,6 +47,9 @@
         "id": 179,
         "text": "those"
       }
+    ],
+    "attachments": [
+      "13857 copy.jpg"
     ]
   },
   {

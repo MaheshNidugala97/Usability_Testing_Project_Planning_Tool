@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import DoneRoundedIcon from "@mui/icons-material/DoneRounded";
 import {
   FormControl,
   InputLabel,
@@ -27,6 +26,7 @@ const IssueDetails = ({
   const handleDescriptionChange = (e) => {
     setDescriptionText(e.target.value);
     setDescriptionChanged(true);
+    setIsEditing(true);
   };
 
   const updateDescription = async () => {
@@ -54,7 +54,10 @@ const IssueDetails = ({
       <div className="title-section">
         <h2 className="title">{issue.title}</h2>
       </div>
-      <div className={`status-section ${selectedStatus}`}>
+      <div
+        className={`status-section ${selectedStatus}`}
+        data-testid="status-container"
+      >
         <label htmlFor="status">Status:</label>
         <FormControl fullWidth>
           <Select
@@ -74,20 +77,21 @@ const IssueDetails = ({
         <div className="description-box">
           <textarea
             className="description-text"
+            data-testid="description-ta"
             value={descriptionText}
             onChange={handleDescriptionChange}
-            onClick={() => setIsEditing(true)}
           ></textarea>
-          {isEditing && (
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={updateDescription}
-              sx={{ marginLeft: "10px" }}
-            >
-              Save
-            </Button>
-          )}
+
+          <Button
+            disabled={!isEditing}
+            variant="contained"
+            color="primary"
+            onClick={updateDescription}
+            sx={{ marginLeft: "10px" }}
+            data-testid="edit-description-button"
+          >
+            Save
+          </Button>
         </div>
       </div>
 
@@ -98,6 +102,7 @@ const IssueDetails = ({
             onClick={toggleDetails}
             variant="contained"
             color="primary"
+            data-testid="show-hide-details-button"
           >
             {showDetails ? "Hide Details" : "Show Details"}
           </Button>
@@ -119,7 +124,7 @@ const IssueDetails = ({
 };
 
 const DetailContent = ({ issue, refreshBoard, toggleDetails }) => {
-  const [employees, setEmployees] = useState([]);
+  const [employees, setEmployees] = useState([issue.assignee]);
   const [assignee, setAssignee] = useState(issue.assignee);
   const [sprint, setSprint] = useState(Number(issue.estimate));
   const [isEditingSprint, setIsEditingSprint] = useState(false);
@@ -136,7 +141,7 @@ const DetailContent = ({ issue, refreshBoard, toggleDetails }) => {
       }
     };
     fetchMembers();
-  }, [employees]);
+  }, []);
 
   const updateAssignee = async (newAssignee) => {
     try {
@@ -224,9 +229,14 @@ const DetailContent = ({ issue, refreshBoard, toggleDetails }) => {
             variant="outlined"
             fullWidth
             size="small"
+            data-testid="sprint-number-input"
           />
         ) : (
-          <span onClick={handleSprintClick} className="sprint-value">
+          <span
+            onClick={handleSprintClick}
+            className="sprint-value"
+            data-testid="sprint-number-span"
+          >
             {sprint}
           </span>
         )}
