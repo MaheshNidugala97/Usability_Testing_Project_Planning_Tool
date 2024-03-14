@@ -219,7 +219,7 @@ const DetailContent = ({ issue, refreshBoard, toggleDetails }) => {
         <span>{issue.reporter}</span>
       </div>
       <div className="issue-detail">
-        <span className="label">Sprint:</span>
+        <span className="label">Estimate:</span>
         {isEditingSprint ? (
           <TextField
             type="number"
