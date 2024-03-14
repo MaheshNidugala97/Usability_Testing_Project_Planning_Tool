@@ -7,11 +7,18 @@ import CommentSection from "./CommentSection";
 
 import "../../styles/issueView/IssuePopup.css";
 
-const IssuePopup = ({ issueId, refreshBoard, onClose, isExpanded, setIsExpanded }) => {
- // const [isExpanded, setIsExpanded] = useState(false);
+const IssuePopup = ({
+  issueId,
+  refreshBoard,
+  onClose,
+  isExpanded,
+  setIsExpanded,
+}) => {
+  // const [isExpanded, setIsExpanded] = useState(false);
   const [issue, setIssue] = useState(null);
   const [selectedStatus, setSelectedStatus] = useState("");
   const [attachments, setAttachments] = useState([]);
+  const [attachmentFileNames, setAttachmentFileNames] = useState([]);
   const [fileInputKey, setFileInputKey] = useState(0);
   const [message, setMessage] = useState("");
   const [showDetails, setShowDetails] = useState(false);
@@ -25,8 +32,10 @@ const IssuePopup = ({ issueId, refreshBoard, onClose, isExpanded, setIsExpanded 
         );
         setIssue(issueResponse.data);
         setSelectedStatus(issueResponse.data.status);
+        setAttachmentFileNames(
+          issueResponse.data.attachments ? issueResponse.data.attachments : []
+        );
         setTime(issueResponse.data.time);
-        
       } catch (error) {
         console.error("Error fetching issue:", error);
       }
@@ -42,7 +51,7 @@ const IssuePopup = ({ issueId, refreshBoard, onClose, isExpanded, setIsExpanded 
   const toggleExpandedView = () => {
     setIsExpanded(!isExpanded);
   };
-  
+
   const handleStatusChange = async (e) => {
     setSelectedStatus(e.target.value);
     try {
@@ -70,10 +79,15 @@ const IssuePopup = ({ issueId, refreshBoard, onClose, isExpanded, setIsExpanded 
   return (
     <div className={`issue-popup-container ${isExpanded ? "expanded" : ""}`}>
       <div className={`issue-popup ${isExpanded ? "expanded" : ""}`}>
-      <IssueHeader onClose={onClose} onExpand={toggleExpandedView} isExpanded={isExpanded} time={time} />
-      {issue ? (
+        <IssueHeader
+          onClose={onClose}
+          onExpand={toggleExpandedView}
+          isExpanded={isExpanded}
+          time={time}
+        />
+        {issue ? (
           <>
-          <IssueDetails
+            <IssueDetails
               issue={issue}
               selectedStatus={selectedStatus}
               handleStatusChange={handleStatusChange}
@@ -89,8 +103,11 @@ const IssuePopup = ({ issueId, refreshBoard, onClose, isExpanded, setIsExpanded 
               fileInputKey={fileInputKey}
               setFileInputKey={setFileInputKey}
               setMessage={setMessage}
+              issue={issue}
+              attachmentFileNames={attachmentFileNames}
+              setAttachmentFileNames={setAttachmentFileNames}
             />
-           
+
             {/* Pass down props to CommentSection */}
             <CommentSection issueId={issueId} />
           </>

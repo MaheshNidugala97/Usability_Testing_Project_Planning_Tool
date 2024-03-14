@@ -10,11 +10,36 @@ const AttachmentUploader = ({
   fileInputKey,
   setFileInputKey,
   setMessage,
+  issue,
+  attachmentFileNames,
+  setAttachmentFileNames,
 }) => {
   const handleFileChange = (e) => {
     const files = e.target.files;
     setAttachments([...attachments, ...files]);
     setFileInputKey((prevKey) => prevKey + 1);
+  };
+
+  const updateAttachmentInfo = async () => {
+    setAttachments([]);
+    try {
+      await axios.patch(
+        `${process.env.REACT_APP_TICKET_API_ENDPOINT}issues/${issue.id}`,
+        {
+          attachments: [
+            ...attachmentFileNames,
+            ...Array.from([...attachments]).map((f) => f.name),
+          ],
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+    } catch (error) {
+      console.error("Error updating attachments:", error);
+    }
   };
 
   const handleFileUpload = async () => {
@@ -36,6 +61,11 @@ const AttachmentUploader = ({
       alert(response.data.message);
 
       setMessage("Files uploaded successfully!");
+      setAttachmentFileNames([
+        ...attachmentFileNames,
+        ...Array.from([...attachments]).map((f) => f.name),
+      ]);
+      await updateAttachmentInfo();
     } catch (error) {
       console.error("Error uploading files:", error);
       setMessage("Error uploading files");
@@ -59,7 +89,7 @@ const AttachmentUploader = ({
         </label>
         <button onClick={handleFileUpload}>Upload</button>
       </div>
-      {attachments.length > 0 && (
+      {(attachments.length > 0 || attachmentFileNames.length) > 0 && (
         <div
           className="attachment-thumbnails"
           data-testid="attachments-container"
@@ -68,6 +98,14 @@ const AttachmentUploader = ({
             <div key={index} className="attachment-thumbnail">
               <img
                 src={URL.createObjectURL(file)}
+                alt={`Attachment ${index + 1}`}
+              />
+            </div>
+          ))}
+          {attachmentFileNames.map((fileName, index) => (
+            <div key={index} className="attachment-thumbnail">
+              <img
+                src={`http://localhost:3009/Assets/uploads/${fileName}`}
                 alt={`Attachment ${index + 1}`}
               />
             </div>
