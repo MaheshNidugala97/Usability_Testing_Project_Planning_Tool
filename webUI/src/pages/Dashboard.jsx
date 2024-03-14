@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
 import Sidebar from '../components/sideBars/Sidebar.jsx';
 import Navbar from '../components/sideBars/NavBar.jsx';
 import Backlog from '../components/Backlog/index.jsx';
@@ -19,24 +19,21 @@ function Dashboard() {
   };
 
   return (
-    <Router>
-      <div className="Dashboard">
-        <Sidebar />
-        <div className="main-section">
-          <Navbar onOpenCreateIssue={handleOpenCreateIssue} />
-          <div className="main-container">
-            <Routes>
-              <Route path="/" element={<Navigate to="/board" />} />
-              <Route path="/board" element={<Board />} />
-              <Route path="/backlog" element={<Backlog />} />
-            </Routes>
-            {showCreateIssue && <CreateIssue onClose={handleCloseCreateIssue} />}
-          </div>
+    <div className="Dashboard">
+      <Sidebar data-testid="sidebar"/>
+      <div className="main-section">
+        <Navbar data-testid="navbar" onOpenCreateIssue={handleOpenCreateIssue} />
+        <div className="main-container" data-testid="main-container">
+          <Routes>
+            <Route path="/" element={<Navigate to="/board" />} />
+            <Route path="/board" element={<Board />} />
+            <Route path="/backlog" element={<Backlog />} />
+          </Routes>
+          {showCreateIssue && <CreateIssue onClose={handleCloseCreateIssue} />}
         </div>
       </div>
-    </Router>
+    </div>
   );
 }
 
 export default Dashboard;
-
