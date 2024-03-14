@@ -318,6 +318,8 @@ app.post("/api/upload", upload.array("files"), (req, res) => {
   res.status(200).json({ message: "Files uploaded successfully" });
 });
 
+app.use(express.static("src"));
+
 app.use((req, res, next) => {
   res.status(404).send("Sorry, that route doesn't exist.");
 });

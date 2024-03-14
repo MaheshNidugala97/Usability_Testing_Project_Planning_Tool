@@ -324,6 +324,7 @@ const KanbanBoard = () => {
           refreshBoard={refreshBoard}
           onClose={() => {
             setShowIssuePopup(false);
+            setIsExpanded(false)
           }}
           isExpanded={isExpanded}
           setIsExpanded={setIsExpanded}
