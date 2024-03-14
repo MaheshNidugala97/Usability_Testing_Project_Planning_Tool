@@ -1,14 +1,14 @@
-
 import React from 'react';
-import Dashboard from './pages/Dashboard'; // Assuming Dashboard.js is in the same directory
-
-
+import { BrowserRouter as Router } from 'react-router-dom';
+import Dashboard from './pages/Dashboard';
 
 function App() {
   return (
-    <div className="app">
-      <Dashboard />
-    </div>
+    <Router>
+      <div className="app">
+        <Dashboard />
+      </div>
+    </Router>
   );
 }
 
