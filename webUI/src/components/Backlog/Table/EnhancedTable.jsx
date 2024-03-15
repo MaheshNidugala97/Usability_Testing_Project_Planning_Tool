@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import EnhancedTableToolbar from './EnhancedTableToolbar';
+import React, { useState, useEffect } from 'react';
 import EnhancedTableHead from './EnhancedTableHead';
 import TableNoData from './table-no-data';
 import { getComparator, applyFilter } from '../../../utilities/sorting';
@@ -12,9 +11,7 @@ import axios from "axios";
 import DeleteTicketModal from "../collapse/DeleteModal";
 import IssuePopup from "../../issueView/IssuePopup";
 
-function EnhancedTable({ header, data, setData, placeholder, setPage, page, filterName}) {
-  const [order, setOrder] = useState('asc');
-  const [orderBy, setOrderBy] = useState('id');
+function EnhancedTable({ header, data, setData, placeholder, setPage, page, filterName }) {
   const [selected, setSelected] = useState([]);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [isDeleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -23,15 +20,10 @@ function EnhancedTable({ header, data, setData, placeholder, setPage, page, filt
   const [popupIssueId, setPopupIssueId] = useState(null);
   const [forceBoardRefresh, setForceBoardRefresh] = useState(false);
   const [isExpanded, setIsExpanded] = useState(true);
-  
+
   useEffect(() => {
-    // Fetch data using props.data if needed
   }, [data]);
-  const handleRequestSort = (event, property) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
-    setOrderBy(property);
-  };
+
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
@@ -52,7 +44,7 @@ function EnhancedTable({ header, data, setData, placeholder, setPage, page, filt
   }
 
   const handleClick = (event, id) => {
-   const selectedIndex = selected.indexOf(id);
+    const selectedIndex = selected.indexOf(id);
     let newSelected = [];
 
     if (selectedIndex === -1) {
@@ -90,7 +82,7 @@ function EnhancedTable({ header, data, setData, placeholder, setPage, page, filt
     // const selectedIds = [...selected];
     try {
       await Promise.all(selectedIds.map(async (id) => {
-        await axios.delete(`http://localhost:3009/api/issues/${id}`);
+        await axios.delete(`https://projectpilotbe-9799004ffbe5.herokuapp.com/api/issues/${id}`);
       }));
       const updatedData = data.filter((row) => !selectedIds.includes((row.id).toString()));
       setData(updatedData);
@@ -98,7 +90,7 @@ function EnhancedTable({ header, data, setData, placeholder, setPage, page, filt
     } catch (error) {
       console.error('Error deleting selected objects:', error);
     }
-     setDeleteModalOpen(false);
+    setDeleteModalOpen(false);
   };
 
   const isSelected = (id) => selected.indexOf(id) !== -1;
@@ -108,15 +100,14 @@ function EnhancedTable({ header, data, setData, placeholder, setPage, page, filt
 
   const dataFiltered = applyFilter({
     inputData: data,
-    comparator: getComparator(order, orderBy),
     filterName,
   });
   const notFound = !dataFiltered.length && !!filterName;
   return (
-  <Box sx={{ width: '100%' }}>
+    <Box sx={{ width: '100%' }}  >
       <Collapsible open header={header} onDelete={handleDelete} numSelected={selected.length}>
         <Paper sx={{ width: '100%' }}>
-        <DeleteTicketModal
+          <DeleteTicketModal
             open={isDeleteModalOpen}
             onClose={() => setDeleteModalOpen(false)}
             onTicketDelete={handleDeleteItems}
@@ -131,13 +122,10 @@ function EnhancedTable({ header, data, setData, placeholder, setPage, page, filt
             >
               <EnhancedTableHead
                 numSelected={selected.length}
-                order={order}
-                orderBy={orderBy}
                 onSelectAllClick={handleSelectAllClick}
-                onRequestSort={handleRequestSort}
                 rowCount={data.length}
               />
-              <TableBody>
+              <TableBody >
                 {dataFiltered
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row, index) => {
@@ -151,6 +139,7 @@ function EnhancedTable({ header, data, setData, placeholder, setPage, page, filt
                           <Draggable key={(row.id).toString()} draggableId={(row.id).toString()} index={index}>
                             {(provided) => (
                               <TableRow
+                              data-testid={header === 'Selected for Development' ? 'sprint-data-box' : 'backlog-data-box'} 
                                 ref={provided.innerRef}
                                 {...provided.draggableProps}
                                 {...provided.dragHandleProps}
@@ -200,8 +189,8 @@ function EnhancedTable({ header, data, setData, placeholder, setPage, page, filt
                               </span>
                             </TableCell>
                             <TableCell align="left"> <span style={{ textDecoration: row.status === 'Done' && row.completedInPreviousSprint ? 'line-through' : 'none' }}>
-                            {row.title}
-                              </span></TableCell>
+                              {row.title}
+                            </span></TableCell>
                             <TableCell align="left">{row.status}</TableCell>
                             <TableCell align="left">{row.priority}</TableCell>
                           </TableRow>
@@ -213,7 +202,7 @@ function EnhancedTable({ header, data, setData, placeholder, setPage, page, filt
 
                 {placeholder}
                 {notFound && <TableNoData query={filterName} />}
-              
+
               </TableBody>
             </Table>
           </TableContainer>
@@ -226,19 +215,19 @@ function EnhancedTable({ header, data, setData, placeholder, setPage, page, filt
             onPageChange={handleChangePage}
             onRowsPerPageChange={handleChangeRowsPerPage}
           />
-          
+
         </Paper>
         {showIssuePopup && (
-        <IssuePopup
-          refreshBoard={refreshBoard}
-          issueId={popupIssueId}
-          onClose={() => {
-            setShowIssuePopup(false);
-          }}
-          isExpanded={isExpanded}
-          setIsExpanded={setIsExpanded}
-        />
-      )}
+          <IssuePopup
+            refreshBoard={refreshBoard}
+            issueId={popupIssueId}
+            onClose={() => {
+              setShowIssuePopup(false);
+            }}
+            isExpanded={isExpanded}
+            setIsExpanded={setIsExpanded}
+          />
+        )}
       </Collapsible>
     </Box>
 

@@ -81,7 +81,6 @@ describe("IssuePopup Component", () => {
     render(<IssuePopup issueId={1} onClose={() => {}} />);
     expect(await screen.findByTestId("issue-details")).toBeInTheDocument();
     // screen.debug(undefined, Infinity);
-    expect(screen.getByTestId("issue-details")).toBeInTheDocument();
   });
 
   it("can toggle between show/hide details", async () => {

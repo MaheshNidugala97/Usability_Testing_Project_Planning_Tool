@@ -403,7 +403,7 @@ describe('component/KanbanBoard/Ticket.jsx', () => {
 
     await waitFor(() => {
       expect(axios.delete).toHaveBeenCalledWith(
-        `${process.env.REACT_APP_TICKET_API_ENDPOINT}issues/${mockTickets[0].id}`
+        `https://projectpilotbe-9799004ffbe5.herokuapp.com/api/issues/${mockTickets[0].id}`
       );
     });
 
