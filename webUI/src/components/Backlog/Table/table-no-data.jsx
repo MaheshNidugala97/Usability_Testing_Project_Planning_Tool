@@ -18,7 +18,7 @@ export default function TableNoData({ query }) {
             Not found
           </Typography>
 
-          <Typography variant="body2">
+          <Typography variant="body2" data-testid='no-found-tag'>
             No results found for &nbsp;
             <strong>&quot;{query}&quot;</strong>.
             <br /> Try checking for typos or using complete words.

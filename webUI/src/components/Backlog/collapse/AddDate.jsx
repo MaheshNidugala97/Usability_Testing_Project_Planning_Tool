@@ -6,7 +6,7 @@ import Button from '@mui/material/Button';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
-import './DatePicker.css';
+import '../../../styles/DatePicker.css';
 import Swal from 'sweetalert2';
 
 export default function AddDate({ open, onClose, onDateChange, sprintName, setSprintName, startDate, setStartDate, endDate, setEndDate }) {
@@ -68,7 +68,7 @@ export default function AddDate({ open, onClose, onDateChange, sprintName, setSp
   };
 
   return (
-    <BasePopup open={open} onClose={onClose} className="modal">
+    <BasePopup open={open} onClose={onClose} className="modal" data-testid='add-date-modal'>
       <PopupBody>
         <div>
           <div style={{ marginLeft: '240px'}}>
@@ -82,6 +82,7 @@ export default function AddDate({ open, onClose, onDateChange, sprintName, setSp
             onChange={(e) => setSprintName(e.target.value)}
             fullWidth
             margin="normal"
+            data-testid ='sprint-name-input'
             required
           />
 
@@ -97,6 +98,7 @@ export default function AddDate({ open, onClose, onDateChange, sprintName, setSp
               className="date-picker"
               dateFormat="MMMM d, yyyy"
               placeholderText="Select Start Date"
+              data-testid = 'start-date-input'
               required
             />
           </div>
@@ -113,12 +115,13 @@ export default function AddDate({ open, onClose, onDateChange, sprintName, setSp
               className="date-picker"
               dateFormat="MMMM d, yyyy"
               placeholderText="Select End Date"
+              data-testid = 'end-date-input'
               required
             />
           </div>
 
           {/* Submit Button */}
-          <Button onClick={handleSubmit} variant="contained" color="primary" sx={{ fontSize: "0.8rem", marginTop: '10px', display: 'flex', justifyContent: 'left' }}>
+          <Button data-testid="sprint-submit" onClick={handleSubmit} variant="contained" color="primary" sx={{ fontSize: "0.8rem", marginTop: '10px', display: 'flex', justifyContent: 'left' }}>
             Update Sprint
           </Button>
         </div>
