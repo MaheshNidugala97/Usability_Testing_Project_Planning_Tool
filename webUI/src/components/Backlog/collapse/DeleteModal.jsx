@@ -37,6 +37,7 @@ const DeleteTicketModal = (props) => {
         <Button
           onClick={props.onClose}
           sx={{ fontSize: "0.8rem", textTransform: "none" }}
+          data-testid= {"cancel-delete-button"}
         >
           Cancel
         </Button>
