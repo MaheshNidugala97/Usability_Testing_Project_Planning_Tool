@@ -90,7 +90,7 @@ function EnhancedTable({ header, data, setData, placeholder, setPage, page, filt
     // const selectedIds = [...selected];
     try {
       await Promise.all(selectedIds.map(async (id) => {
-        await axios.delete(`${process.env.REACT_APP_TICKET_API_ENDPOINT}issues/${id}`);
+        await axios.delete(`https://projectpilotwebui-3bcba7bae641.herokuapp.com/api/issues/${id}`);
       }));
       const updatedData = data.filter((row) => !selectedIds.includes((row.id).toString()));
       setData(updatedData);

@@ -32,7 +32,7 @@ const IssueDetails = ({
   const updateDescription = async () => {
     try {
       await axios.patch(
-        `${process.env.REACT_APP_TICKET_API_ENDPOINT}issues/${issue.id}`,
+        `https://projectpilotwebui-3bcba7bae641.herokuapp.com/api/issues/${issue.id}`,
         {
           description: descriptionText,
         },
@@ -132,7 +132,7 @@ const DetailContent = ({ issue, refreshBoard, toggleDetails }) => {
   useEffect(() => {
     const fetchMembers = async () => {
       try {
-        const response = await axios.get("${process.env.REACT_APP_TICKET_API_ENDPOINT}members");
+        const response = await axios.get("https://projectpilotwebui-3bcba7bae641.herokuapp.com/api/members");
         if (response.data) {
           setEmployees(response.data);
         }
@@ -146,7 +146,7 @@ const DetailContent = ({ issue, refreshBoard, toggleDetails }) => {
   const updateAssignee = async (newAssignee) => {
     try {
       await axios.patch(
-        `${process.env.REACT_APP_TICKET_API_ENDPOINT}issues/${issue.id}`,
+        `https://projectpilotwebui-3bcba7bae641.herokuapp.com/api/issues/${issue.id}`,
         {
           assignee: newAssignee,
         },
@@ -166,7 +166,7 @@ const DetailContent = ({ issue, refreshBoard, toggleDetails }) => {
   const updateSprint = async () => {
     try {
       await axios.patch(
-        `${process.env.REACT_APP_TICKET_API_ENDPOINT}issues/${issue.id}`,
+        `https://projectpilotwebui-3bcba7bae641.herokuapp.com/api/issues/${issue.id}`,
         {
           estimate: sprint.toString(),
         },

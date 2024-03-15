@@ -42,7 +42,7 @@ const KanbanBoard = () => {
     const getTickets = async () => {
       try {
         const issues = await axios.get(
-          `${process.env.REACT_APP_TICKET_API_ENDPOINT}issues`
+          `https://projectpilotwebui-3bcba7bae641.herokuapp.com/api/issues`
         );
         if (!issues?.data) {
           throw new Error('Failed to get tickets');
@@ -64,7 +64,7 @@ const KanbanBoard = () => {
   useEffect(() => {
     const fetchMembers = async () => {
       try {
-        const response = await axios.get('${process.env.REACT_APP_TICKET_API_ENDPOINT}members');
+        const response = await axios.get('https://projectpilotwebui-3bcba7bae641.herokuapp.com/api/members');
         if (response.data) {
           setMembers(response.data);
         }
@@ -78,7 +78,7 @@ const KanbanBoard = () => {
   useEffect(() => {
     const fetchSprints = async () => {
       try {
-        const response = await axios.get('${process.env.REACT_APP_TICKET_API_ENDPOINT}sprints');
+        const response = await axios.get('https://projectpilotwebui-3bcba7bae641.herokuapp.com/api/sprints');
         if (response?.data) {
           setSprints(response.data);
           response.data[0].sprintName !== null
@@ -107,7 +107,7 @@ const KanbanBoard = () => {
   const handleAddMember = async (name) => {
     try {
       await axios.post(
-        '${process.env.REACT_APP_TICKET_API_ENDPOINT}members',
+        'https://projectpilotwebui-3bcba7bae641.herokuapp.com/api/members',
         {
           name,
         },
@@ -126,7 +126,7 @@ const KanbanBoard = () => {
   const handleSprintComplete = async () => {
     try {
       const issues = await axios.patch(
-        '${process.env.REACT_APP_TICKET_API_ENDPOINT}issues',
+        'https://projectpilotwebui-3bcba7bae641.herokuapp.com/api/issues',
         {
           completedInPreviousSprint: true,
         },
@@ -149,7 +149,7 @@ const KanbanBoard = () => {
     }
     try {
       const sprints = await axios.patch(
-        '${process.env.REACT_APP_TICKET_API_ENDPOINT}sprints/1',
+        'https://projectpilotwebui-3bcba7bae641.herokuapp.com/api/sprints/1',
         {
           sprintName: null,
           startDate: null,

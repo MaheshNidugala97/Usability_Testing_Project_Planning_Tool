@@ -23,7 +23,7 @@ const CreateIssue = ({ onClose }) => {
   useEffect(() => {
     const fetchMembers = async () => {
       try {
-        const response = await axios.get('${process.env.REACT_APP_TICKET_API_ENDPOINT}members');
+        const response = await axios.get('https://projectpilotwebui-3bcba7bae641.herokuapp.com/api/members');
         setMembers(response.data); 
       } catch (error) {
         console.error('Error fetching members:', error);
@@ -54,7 +54,7 @@ const CreateIssue = ({ onClose }) => {
   
       console.log('Submitting issue:', issueWithId);
   
-      const response = await axios.post('${process.env.REACT_APP_TICKET_API_ENDPOINT}issues', issueWithId);
+      const response = await axios.post('https://projectpilotwebui-3bcba7bae641.herokuapp.com/api/issues', issueWithId);
       
       Swal.fire({
         title: 'Success!',

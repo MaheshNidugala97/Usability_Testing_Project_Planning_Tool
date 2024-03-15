@@ -40,7 +40,7 @@ describe('CreateIssue Component', () => {
     render(<CreateIssue onClose={() => {}} />);
 
     await waitFor(() => {
-      expect(axios.get).toHaveBeenCalledWith('${process.env.REACT_APP_TICKET_API_ENDPOINT}members');
+      expect(axios.get).toHaveBeenCalledWith('https://projectpilotwebui-3bcba7bae641.herokuapp.com/api/members');
     });
   });
 
@@ -123,7 +123,7 @@ describe('CreateIssue Component', () => {
         fireEvent.change(getByPlaceholderText('Add a description'), { target: { value: mockIssue.description } });
         fireEvent.click(getByText('Accept'));
         await waitFor(() => {
-          expect(axios.post).toHaveBeenCalledWith('${process.env.REACT_APP_TICKET_API_ENDPOINT}issues', expect.any(Object));
+          expect(axios.post).toHaveBeenCalledWith('https://projectpilotwebui-3bcba7bae641.herokuapp.com/api/issues', expect.any(Object));
           expect(Swal.fire).toHaveBeenCalledWith(expect.objectContaining({ title: 'Success!' }));
           expect(mockOnClose).toHaveBeenCalled();
         });

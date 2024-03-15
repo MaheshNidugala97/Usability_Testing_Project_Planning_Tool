@@ -50,7 +50,7 @@ export default function AddDate({ open, onClose, onDateChange, sprintName, setSp
 
     try {
       // Example: Send form data to API endpoint
-      const response = await axios.patch('${process.env.REACT_APP_TICKET_API_ENDPOINT}sprints/1', formData);
+      const response = await axios.patch('https://projectpilotwebui-3bcba7bae641.herokuapp.com/api/sprints/1', formData);
       Swal.fire({
         title: 'Success!',
         text: response.data.message,

@@ -18,7 +18,7 @@ export default function Backlog() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("${process.env.REACT_APP_TICKET_API_ENDPOINT}issues");
+        const response = await fetch("https://projectpilotwebui-3bcba7bae641.herokuapp.com/api/issues");
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
@@ -60,7 +60,7 @@ export default function Backlog() {
 
     try {
       // Example: Send update to API endpoint
-      await axios.patch(`${process.env.REACT_APP_TICKET_API_ENDPOINT}issues/${taskId}`, { status: newStatus });
+      await axios.patch(`https://projectpilotwebui-3bcba7bae641.herokuapp.com/api/issues/${taskId}`, { status: newStatus });
     } catch (error) {
       console.error('Error updating task status:', error);
     }
