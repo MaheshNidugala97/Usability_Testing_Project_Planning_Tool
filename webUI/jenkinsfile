@@ -21,7 +21,7 @@ pipeline {
                      sh 'npm i --force'
                      sh 'npm cache clean --force'
                      sh 'npm install --save-dev @testing-library/user-event --force'
-                     sh 'npm run test-coverage-report'
+                     sh 'npm run test-coverage --watchAll=false'
                      sh 'docker build -t projectpilotwebui  .'
                  }
              }
