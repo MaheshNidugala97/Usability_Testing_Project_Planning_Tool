@@ -4,6 +4,7 @@ pipeline {
         nodejs 'nodejs' 
     }
     environment {
+       
         HEROKU_API_KEY = credentials('HEROKU_API_KEY')
     }
     stages {
@@ -13,32 +14,41 @@ pipeline {
             }
         }
         stage('Build') {
-            steps {
-                dir('webUI') {
-                    echo 'Building Frontend...'
-                    sh 'npm i --force'
-                    sh 'npm cache clean --force'
-                    sh 'npm install --save-dev @testing-library/user-event --force'
-                    sh 'npm run test-coverage-report'
-            
-                }
-            }
+             steps {
+                 dir('webui') {
+                     echo 'Building Frontend...'
+                     sh 'dir'
+                     sh 'npm i --force'
+                     sh 'npm cache clean --force'
+                     sh 'npm install --save-dev @testing-library/user-event --force'
+                     sh 'npm run test-coverage-report'
+                     sh 'docker build -t projectpilotwebui  .'
+                 }
+             }
+
+
         }
         stage('Deploy') {
             steps {
-                dir('webUI') {
+                dir('webui') {
                     echo 'Deploying to Heroku...'
                     script {
-                        withCredentials([string(credentialsId: 'HEROKU_API_KEY', variable: 'HEROKU_API_KEY')]) {
-                            sh '''
-                                echo "machine api.heroku.com login _ password $HEROKU_API_KEY" > ~/.netrc
-                                chmod 600 ~/.netrc
-                                git push https://heroku:$HEROKU_API_KEY@git.heroku.com/projectpilotwebui.git master
-                            '''
-                        }
+                        sh '''
+                            echo "$HEROKU_API_KEY" | docker login --username=_ --password-stdin registry.heroku.com
+                            docker tag projectpilotwebui registry.heroku.com/projectpilotwebui/web
+                            docker push registry.heroku.com/projectpilotwebui/web
+                            heroku container:release web --app projectpilotwebui
+                        '''
                     }
                 }
             }
         }
     }
+    post {
+        always {
+            echo 'Cleaning up...'
+            sh 'docker rmi jobpilot'
+        }
+    }
 }
+
