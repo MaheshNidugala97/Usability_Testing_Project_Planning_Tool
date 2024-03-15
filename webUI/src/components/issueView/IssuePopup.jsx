@@ -28,7 +28,7 @@ const IssuePopup = ({
     const fetchData = async () => {
       try {
         const issueResponse = await axios.get(
-          `https://projectpilotwebui-3bcba7bae641.herokuapp.com/api/issues/${issueId}`
+          `https://projectpilotbe-9799004ffbe5.herokuapp.com/api/issues/${issueId}`
         );
         setIssue(issueResponse.data);
         setSelectedStatus(issueResponse.data.status);
@@ -56,7 +56,7 @@ const IssuePopup = ({
     setSelectedStatus(e.target.value);
     try {
       await axios.patch(
-        `https://projectpilotwebui-3bcba7bae641.herokuapp.com/api/issues/${issueId}`,
+        `https://projectpilotbe-9799004ffbe5.herokuapp.com/api/issues/${issueId}`,
         {
           status: e.target.value,
         },

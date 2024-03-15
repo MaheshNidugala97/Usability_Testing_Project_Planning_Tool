@@ -61,7 +61,7 @@ describe('CommentSection', () => {
   
     await waitFor(() => {
       expect(axios.post).toHaveBeenCalledWith(
-        `https://projectpilotwebui-3bcba7bae641.herokuapp.com/api/issues/${issueId}/comment`,
+        `https://projectpilotbe-9799004ffbe5.herokuapp.com/api/issues/${issueId}/comment`,
         {
           comment: expect.objectContaining({ text: newComment }),
         }

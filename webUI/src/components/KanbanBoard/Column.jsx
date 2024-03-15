@@ -23,7 +23,7 @@ const Column = (props) => {
 
   const moveTicket = async (ticketId, status) => {
     const { data } = await axios.patch(
-      `https://projectpilotwebui-3bcba7bae641.herokuapp.com/api/issues/${ticketId}`,
+      `https://projectpilotbe-9799004ffbe5.herokuapp.com/api/issues/${ticketId}`,
       {
         status,
       },

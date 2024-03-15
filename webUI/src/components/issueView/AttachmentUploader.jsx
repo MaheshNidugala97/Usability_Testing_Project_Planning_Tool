@@ -24,7 +24,7 @@ const AttachmentUploader = ({
     setAttachments([]);
     try {
       await axios.patch(
-        `https://projectpilotwebui-3bcba7bae641.herokuapp.com/api/issues/${issue.id}`,
+        `https://projectpilotbe-9799004ffbe5.herokuapp.com/api/issues/${issue.id}`,
         {
           attachments: [
             ...attachmentFileNames,
@@ -50,7 +50,7 @@ const AttachmentUploader = ({
       });
 
       const response = await axios.post(
-        "https://projectpilotwebui-3bcba7bae641.herokuapp.com/api/upload",
+        "https://projectpilotbe-9799004ffbe5.herokuapp.com/api/upload",
         formData,
         {
           headers: {
