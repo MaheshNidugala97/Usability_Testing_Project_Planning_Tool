@@ -47,7 +47,7 @@ pipeline {
     post {
         always {
             echo 'Cleaning up...'
-            sh 'docker rmi jobpilot'
+            sh 'docker rmi projectpilotwebui'
         }
     }
 }
