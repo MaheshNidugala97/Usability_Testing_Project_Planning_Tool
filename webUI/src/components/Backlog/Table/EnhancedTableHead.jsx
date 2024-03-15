@@ -30,10 +30,8 @@ const headCells = [
     }
 ];
 
-function EnhancedTableHead({ numSelected, order, orderBy, onSelectAllClick, onRequestSort, rowCount, isItemSelected }) {
-    const createSortHandler = (property) => (event) => {
-        onRequestSort(event, property);
-    };
+function EnhancedTableHead({ numSelected, onSelectAllClick, rowCount, isItemSelected }) {
+   
     return (
         <TableHead>
             <TableRow>
@@ -52,17 +50,10 @@ function EnhancedTableHead({ numSelected, order, orderBy, onSelectAllClick, onRe
                         align={headCell.numeric ? 'left' : 'right'}
                         padding={headCell.disablePadding ? 'none' : 'normal'}
                         sx={{ flex: '1 1 100%', fontWeight: 'bold' }}
-                        sortDirection={orderBy === headCell.id ? order : false}
                     >
-                        <TableSortLabel
-                            active={orderBy === headCell.id}
-                        >
+                        
                             {headCell.label}
-                            {orderBy === headCell.id ? (
-                                <Box component="span">
-                                </Box>
-                            ) : null}
-                        </TableSortLabel>
+                            
                     </TableCell>
                 ))}
             </TableRow>
@@ -72,10 +63,7 @@ function EnhancedTableHead({ numSelected, order, orderBy, onSelectAllClick, onRe
 
 EnhancedTableHead.propTypes = {
     numSelected: PropTypes.number.isRequired,
-    onRequestSort: PropTypes.func.isRequired,
     onSelectAllClick: PropTypes.func.isRequired,
-    order: PropTypes.oneOf(['asc', 'desc']).isRequired,
-    orderBy: PropTypes.string.isRequired,
     rowCount: PropTypes.number.isRequired,
 };
 

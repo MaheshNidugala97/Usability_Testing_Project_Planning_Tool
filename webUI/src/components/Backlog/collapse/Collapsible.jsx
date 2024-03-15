@@ -1,22 +1,17 @@
 import React, { useEffect, useRef, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleChevronDown } from '@fortawesome/free-solid-svg-icons'
-import { alpha } from '@mui/material/styles';
-import { Toolbar, Typography, Tooltip, IconButton } from '@mui/material';
+import { Tooltip, IconButton } from '@mui/material';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import AddDate from './AddDate';
 import axios from "axios";
-import { grey } from "@mui/material/colors";
 
 const Collapsible = ({
   numSelected,
   open,
   onDelete,
-  collapsibleClassName = "collapsible-card-edonec",
-  headerClassName = "collapsible-header-edonec",
   titleClassName = "title-text-edonec",
   iconButtonClassName = "collapsible-icon-button-edonec",
-  contentClassName = "collapsible-content-edonec",
   contentContainerClassName = "collapsible-content-padding-edonec",
   children,
   header
@@ -25,7 +20,7 @@ const Collapsible = ({
   const [height, setHeight] = useState(open ? undefined : 0);
   const ref = useRef(null);
   const [anchor, setAnchor] = React.useState(null);
-  const [isAddMemberModalOpen, setAddMemberModalOpen] = useState(false);
+  const [isEditDate, setEditDate] = useState(false);
   const [sprintName, setSprintName] = useState("");
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
@@ -36,9 +31,6 @@ const Collapsible = ({
     setIsOpen((prev) => !prev);
   };
 
-  const handleClick = (event) => {
-    setAnchor(anchor ? null : event.currentTarget);
-  };
   const popupOpen = Boolean(anchor);
   const popupId = popupOpen ? 'simple-popup' : undefined;
 
@@ -60,12 +52,11 @@ const Collapsible = ({
     else setHeight(0);
   }, [isOpen]);
 
-
   useEffect(() => {
     const fetchSprint = async () => {
       try {
         const response = await axios.get("https://projectpilotbe-9799004ffbe5.herokuapp.com/api/sprints");
-        if (response.data) {
+        if (response && response.data) {
           const sprint = response.data[0];
           setSprintName(sprint.sprintName);
           setStartDate(new Date(sprint.startDate));
@@ -80,14 +71,10 @@ const Collapsible = ({
     fetchSprint();
   }, []);
 
-
-
-const handleDateChange = (newStartDate, newEndDate) => {
-  setFormatStartDate(newStartDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
-  setFormatEndDate(newEndDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
+  const handleDateChange = (newStartDate, newEndDate) => {
+    setFormatStartDate(newStartDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
+    setFormatEndDate(newEndDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }));
   };
-
-
   return (
     <>
       <div style={{ borderRadius: '10px' }}>
@@ -105,28 +92,29 @@ const handleDateChange = (newStartDate, newEndDate) => {
           </button>
           <div style={{ display: 'flex', padding: "2px 20px 2px 20px", marginTop: '-35px', justifyContent: 'space-between' }}>
 
-            <div className={titleClassName} style={{fontSize:'25px'}}>{header}
-              {header === 'Selected for Development' ?  (<span><button
+            <div className={titleClassName} style={{ fontSize: '25px' }}>{header}
+              {header === 'Selected for Development' ? (<span><button
+                data-testid='edit-sprint-btn'
                 type="button"
                 aria-describedby={popupId}
                 style={{
                   background: 'transparent', height: '28px',
-                  border:formatStartDate ? 'none' : '1px solid black',
-                  color: formatStartDate ?  'grey' : null,
+                  border: formatStartDate ? 'none' : '1px solid black',
+                  color: formatStartDate ? 'grey' : null,
                   fontWeight: formatStartDate ? 'bold' : 'normal',
                   textAlign: 'center',
-                  width: startDate ? '130px':'96px',
+                  width: startDate ? '130px' : '96px',
                   padding: '0px! important',
-                  fontSize: formatStartDate ? '14px' :'14px',
+                  fontSize: formatStartDate ? '14px' : '14px',
                   marginLeft: '13px',
                   borderRadius: '30px'
-                }}  onClick={() => setAddMemberModalOpen(true)}>{formatStartDate && formatEndDate ? `${formatStartDate} - ${formatEndDate}` : 'Edit Date'}</button>
-                </span>) : null }</div>
+                }} onClick={() => setEditDate(true)}>{formatStartDate && formatEndDate ? `${formatStartDate} - ${formatEndDate}` : 'Edit Date'}</button>
+              </span>) : null}</div>
 
             {numSelected > 0 ? (
-              <Tooltip title="Delete">
+              <Tooltip title="Delete" data-testid='delete-button'>
                 <IconButton onClick={onDelete}>
-                  <FontAwesomeIcon icon={faTrashCan} size='xs' color='red'  /></IconButton>
+                  <FontAwesomeIcon icon={faTrashCan} size='xs' color='red' /></IconButton>
               </Tooltip>
             ) : false}
           </div>
@@ -138,16 +126,16 @@ const handleDateChange = (newStartDate, newEndDate) => {
           </div>
         </div>
         <AddDate
-        open={isAddMemberModalOpen}
-        onClose={() => setAddMemberModalOpen(false)}
-        onDateChange={handleDateChange}
-        startDate={startDate}
-        setStartDate={setStartDate}
-        endDate={endDate}
-        setEndDate={setEndDate}
-        sprintName={sprintName}
-        setSprintName={setSprintName}
-      />
+          open={isEditDate}
+          onClose={() => setEditDate(false)}
+          onDateChange={handleDateChange}
+          startDate={startDate}
+          setStartDate={setStartDate}
+          endDate={endDate}
+          setEndDate={setEndDate}
+          sprintName={sprintName}
+          setSprintName={setSprintName}
+        />
       </div>
     </>
   );
