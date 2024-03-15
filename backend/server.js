@@ -7,6 +7,7 @@ const multer = require("multer");
 const app = express();
 
 app.use(cors());
+app.use(cors({ origin: "*" }));
 app.use(express.json());
 
 const issueFilePath = path.join(__dirname, "data", "issues.json");
