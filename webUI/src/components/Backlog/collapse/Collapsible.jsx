@@ -64,7 +64,7 @@ const Collapsible = ({
   useEffect(() => {
     const fetchSprint = async () => {
       try {
-        const response = await axios.get("http://localhost:3009/api/sprints");
+        const response = await axios.get("${process.env.REACT_APP_TICKET_API_ENDPOINT}sprints");
         if (response.data) {
           const sprint = response.data[0];
           setSprintName(sprint.sprintName);

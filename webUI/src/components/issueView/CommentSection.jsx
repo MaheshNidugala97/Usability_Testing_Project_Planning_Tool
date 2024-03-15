@@ -13,7 +13,7 @@ const CommentSection = ({ issueId }) => {
     const fetchComments = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3009/api/issues/${issueId}/comment`
+          `${process.env.REACT_APP_TICKET_API_ENDPOINT}issues/${issueId}/comment`
         );
         setComments(response.data);
       } catch (error) {
@@ -45,7 +45,7 @@ const CommentSection = ({ issueId }) => {
     try {
       const commentId = Math.floor(Math.random() * 1000) + 1;
       const response = await axios.post(
-        `http://localhost:3009/api/issues/${issueId}/comment`,
+        `${process.env.REACT_APP_TICKET_API_ENDPOINT}issues/${issueId}/comment`,
         {
           comment: { id: commentId, text: comment },
         }
@@ -69,7 +69,7 @@ const CommentSection = ({ issueId }) => {
   const deleteComment = async (commentId) => {
     try {
       await axios.delete(
-        `http://localhost:3009/api/issues/${issueId}/comments/${commentId}`
+        `${process.env.REACT_APP_TICKET_API_ENDPOINT}issues/${issueId}/comments/${commentId}`
       );
       setComments(comments.filter((comment) => comment.id !== commentId));
       Swal.fire({
@@ -89,7 +89,7 @@ const CommentSection = ({ issueId }) => {
   const editComment = async (commentId, newText) => {
     try {
       await axios.put(
-        `http://localhost:3009/api/issues/${issueId}/comments/${commentId}`,
+        `${process.env.REACT_APP_TICKET_API_ENDPOINT}issues/${issueId}/comments/${commentId}`,
         { text: newText }
       );
       setComments(

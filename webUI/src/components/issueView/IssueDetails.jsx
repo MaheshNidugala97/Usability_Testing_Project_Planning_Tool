@@ -132,7 +132,7 @@ const DetailContent = ({ issue, refreshBoard, toggleDetails }) => {
   useEffect(() => {
     const fetchMembers = async () => {
       try {
-        const response = await axios.get("http://localhost:3009/api/members");
+        const response = await axios.get("${process.env.REACT_APP_TICKET_API_ENDPOINT}members");
         if (response.data) {
           setEmployees(response.data);
         }

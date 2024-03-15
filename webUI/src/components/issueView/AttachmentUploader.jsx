@@ -50,7 +50,7 @@ const AttachmentUploader = ({
       });
 
       const response = await axios.post(
-        "http://localhost:3009/api/upload",
+        "${process.env.REACT_APP_TICKET_API_ENDPOINT}upload",
         formData,
         {
           headers: {

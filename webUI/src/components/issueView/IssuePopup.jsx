@@ -28,7 +28,7 @@ const IssuePopup = ({
     const fetchData = async () => {
       try {
         const issueResponse = await axios.get(
-          `http://localhost:3009/api/issues/${issueId}`
+          `${process.env.REACT_APP_TICKET_API_ENDPOINT}issues/${issueId}`
         );
         setIssue(issueResponse.data);
         setSelectedStatus(issueResponse.data.status);

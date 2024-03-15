@@ -64,7 +64,7 @@ const KanbanBoard = () => {
   useEffect(() => {
     const fetchMembers = async () => {
       try {
-        const response = await axios.get('http://localhost:3009/api/members');
+        const response = await axios.get('${process.env.REACT_APP_TICKET_API_ENDPOINT}members');
         if (response.data) {
           setMembers(response.data);
         }
@@ -78,7 +78,7 @@ const KanbanBoard = () => {
   useEffect(() => {
     const fetchSprints = async () => {
       try {
-        const response = await axios.get('http://localhost:3009/api/sprints');
+        const response = await axios.get('${process.env.REACT_APP_TICKET_API_ENDPOINT}sprints');
         if (response?.data) {
           setSprints(response.data);
           response.data[0].sprintName !== null
@@ -107,7 +107,7 @@ const KanbanBoard = () => {
   const handleAddMember = async (name) => {
     try {
       await axios.post(
-        'http://localhost:3009/api/members',
+        '${process.env.REACT_APP_TICKET_API_ENDPOINT}members',
         {
           name,
         },
@@ -126,7 +126,7 @@ const KanbanBoard = () => {
   const handleSprintComplete = async () => {
     try {
       const issues = await axios.patch(
-        'http://localhost:3009/api/issues',
+        '${process.env.REACT_APP_TICKET_API_ENDPOINT}issues',
         {
           completedInPreviousSprint: true,
         },
@@ -149,7 +149,7 @@ const KanbanBoard = () => {
     }
     try {
       const sprints = await axios.patch(
-        'http://localhost:3009/api/sprints/1',
+        '${process.env.REACT_APP_TICKET_API_ENDPOINT}sprints/1',
         {
           sprintName: null,
           startDate: null,

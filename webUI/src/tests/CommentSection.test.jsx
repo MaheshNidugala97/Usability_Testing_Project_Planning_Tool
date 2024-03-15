@@ -61,7 +61,7 @@ describe('CommentSection', () => {
   
     await waitFor(() => {
       expect(axios.post).toHaveBeenCalledWith(
-        `http://localhost:3009/api/issues/${issueId}/comment`,
+        `${process.env.REACT_APP_TICKET_API_ENDPOINT}issues/${issueId}/comment`,
         {
           comment: expect.objectContaining({ text: newComment }),
         }
