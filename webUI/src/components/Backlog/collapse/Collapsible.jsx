@@ -55,7 +55,7 @@ const Collapsible = ({
   useEffect(() => {
     const fetchSprint = async () => {
       try {
-        const response = await axios.get("http://localhost:3009/api/sprints");
+        const response = await axios.get("https://projectpilotbe-9799004ffbe5.herokuapp.com/api/sprints");
         if (response && response.data) {
           const sprint = response.data[0];
           setSprintName(sprint.sprintName);

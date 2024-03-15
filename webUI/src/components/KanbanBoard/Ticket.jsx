@@ -46,7 +46,7 @@ const Ticket = (props) => {
   const handleDelete = async (id) => {
     try {
       const response = await axios.delete(
-        `${process.env.REACT_APP_TICKET_API_ENDPOINT}issues/${id}`
+        `https://projectpilotbe-9799004ffbe5.herokuapp.com/api/issues/${id}`
       );
       if (!response?.data) {
         console.log('Deleting ticket with ID:', props.ticket.id);
