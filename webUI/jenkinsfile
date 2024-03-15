@@ -17,7 +17,7 @@ pipeline {
                 dir('webui') {
                     echo 'Building Frontend...'
                     sh 'dir'
-                    sh 'npm run tests'
+                    sh 'npm run test-coverage-report'
             
                 }
             }
